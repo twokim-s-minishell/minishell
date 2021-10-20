@@ -22,14 +22,14 @@ void	set_environment_path(t_info *info)
 	char	**environment_path;
 
 	idx = 0;
-	path_value = get_env_value("PATH", info);//에러 처리 추가
+	path_value = get_env_value("PATH", info);//**에러 처리 추가, PATH가 없으면 NULL리턴
 	environment_path = ft_split(path_value, ':');
 	free(path_value);
 	info->env_path = (char **)malloc(sizeof(char *)
 		* (sizeof(environment_path) + 1));
 	merror(info->env_path);
 	add_slash_at_end_of_path(info, environment_path);
-	info->env_path[sizeof(environment_path)] = NULL;
+	info->env_path[sizeof(environment_path)] = NULL;//**sizeof부분 바꾸기
 	free_two_dimensional(environment_path);
 }
 
@@ -65,10 +65,7 @@ void	get_line(t_info *info)
 	if (line)
 		add_history(line);
 	if (parse_line(line, info))
-	{
-		error();//syntex에러 메시지 출력으로 변경하기
 		return ;
-	}
 	execute_command_main(info);
 	return ;
 }

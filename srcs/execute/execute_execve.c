@@ -70,8 +70,8 @@ int	execute_execve(t_info *info, int depth)
 	else
 	{
 		execve(cmd_path, info->cmd_list, info->env_list);
-		error_message(info->cmd_list[0], NULL,"command not found");
-		exit(CMD_NOT_FOUND);//127 나중에 디파인상수로
+		error_message(info->cmd_list[0], NULL, MSG_CMD_NOT_FOUND);//++오류 확인하고 메시지 출력하는 함수로 변경
+		exit(CODE_CMD_NOT_FOUND);//127 나중에 디파인상수로
 		//비정상 종료 리턴
 	}
 	return (NORMAL);

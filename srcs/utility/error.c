@@ -36,3 +36,12 @@ void	error_message(char *cmd, char *arg, char *msg)
 	}
 	ft_putendl_fd(msg, STDERR_FILENO);
 }
+
+void	syntax_error(char c)
+{
+	//bash: syntax error near unexpected token `<'
+	ft_putstr_fd("Minishell: ", STDERR_FILENO);
+	ft_putstr_fd("syntax error near unexpected token '", STDERR_FILENO);
+	ft_putchar_fd(c, STDERR_FILENO);
+	ft_putendl_fd("\'", STDERR_FILENO);
+}
