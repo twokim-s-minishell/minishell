@@ -22,28 +22,33 @@ static int	check_redirection(char *line, int i)
 	return (FALSE);
 }
 
-static int in_a_row_separator(char *line, int i)
+static int separator_in_a_row(char *line, int i)
 {
 	if (!is_separator(line[i]))
 		return (FALSE);
 	while (is_space(line[i]))
 		i++;
 	if (is_separator(line[i]))
+	{
+		syntax_error(line[i]);
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
 static int	check_incorrect_case(char *line, int i)
 {
 	if ((line[i] == ';' || line[i] == '\\'))
+		syntax_error(line[i]);
+	else if (check_type(line[i]) == PIPE && check_type(line[i + 1]) == PIPE)
+		syntax_error(line[i]);
+	else if (is_redirection(line[i]) && check_redirection(line, i))
+		syntax_error(line[i]);
+	else if (separator_in_a_row(line, i))
 		return (TRUE);
-	if (check_type(line[i]) == PIPE && check_type(line[i + 1]) == PIPE)
-		return (TRUE);
-	if (is_redirection(line[i]) && check_redirection(line, i))
-		return (TRUE);
-	if (in_a_row_separator(line, i))
-		return (TRUE);
-	return (FALSE);
+	else
+		return (FALSE);
+	return (TRUE);
 	//; or \
 	//더블 파이프
 	//리다이렉션 <> >< or >>>처럼 3개 이상인 경우

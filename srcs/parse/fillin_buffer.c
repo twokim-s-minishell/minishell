@@ -13,7 +13,7 @@ static char	*parse_env_after_dollar(char **origin, int *i, t_info *info)
 		type = check_type((*origin)[++(*i)]);
 	env_key = (char *)malloc(sizeof(char) * (*i - pre_idx + 1));
 	merror(env_key);
-	ft_strlcpy(env_key, (*origin + *i), (*i - pre_idx + 1));//"aa$"같은 경우 테스트 해보기
+	ft_strlcpy(env_key, (*origin + pre_idx), (*i - pre_idx + 1));//"aa$"같은 경우 테스트 해보기
 	env_value = get_env_value(env_key, info);
 	free(env_key);
 	return (env_value);
@@ -93,7 +93,7 @@ char	*fillin_buf(char *buf, char *origin, t_info *info)
 				data.dquote_flag ^= TRUE;
 			i++;
 		}
-		else if (data.dquote_flag == TRUE && origin[i] == '$')
+		else if (data.squote_flag == FALSE && origin[i] == '$')
 			replace_env_value(&origin, &i, info);
 		else
 			buf[j++] = origin[i++];
