@@ -64,6 +64,7 @@ void	cd(char *path, t_info *info)
 		return (error_message("cd", path, "No such file or directory"));
 	if (normal_flag)
 		save_old_pwd(info);
+	return ;//지우기
 }
 
 /*
