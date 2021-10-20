@@ -45,7 +45,11 @@
 # define BUF_SIZE 20000//한 명령어(인자)가 받을 수 있는 문자열의 길이
 # define ISODD 1
 
-# define CMD_NOT_FOUND 127
+# define MSG_CMD_NOT_FOUND "command not found"
+
+
+# define CODE_CMD_NOT_FOUND 127
+
 
 /*
 ** =============================================================================
@@ -239,6 +243,7 @@ void	link_node(char *cmd, t_lst **list);
 int		error(void);
 void	merror(void *addr);
 void	error_message(char *cmd, char *arg, char *msg);
+void	syntax_error(char c);
 
 void	set_environment_path(t_info *info);
 
