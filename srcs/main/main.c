@@ -18,19 +18,22 @@ static void	add_slash_at_end_of_path(t_info *info, char **environment_path)
 void	set_environment_path(t_info *info)
 {
 	int		idx;
+	int		path_size;
 	char	*path_value;
-	char	**environment_path;
+	char	**env_path;
 
 	idx = 0;
 	path_value = get_env_value("PATH", info);//에러 처리 추가
-	environment_path = ft_split(path_value, ':');
+	if (path_value == NULL)
+		return ;
+	env_path = ft_split(path_value, ':');
 	free(path_value);
-	info->env_path = (char **)malloc(sizeof(char *)
-		* (sizeof(environment_path) + 1));
+	path_size = double_string_size(env_path);
+	info->env_path = (char **)malloc(sizeof(char *) * (path_size + 1));
 	merror(info->env_path);
-	add_slash_at_end_of_path(info, environment_path);
-	info->env_path[sizeof(environment_path)] = NULL;
-	free_two_dimensional(environment_path);
+	add_slash_at_end_of_path(info, env_path);
+	info->env_path[path_size] = NULL;
+	free_two_dimensional(env_path);
 }
 
 void	get_line(t_info *info)
