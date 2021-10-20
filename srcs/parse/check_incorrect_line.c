@@ -24,7 +24,13 @@ static int	check_redirection(char *line, int i)
 
 static int separator_in_a_row(char *line, int i)
 {
-	if (!is_separator(line[i]))
+	if (is_redirection(line[i]))
+	{
+		i++;
+		if (is_redirection(line[i]))
+			i++;
+	}
+	else if (!is_separator(line[i++]))
 		return (FALSE);
 	while (is_space(line[i]))
 		i++;
