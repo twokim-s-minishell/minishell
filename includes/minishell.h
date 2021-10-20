@@ -201,6 +201,7 @@ void	free_double_string(char **list);
 //parsing
 //util
 int		is_special(char c);
+int		is_space(char c);
 t_type	is_redirection(char c);
 t_type	check_type(char c);
 int		is_separator(char c);

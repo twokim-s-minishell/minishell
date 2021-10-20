@@ -22,6 +22,17 @@ static int	check_redirection(char *line, int i)
 	return (FALSE);
 }
 
+static int in_a_row_separator(char *line, int i)
+{
+	if (!is_separator(line[i]))
+		return (FALSE);
+	while (is_space(line[i]))
+		i++;
+	if (is_separator(line[i]))
+		return (TRUE);
+	return (FALSE);
+}
+
 static int	check_incorrect_case(char *line, int i)
 {
 	if ((line[i] == ';' || line[i] == '\\'))
@@ -29,6 +40,8 @@ static int	check_incorrect_case(char *line, int i)
 	if (check_type(line[i]) == PIPE && check_type(line[i + 1]) == PIPE)
 		return (TRUE);
 	if (is_redirection(line[i]) && check_redirection(line, i))
+		return (TRUE);
+	if (in_a_row_separator(line, i))
 		return (TRUE);
 	return (FALSE);
 	//; or \
