@@ -12,6 +12,8 @@ char	*get_cmd_path(char **env_path, t_info *info)
 	cmd = info->cmd_list[0];
 	if (cmd[0] == '\0')
 		cmd = info->cmd_list[1];
+	if (env_path == NULL)
+		return (NULL);
 	while (env_path[idx])
 	{
 		if (stat(cmd, &file_stat) == 0)

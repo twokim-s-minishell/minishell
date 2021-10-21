@@ -8,7 +8,7 @@ int	builtin(char **cmd, t_info *info, int *fd)
 	if (!ft_strncmp(cmd[0], "cd", cmd_len))
 		cd(cmd[1], info);
 	else if (!ft_strncmp(cmd[0], "pwd", cmd_len))
-		pwd(fd);
+		pwd(fd, info);
 	else if (!ft_strncmp(cmd[0], "export", cmd_len))
 		export(cmd, info);
 	else if (!ft_strncmp(cmd[0], "unset", cmd_len))
