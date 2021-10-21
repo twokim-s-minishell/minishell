@@ -8,6 +8,7 @@ void	execute_command(t_info *info, int depth)
 	int	ret;
 
 	info->cmd_sequence = depth;
+	make_pipeline(info, depth);
 	info->pipex.pid[depth] = fork();
 	if (info->pipex.pid[depth] == -1)
 		error();
@@ -34,7 +35,7 @@ void	execute_command(t_info *info, int depth)
 
 void	execute_command_main(t_info *info)
 {
-	make_pipeline(info);//파이프라인 생성
+	init_pipe_fd(info);
 	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);
 	info->cmd_sequence = 0;
 	get_cmd_list(info);

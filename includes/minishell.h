@@ -166,7 +166,8 @@ void	get_pipe_fd(t_info *info, int depth, int fd[]);
 void	switch_stdio(t_info *info, int fd_stdin, int fd_stdout);
 int		get_cmd_list(t_info *info);
 
-void	make_pipeline(t_info *info);
+void	init_pipe_fd(t_info *info);
+void	make_pipeline(t_info *info, int depth);
 void	close_pipeline(t_info *info);
 
 //redirection
@@ -201,9 +202,11 @@ int		builtin(char **cmd, t_info *info, int *fd);
 
 void	free_double_string(char **list);
 
+
 //parsing
 //util
 int		is_special(char c);
+int		is_space(char c);
 t_type	is_redirection(char c);
 t_type	check_type(char c);
 int		is_separator(char c);
@@ -223,6 +226,9 @@ void	make_command(char *line, t_info *info);
 
 int		parse_line(char *line, t_info *info);
 
+
+
+
 //env_list, utils
 char	**env_split(char *str);
 char	*get_env_value(char *key, t_info *info);
@@ -233,6 +239,8 @@ t_env	*make_env_list(char **envp);
 int		is_register_variable(char *cmd);
 void	register_variable(char *cmd, t_info *info);
 
+//string
+int		double_string_size(char **str);
 
 
 //list.c
