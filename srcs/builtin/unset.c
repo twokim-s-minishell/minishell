@@ -38,4 +38,5 @@ void	unset(char **cmd, t_info *info)
 		if (cur)
 			del_env_variable(cur, info);
 	}
+	reset_env_path(info);
 }

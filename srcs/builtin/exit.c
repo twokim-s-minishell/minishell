@@ -7,7 +7,6 @@ static t_ll	save_number(const char *str, int *idx, int *digit_len)
 	int			minus;
 	long long	num;
 
-	idx = 0;
 	minus = 1;
 	num = 0;
 	while ((str[*idx] >= 9 && str[*idx] <= 13) || str[*idx] == ' ')
@@ -22,7 +21,7 @@ static t_ll	save_number(const char *str, int *idx, int *digit_len)
 	}
 	while ((str[*idx] >= 9 && str[*idx] <= 13) || str[*idx] == ' ')
 		(*idx)++;
-	return (num);
+	return (num * minus);
 }
 
 static int	long_num_len(t_ll num)
@@ -58,15 +57,19 @@ static int	ft_atolong(const char *str, t_ll *val)
 static int	is_digit_string(char *str)
 {
 	int	i;
+	int	digit_cnt;
 
 	i = 0;
+	digit_cnt = 0;
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	while (str[i] && ft_isdigit(str[i]))
+	while (str[i + digit_cnt] && ft_isdigit(str[i + digit_cnt]))
+		digit_cnt++;
+	while (is_space(str[i + digit_cnt]))
 		i++;
-	if (str[i] == 0 && i <= 19)
+	if (str[i + digit_cnt] == 0 && digit_cnt <= 19)
 		return (TRUE);
 	return (FALSE);
 	/*
@@ -89,7 +92,9 @@ void	execute_exit(char **cmd)
 	{
 		if (cmd[2] == NULL)
 		{
-			g_exit_code = tmp.c[3];//3번 바꾸기
+			g_exit_code = tmp.c[7];
+			printf("g_exit_code : %lld\n", tmp.num);
+			printf("g_exit_code : %u\n", tmp.c[7]);
 			exit(g_exit_code);//exit안의 값 exitcode로 변경해주어야함.
 		}
 		error_message(cmd[0], NULL, "too many arguments");
