@@ -108,7 +108,7 @@ void	export(char **cmd, t_info *info)
 		if (cur_env)
 			add_env_value(env, cur_env, info, add_flag);//그 변수 값을 새로이
 		else
-			add_new_env(env, info);//변수 자체를 새로 추가 
+			add_new_env(env, info);//변수 자체를 새로 추가
 		free_double_string(env);
 		env = 0;
 		free_double_string(info->env_list);

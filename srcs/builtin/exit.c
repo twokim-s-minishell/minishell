@@ -79,22 +79,21 @@ static int	is_digit_string(char *str)
 	*/
 }
 
-void	execute_exit(char **cmd)
+void	execute_exit(char **cmd, t_info *info)
 {
 	int		i;
 	char	*first_argv;
 	t_exit	tmp;
 
-	ft_putendl_fd("exit", STDOUT_FILENO);
+	if (info->n_cmd <= 1)
+		ft_putendl_fd("exit", STDOUT_FILENO);
 	if (cmd[1] == NULL)
 		exit(0);
 	if (is_digit_string(cmd[1]) && ft_atolong(cmd[1], &(tmp.num)))
 	{
 		if (cmd[2] == NULL)
 		{
-			g_exit_code = tmp.c[7];
-			printf("g_exit_code : %lld\n", tmp.num);
-			printf("g_exit_code : %u\n", tmp.c[7]);
+			g_exit_code = tmp.c[0];
 			exit(g_exit_code);//exit안의 값 exitcode로 변경해주어야함.
 		}
 		error_message(cmd[0], NULL, "too many arguments");

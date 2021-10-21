@@ -16,7 +16,7 @@ int	builtin(char **cmd, t_info *info, int *fd)
 	else if (!ft_strncmp(cmd[0], "env", cmd_len))
 		env(info, fd);
 	else if (!ft_strncmp(cmd[0], "exit", cmd_len))
-		execute_exit(cmd);
+		execute_exit(cmd, info);
 	else if (is_register_variable(cmd[0]))
 		register_variable(cmd[0], info);
 	else
