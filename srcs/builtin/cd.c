@@ -1,10 +1,15 @@
 #include "minishell.h"
 
-static int	cd_old_pwd(t_info *info)
+static int	cd_old_pwd(t_info *info, int first_flag)
 {
 	char	*old_pwd;
 
 	old_pwd = NULL;
+	if (first_flag == 0)
+	{
+		error_message("cd", NULL, "OLDPWD not set");
+		return (ERROR);
+	}
 	old_pwd = get_env_value("OLDPWD", info);
 	if (old_pwd == NULL)
 	{
@@ -19,19 +24,14 @@ static int	cd_old_pwd(t_info *info)
 	return (TRUE);
 }
 
-static void	save_old_pwd(t_info *info)
+static void	save_old_pwd(char *cur_pwd, t_info *info, int *first_flag)
 {
 	char	*cmd[3];
-	char	*tmp;
 
-	tmp = NULL;
+	*first_flag += 1;
 	cmd[0] = "export";
-	tmp = getcwd(NULL, 0);
-	if (tmp)
-	{
-		cmd[1] = ft_strjoin("OLDPWD=", tmp);
-		free(tmp);
-	}
+	if (cur_pwd)
+		cmd[1] = ft_strjoin("OLDPWD=", cur_pwd);
 	cmd[2] = NULL;
 	export(cmd, info);
 	free(cmd[1]);
@@ -40,10 +40,13 @@ static void	save_old_pwd(t_info *info)
 void	cd(char *path, t_info *info)
 {
 	int			normal_flag;
+	static int	first_flag;
 	char		*home;
+	char		cur_pwd[1024];
 
 	normal_flag = FALSE;
 	home = NULL;
+	getcwd(cur_pwd, 1024);
 	if (path == NULL || (path[0] == '~' && path[1] == 0))
 	{
 		home = get_env_value("HOME", info);
@@ -57,14 +60,15 @@ void	cd(char *path, t_info *info)
 	}
 	else if (path[0] == '-' && path[1] == 0)
 	{
-		if (cd_old_pwd(info) != ERROR)
+		if (cd_old_pwd(info, first_flag) != ERROR)
 			normal_flag = TRUE;
 	}
 	else if (chdir(path) == ERROR)
 		return (error_message("cd", path, "No such file or directory"));
+	else
+		normal_flag = TRUE;
 	if (normal_flag)
-		save_old_pwd(info);
-	return ;//지우기
+		save_old_pwd(cur_pwd, info, &first_flag);
 }
 
 /*

@@ -73,6 +73,7 @@ OBJS_LST	=	main.o						\
 				env_list.o					\
 				env_utils.o					\
 				list.o						\
+				string_utils.o				\
 				parse_utils.o				\
 				parse_utils2.o
 				
