@@ -180,7 +180,7 @@ void	free_two_dimensional(char **two_dimensional);
 //builtin
 void	cd(char *path, t_info *info);
 int		pwd(int *fd, t_info *info);
-void	execute_exit(char **cmd);
+void	execute_exit(char **cmd, t_info *info);
 
 //export
 int		incorrect_env_key(char *env_key);
