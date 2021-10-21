@@ -9,9 +9,9 @@ char	*get_cmd_path(char **env_path, t_info *info)
 
 	idx = 0;
 	path_of_cmd = NULL;
-	cmd = info->cmd_lst[info->cmd_sequence].text->str;
-	if (info->cmd_lst[info->cmd_sequence].text->str[0] == '\0')
-		cmd = info->cmd_lst[info->cmd_sequence].text->next->str;
+	cmd = info->cmd_list[0];
+	if (cmd[0] == '\0')
+		cmd = info->cmd_list[1];
 	while (env_path[idx])
 	{
 		if (stat(cmd, &file_stat) == 0)
@@ -54,9 +54,9 @@ int	execute_execve(t_info *info, int depth)
 	get_pipe_fd(info, depth, fd);
 	if (redirection(info, fd))
 		return (ERROR);//비정상 종료 리턴
-	cmd_path = get_cmd_path(info->env_path, info);
 	if (get_cmd_list(info) == -1)
 		return (ERROR);
+	cmd_path = get_cmd_path(info->env_path, info);
 	if (!is_builtin_command(info) || !(info->n_cmd == 1))
 		switch_stdio(info, fd[READ], fd[WRITE]);
 	if (is_builtin_command(info))//**현교 : 이 if문 한 블록을 builtin함수 안에 넣어도 될듯?

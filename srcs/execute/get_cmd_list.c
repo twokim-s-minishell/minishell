@@ -7,6 +7,8 @@ void	malloc_cmd_list(t_info *info)
 
 	cnt = 0;
 	cur = info->cmd_lst[info->cmd_sequence].text;
+	if (is_register_variable(cur->str) && cur->next != NULL)
+		cur = cur->next;
 	while (cur != NULL)
 	{
 		cur = cur->next;
@@ -24,6 +26,8 @@ int	get_cmd_list(t_info *info)
 	malloc_cmd_list(info);
 	merror(info->cmd_list);
 	cur = info->cmd_lst[info->cmd_sequence].text;
+	if (is_register_variable(cur->str) && cur->next != NULL)
+		cur = cur->next;
 	while (cur != NULL)
 	{
 		if (cur->str != NULL && cur->str[0] != '\0')

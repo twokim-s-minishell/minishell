@@ -28,7 +28,6 @@ static void	save_old_pwd(char *cur_pwd, t_info *info, int *first_flag)
 {
 	char	*cmd[3];
 
-	cur_pwd = NULL;
 	*first_flag += 1;
 	cmd[0] = "export";
 	if (cur_pwd)
@@ -66,6 +65,8 @@ void	cd(char *path, t_info *info)
 	}
 	else if (chdir(path) == ERROR)
 		return (error_message("cd", path, "No such file or directory"));
+	else
+		normal_flag = TRUE;
 	if (normal_flag)
 		save_old_pwd(cur_pwd, info, &first_flag);
 }
