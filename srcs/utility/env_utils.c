@@ -31,6 +31,23 @@ char	**env_split(char *str)
 	//env[2] == NULL
 }
 
+t_env	*check_listin(char *env_key, t_info *info)
+{
+	int	i;
+	int	len_value;
+	t_env	*cur;
+
+	len_value = (int)ft_strlen(env_key) + 1;
+	cur = info->env_deq->head;
+	while (cur != NULL)
+	{
+		if (!ft_strncmp(env_key, cur->key, len_value))
+			return (cur);
+		cur = cur->next;
+	}
+	return (NULL);
+}
+
 char	*get_env_value(char *key, t_info *info)//key문자열의 복사본 리턴, 없으면 null
 {
 	t_env	*cur;

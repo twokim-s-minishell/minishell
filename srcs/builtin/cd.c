@@ -69,6 +69,8 @@ void	cd(char *path, t_info *info)
 	}
 	else if (chdir(path) == ERROR)
 		return (error_message("cd", path, "No such file or directory"));
+	else
+		normal_flag = TRUE;
 	if (normal_flag)
 		save_old_pwd(cur_pwd, info, &first_flag);
 }

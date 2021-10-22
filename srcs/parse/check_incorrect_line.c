@@ -24,14 +24,18 @@ static int	check_redirection(char *line, int i)
 
 static int separator_in_a_row(char *line, int i)
 {
-	if (!is_separator(line[i]))
-		return (FALSE);
-	while (is_space(line[i]))
-		i++;
-	if (is_separator(line[i]))
+	if (is_separator(line[i]) && !is_space(line[i]))
 	{
-		syntax_error(line[i]);
-		return (TRUE);
+		if (is_redirection(line[i++]))
+			if (is_redirection(line[i]))
+				i++;
+		while (is_space(line[i]))
+			i++;
+		if (is_separator(line[i]))
+		{
+			syntax_error(line[i]);
+			return (TRUE);
+		}
 	}
 	return (FALSE);
 }

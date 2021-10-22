@@ -38,7 +38,5 @@ void	unset(char **cmd, t_info *info)
 		if (cur)
 			del_env_variable(cur, info);
 	}
-	free(info->env_path);//**여기 좀 더 생각해보기
-	info->env_path = NULL;
-	set_environment_path(info);
+	reset_env_path(info);
 }

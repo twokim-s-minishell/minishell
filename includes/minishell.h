@@ -81,8 +81,8 @@ typedef enum e_type
 
 typedef union u_exit
 {
-	int				num;
-	unsigned char	c[4];
+	long long		num;
+	unsigned char	c[8];
 }			t_exit;
 
 /*
@@ -166,7 +166,8 @@ void	get_pipe_fd(t_info *info, int depth, int fd[]);
 void	switch_stdio(t_info *info, int fd_stdin, int fd_stdout);
 int		get_cmd_list(t_info *info);
 
-void	make_pipeline(t_info *info);
+void	init_pipe_fd(t_info *info);
+void	make_pipeline(t_info *info, int depth);
 void	close_pipeline(t_info *info);
 
 //redirection
@@ -178,8 +179,8 @@ void	free_two_dimensional(char **two_dimensional);
 
 //builtin
 void	cd(char *path, t_info *info);
-int		pwd(int *fd);
-void	execute_exit(char **cmd);
+int		pwd(int *fd, t_info *info);
+void	execute_exit(char **cmd, t_info *info);
 
 //export
 int		incorrect_env_key(char *env_key);
@@ -231,12 +232,18 @@ int		parse_line(char *line, t_info *info);
 //env_list, utils
 char	**env_split(char *str);
 char	*get_env_value(char *key, t_info *info);
+t_env	*check_listin(char *env_key, t_info *info);
+
+void	reset_env_path(t_info *info);
 
 t_env	*create_env_node(void);
 void	link_env_node(t_env *front, t_env *back);
 t_env	*make_env_list(char **envp);
 int		is_register_variable(char *cmd);
 void	register_variable(char *cmd, t_info *info, int *fd);
+
+//string
+int		double_string_size(char **str);
 
 //string
 int		double_string_size(char **str);
