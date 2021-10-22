@@ -184,7 +184,7 @@ void	execute_exit(char **cmd);
 //export
 int		incorrect_env_key(char *env_key);
 t_env	*check_listin(char *env_key, t_info *info);
-void	export(char **cmd, t_info *info);
+void	export(char **cmd, t_info *info, int *fd);
 
 void	unset(char **cmd, t_info *info);
 
@@ -236,7 +236,7 @@ t_env	*create_env_node(void);
 void	link_env_node(t_env *front, t_env *back);
 t_env	*make_env_list(char **envp);
 int		is_register_variable(char *cmd);
-void	register_variable(char *cmd, t_info *info);
+void	register_variable(char *cmd, t_info *info, int *fd);
 
 //string
 int		double_string_size(char **str);

@@ -27,14 +27,17 @@ static int	cd_old_pwd(t_info *info, int first_flag)
 static void	save_old_pwd(char *cur_pwd, t_info *info, int *first_flag)
 {
 	char	*cmd[3];
+	int		fd[2];
 
+	fd[0] = 0;
+	fd[1] = 0;
 	cur_pwd = NULL;
 	*first_flag += 1;
 	cmd[0] = "export";
 	if (cur_pwd)
 		cmd[1] = ft_strjoin("OLDPWD=", cur_pwd);
 	cmd[2] = NULL;
-	export(cmd, info);
+	export(cmd, info, fd);
 	free(cmd[1]);
 }
 

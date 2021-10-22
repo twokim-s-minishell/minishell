@@ -2,19 +2,108 @@
 
 t_env	*check_listin(char *env_key, t_info *info)
 {
-	int	i;
-	int	len_value;
+	int		i;
+	int		len_key;
 	t_env	*cur;
 
-	len_value = (int)ft_strlen(env_key) + 1;
+	len_key = (int)ft_strlen(env_key) + 1;
 	cur = info->env_deq->head;
 	while (cur != NULL)
 	{
-		if (!ft_strncmp(env_key, cur->key, len_value))
+		if (!ft_strncmp(env_key, cur->key, len_key))
 			return (cur);
 		cur = cur->next;
 	}
 	return (NULL);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	*s1_tmp;
+	unsigned char	*s2_tmp;
+
+	i = 0;
+	s1_tmp = (unsigned char *)s1;
+	s2_tmp = (unsigned char *)s2;
+	while (s1_tmp[i] && s2_tmp[i])
+	{
+		if (s1_tmp[i] != s2_tmp[i])
+			break ;
+		i++;
+	}
+	return (s1_tmp[i] - s2_tmp[i]);
+}
+
+void	swap_str(char **str, int i, int j)
+{
+	char	*tmp;
+
+	tmp = str[i];
+	str[i] = str[j];
+	str[j] = tmp;
+}
+
+void	sort_env_str(char **str)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (str[i] != NULL)
+	{
+		j = i;
+		while (ft_strcmp(str[j - 1], str[j]) > 0)
+		{
+			swap_str(str, j - 1, j);
+			j--;
+			if (j <= 0)
+				break;
+		}
+		i++;
+	}
+}
+
+void	print_env_str(char **str, int *fd)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != NULL)
+	{
+		ft_putendl_fd(str[i], fd[WRITE]);
+		i++;
+	}
+}
+
+void	print_export(t_info *info, int *fd)
+{
+	int		i;
+	t_env	*cur;
+	char	*tmp;
+	char	**str;
+
+	i = 0;
+	cur = info->env_deq->head;
+	str = (char **)malloc(sizeof(char *) * (info->env_deq->size + 1));
+	merror(str);
+	str[info->env_deq->size] = NULL;
+	while (cur != NULL)
+	{
+		if (cur->env_flag == TRUE)
+		{
+			tmp = ft_strjoin(cur->key, "=");
+			merror(tmp);
+			str[i] = ft_strjoin(tmp, cur->value);
+			merror(str[i++]);
+			free(tmp);
+			tmp = NULL;
+		}
+		cur = cur->next;
+	}
+	sort_env_str(str);
+	print_env_str(str, fd);
+	free_double_string(str);
 }
 
 void	add_env_value(char **env, t_env *cur, t_info *info, int add)
@@ -59,12 +148,12 @@ void	add_new_env(char **env, t_info *info)
 	end->key = ft_strdup(env[KEY]);
 	merror(end->key);
 	info->env_deq->last = end;
-	if (env[VALUE][0] == '\0')
+	end->env_flag = TRUE;
+	info->env_deq->size += 1;
+	if (env[VALUE] == NULL || env[VALUE][0] == '\0')
 		return ;
 	end->value = ft_strdup(env[VALUE]);
 	merror(end->value);
-	end->env_flag = TRUE;
-	info->env_deq->size += 1;
 }
 
 int	incorrect_env_key(char *env_key)
@@ -101,7 +190,7 @@ int	check_add_value(char **env)
 	return (FALSE);
 }
 
-void	export(char **cmd, t_info *info)
+void	export(char **cmd, t_info *info, int *fd)
 {
 	int		i;
 	int		add_flag;
@@ -110,6 +199,11 @@ void	export(char **cmd, t_info *info)
 
 	i = 0;
 	add_flag = FALSE;
+	if (cmd[1] == NULL)
+	{
+		print_export(info, fd);
+		return ;
+	}
 	while (cmd[++i] != NULL)
 	{
 		env = env_split(cmd[i]);//==이 2개인 경우도 인식하는데 이거 처리 어떻게? => 무조건 첫번째 =으로 처리
