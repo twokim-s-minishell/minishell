@@ -31,7 +31,8 @@ static void	save_old_pwd(char *cur_pwd, t_info *info, int *first_flag)
 
 	fd[0] = 0;
 	fd[1] = 0;
-	cur_pwd = NULL;
+	if (cur_pwd == NULL)
+		return ;
 	*first_flag += 1;
 	cmd[0] = "export";
 	if (cur_pwd)
@@ -50,7 +51,7 @@ void	cd(char *path, t_info *info)
 
 	normal_flag = FALSE;
 	home = NULL;
-	getcwd(cur_pwd, 1024);
+	getcwd(cur_pwd, 1024);//OLD_PWD에 저장하기 위해
 	if (path == NULL || (path[0] == '~' && path[1] == 0))
 	{
 		home = get_env_value("HOME", info);
