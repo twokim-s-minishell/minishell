@@ -28,6 +28,6 @@ void	here_doc_handler(int signo)
 
 void	execve_handler(int signo)
 {
-	ft_putchar_fd('\n', STDOUT_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 	exit(0);//시그널 종료 exit코드 알아보기
 }
