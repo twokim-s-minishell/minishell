@@ -21,6 +21,7 @@ static int	cd_old_pwd(t_info *info, int first_flag)
 		error_message("cd", old_pwd, "No such file or directory");
 		return (ERROR);
 	}
+	ft_putendl_fd(old_pwd, STDOUT_FILENO);
 	return (TRUE);
 }
 
