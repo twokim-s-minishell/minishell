@@ -8,17 +8,20 @@ void	init_quote_data(t_quote *data)
 	data->dquote_cnt = 0;
 }
 
-static int	check_redirection(char *line, int i)
+static int	check_redirection(char *line, int *i)
 {
 	int		redi_cnt;
 	t_type	type;
 
 	redi_cnt = 1;
-	type = is_redirection(line[i]);
-	while (type == is_redirection(line[i + redi_cnt]) && line[i + redi_cnt])
+	type = is_redirection(line[*i]);
+	while (type == is_redirection(line[*i + redi_cnt]) && line[*i + redi_cnt])
 		redi_cnt++;
-	if (redi_cnt > 2 || is_redirection(line[i + redi_cnt]))
+	if (redi_cnt > 2 || is_redirection(line[*i + redi_cnt]))
+	{
+		*i += redi_cnt;
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
@@ -46,7 +49,7 @@ static int	check_incorrect_case(char *line, int i)
 		syntax_error(line[i]);
 	else if (check_type(line[i]) == PIPE && check_type(line[i + 1]) == PIPE)
 		syntax_error(line[i]);
-	else if (is_redirection(line[i]) && check_redirection(line, i))
+	else if (is_redirection(line[i]) && check_redirection(line, &i))
 		syntax_error(line[i]);
 	else if (separator_in_a_row(line, i))
 		return (TRUE);

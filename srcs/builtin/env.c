@@ -7,7 +7,7 @@ void	env(t_info *info, int *fd)
 	cur = info->env_deq->head;
 	while (cur != NULL)
 	{
-		if (cur->env_flag == TRUE)
+		if (cur->env_flag == TRUE && cur->value != NULL)
 		{
 			ft_putstr_fd(cur->key, fd[WRITE]);
 			ft_putstr_fd("=", fd[WRITE]);

@@ -68,7 +68,7 @@ int	is_register_variable(char *cmd)
 	return(FALSE);
 }
 
-void	register_variable(char *cmd, t_info *info)
+void	register_variable(char *cmd, t_info *info, int *fd)
 {
 	int		flag;
 	char	*export_cmd[3];
@@ -82,10 +82,11 @@ void	register_variable(char *cmd, t_info *info)
 	merror(export_cmd[1]);
 	export_cmd[2] = NULL;
 	env = env_split(cmd);
+	check_add_value(env);
 	if (check_listin(env[KEY], info))
 		flag = TRUE;
 	free_double_string(env);
-	export(export_cmd, info);
+	export(export_cmd, info, fd);
 	if (flag == FALSE)//이미 있는 변수의 값만 바꾸는 경우
 		info->env_deq->last->env_flag = FALSE;
 	free(export_cmd[1]);

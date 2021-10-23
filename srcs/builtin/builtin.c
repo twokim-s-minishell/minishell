@@ -10,7 +10,7 @@ int	builtin(char **cmd, t_info *info, int *fd)
 	else if (!ft_strncmp(cmd[0], "pwd", cmd_len))
 		pwd(fd, info);
 	else if (!ft_strncmp(cmd[0], "export", cmd_len))
-		export(cmd, info);
+		export(cmd, info, fd);
 	else if (!ft_strncmp(cmd[0], "unset", cmd_len))
 		unset(cmd, info);
 	else if (!ft_strncmp(cmd[0], "env", cmd_len))
@@ -18,7 +18,7 @@ int	builtin(char **cmd, t_info *info, int *fd)
 	else if (!ft_strncmp(cmd[0], "exit", cmd_len))
 		execute_exit(cmd, info);
 	else if (is_register_variable(cmd[0]))
-		register_variable(cmd[0], info);
+		register_variable(cmd[0], info, fd);
 	else
 	{
 		free_double_string(cmd);
