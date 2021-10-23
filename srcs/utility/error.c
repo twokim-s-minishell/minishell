@@ -42,6 +42,9 @@ void	syntax_error(char c)
 	//bash: syntax error near unexpected token `<'
 	ft_putstr_fd("Minishell: ", STDERR_FILENO);
 	ft_putstr_fd("syntax error near unexpected token '", STDERR_FILENO);
-	ft_putchar_fd(c, STDERR_FILENO);
+	if (c == '\0')
+		ft_putstr_fd("newline", STDERR_FILENO);
+	else
+		ft_putchar_fd(c, STDERR_FILENO);
 	ft_putendl_fd("\'", STDERR_FILENO);
 }
