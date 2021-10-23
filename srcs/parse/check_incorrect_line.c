@@ -18,7 +18,10 @@ static int	check_redirection(char *line, int *i)
 	while (type == is_redirection(line[*i + redi_cnt]) && line[*i + redi_cnt])
 		redi_cnt++;
 	if (redi_cnt > 2 || is_redirection(line[*i + redi_cnt]))
+	{
+		*i += redi_cnt;
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
