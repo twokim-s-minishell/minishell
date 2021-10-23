@@ -167,7 +167,7 @@ void	switch_stdio(t_info *info, int fd_stdin, int fd_stdout);
 int		get_cmd_list(t_info *info);
 
 void	init_pipe_fd(t_info *info);
-void	make_pipeline(t_info *info, int depth);
+int		make_pipeline(t_info *info, int depth);
 void	close_pipeline(t_info *info);
 
 //redirection

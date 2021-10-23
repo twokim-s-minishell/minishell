@@ -12,12 +12,10 @@ char	*get_cmd_path(char **env_path, t_info *info)
 	cmd = info->cmd_list[0];
 	if (cmd[0] == '\0')
 		cmd = info->cmd_list[1];
-	if (env_path == NULL)
-		return (NULL);
-	while (env_path[idx])
+	if (stat(cmd, &file_stat) == 0 && ft_strchr(cmd, '/'))//절대 경로 입력 시 커맨드 바로 리턴
+		return (cmd);
+	while (env_path && env_path[idx])
 	{
-		if (stat(cmd, &file_stat) == 0)
-			return (cmd);
 		path_of_cmd = ft_strjoin(env_path[idx], cmd);
 		if (stat(path_of_cmd, &file_stat) == 0)
 			return (path_of_cmd);

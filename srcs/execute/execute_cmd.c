@@ -2,11 +2,18 @@
 
 extern int	g_exit_code;
 
-void	fork_process(t_info *info, int depth)
+int	fork_process(t_info *info, int depth)
 {
+	char	*error_message;
+
 	info->pipex.pid[depth] = fork();
 	if (info->pipex.pid[depth] == -1)
-		error();
+	{
+		error_message = strerror(errno);
+		ft_putendl_fd((char *)error_message, STDERR_FILENO);
+		return (ERROR);
+	}
+	return (NORMAL);
 }
 
 void	waiting_child_process(t_info *info)
@@ -25,8 +32,10 @@ void	execute_command(t_info *info, int depth)
 	int	ret;
 
 	info->cmd_sequence = depth;
-	make_pipeline(info, depth);//pipe 생성
-	fork_process(info, depth);//fork()
+	if (make_pipeline(info, depth) == ERROR)//pipe 생성
+		return ;
+	if (fork_process(info, depth) == ERROR)//fork()
+		return ;
 	if (info->pipex.pid[depth] > 0)
 	{
 		if (depth == info->n_cmd - 1)//마지막 명령어이면 if문 진입
