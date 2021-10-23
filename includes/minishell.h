@@ -197,6 +197,7 @@ void	make_env_double_string(t_info *info);
 //signal
 void	sig_handler(int signo);
 void	here_doc_handler(int signo);
+void	execve_handler(int signo);
 
 int		builtin(char **cmd, t_info *info, int *fd);
 
