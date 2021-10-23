@@ -62,6 +62,17 @@ static int	check_incorrect_case(char *line, int i)
 	//체크
 }
 
+int	check_closed_quote(t_quote data)
+{
+	if (data.squote_cnt & ISODD)
+		syntax_error('\'');
+	else if (data.dquote_cnt & ISODD)
+		syntax_error('\"');
+	else
+		return (FALSE);
+	return (TRUE);
+}
+
 int	check_incorrect_line(char *line)
 {
 	int		i;
@@ -85,9 +96,7 @@ int	check_incorrect_line(char *line)
 			if (check_incorrect_case(line, i))
 				return (TRUE);
 	}
-	if ((data.squote_cnt & ISODD) || (data.dquote_cnt & ISODD))
-		return (TRUE);
-	return (FALSE);
+	return (check_closed_quote(data));
 	/*
 	1. quote가 짝수개인지
 	2. quote안이 아닌 곳에 ; \ 있는지
