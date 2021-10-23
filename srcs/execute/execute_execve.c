@@ -1,5 +1,23 @@
 #include "minishell.h"
 
+void	is_directory(t_info *info, char *cmd)
+{
+	struct stat	file_stat;
+	int			file_type;
+
+	if (stat(cmd, &file_stat) == ERROR)//존재하지 않는 파일이면
+	{
+		error_message(cmd, NULL, MSG_NO_FILE_OR_DIR);//존재하지 않는 파일이면 에러메세지 출력
+		exit(CODE_NO_FILE_OR_DIR);
+	}
+	file_type = file_stat.st_mode & S_IFMT;
+	if (file_type == S_IFDIR)//디렉토리 파일이면 에러메세지 출력 후 종료
+	{
+		error_message(cmd, NULL, MSG_IS_A_DIR);
+		exit(CODE_IS_A_DIR);
+	}
+}
+
 char	*get_cmd_path(char **env_path, t_info *info)
 {
 	int			idx;
@@ -12,8 +30,11 @@ char	*get_cmd_path(char **env_path, t_info *info)
 	cmd = info->cmd_list[0];
 	if (cmd[0] == '\0')
 		cmd = info->cmd_list[1];
-	if (stat(cmd, &file_stat) == 0 && ft_strchr(cmd, '/'))//절대 경로 입력 시 커맨드 바로 리턴
+	if (ft_strchr(cmd, '/'))//커맨드를 경로로 입력했을 때 if문 진입(/bin/ls)
+	{
+		is_directory(info, cmd);//디렉토리 파일이면 에러메세지 출력 후 종료
 		return (cmd);
+	}
 	while (env_path && env_path[idx])
 	{
 		path_of_cmd = ft_strjoin(env_path[idx], cmd);
@@ -57,7 +78,7 @@ int	execute_execve(t_info *info, int depth)
 	if (get_cmd_list(info) == -1)
 		return (ERROR);
 	cmd_path = get_cmd_path(info->env_path, info);
-	if (!is_builtin_command(info) || !(info->n_cmd == 1))
+	if (!is_builtin_command(info))
 		switch_stdio(info, fd[READ], fd[WRITE]);
 	if (is_builtin_command(info))//**현교 : 이 if문 한 블록을 builtin함수 안에 넣어도 될듯?
 	{
@@ -71,7 +92,7 @@ int	execute_execve(t_info *info, int depth)
 	{
 		execve(cmd_path, info->cmd_list, info->env_list);
 		error_message(info->cmd_list[0], NULL, MSG_CMD_NOT_FOUND);//++오류 확인하고 메시지 출력하는 함수로 변경
-		exit(CODE_CMD_NOT_FOUND);//127 나중에 디파인상수로
+		exit(CODE_CMD_NOT_FOUND);
 		//비정상 종료 리턴
 	}
 	return (NORMAL);
