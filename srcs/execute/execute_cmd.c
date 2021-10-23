@@ -29,6 +29,7 @@ void	execute_command(t_info *info, int depth)
 	fork_process(info, depth);//fork()
 	if (info->pipex.pid[depth] > 0)
 	{
+		signal(SIGINT, SIG_IGN);
 		if (depth == info->n_cmd - 1)//마지막 명령어이면 if문 진입
 		{
 			close_pipeline(info);//부모에서 파이프라인 다 닫음(자식엔 영향 없음)
@@ -56,4 +57,5 @@ void	execute_command_main(t_info *info)
 		return ;
 	}
 	execute_command(info, 0);
+	signal(SIGINT, sig_handler);
 }

@@ -20,11 +20,8 @@ void	sig_handler(int signo)
 
 void	here_doc_handler(int signo)
 {
-	char	c[2];
-
-	c[0] = '\n';
-	c[1] = 0;
-	if (signo == SIGINT)
-		write(0, &c, 2);
-	g_exit_code = -424242;
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }

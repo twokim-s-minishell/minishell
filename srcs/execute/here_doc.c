@@ -28,7 +28,7 @@ int	read_string_from_stdin(t_info *info, char *limiter)
 int	here_doc(t_info *info, char *limiter, int fd[])
 {
 	info->pipex.is_here_doc = 1;
-	// signal(SIGINT, here_doc_handler);
+	signal(SIGINT, here_doc_handler);
 	fd[READ] = read_string_from_stdin(info, limiter);//파이프의 fd 리턴, 에러 시 -1 리턴
 	if (fd[READ] == -1)
 		return (ERROR);
