@@ -56,6 +56,7 @@ void	execute_command_main(t_info *info)
 		g_exit_code = execute_execve(info, 0);
 		return ;
 	}
+	signal(SIGINT, SIG_IGN);
 	execute_command(info, 0);
 	signal(SIGINT, sig_handler);
 }
