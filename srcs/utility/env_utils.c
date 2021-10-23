@@ -82,6 +82,7 @@ void	register_variable(char *cmd, t_info *info, int *fd)
 	merror(export_cmd[1]);
 	export_cmd[2] = NULL;
 	env = env_split(cmd);
+	check_add_value(env);
 	if (check_listin(env[KEY], info))
 		flag = TRUE;
 	free_double_string(env);

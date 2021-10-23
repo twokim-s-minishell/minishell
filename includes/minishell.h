@@ -233,6 +233,7 @@ int		parse_line(char *line, t_info *info);
 char	**env_split(char *str);
 char	*get_env_value(char *key, t_info *info);
 t_env	*check_listin(char *env_key, t_info *info);
+int		check_add_value(char **env);
 
 void	reset_env_path(t_info *info);
 
