@@ -20,7 +20,7 @@ int	read_string_from_stdin(t_info *info, char *limiter)
 		str = NULL;
 	}
 	info->pipex.is_here_doc = 0;
-	signal(SIGINT, sig_handler);
+	// signal(SIGINT, sig_handler);
 	close(pipe_fd[WRITE]);
 	return (pipe_fd[READ]);//문자열이 저장된 파이프의 fd를 반환
 }
