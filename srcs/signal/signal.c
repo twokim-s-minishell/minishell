@@ -21,13 +21,15 @@ void	sig_handler(int signo)
 void	here_doc_handler(int signo)
 {
 	ft_putchar_fd('\n', STDOUT_FILENO);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	//rl_on_new_line();
+	//rl_replace_line("", 0);
+	//rl_redisplay();
+	exit(0);
 }
 
 void	execve_handler(int signo)
 {
-	ft_putchar_fd('\n', STDERR_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	printf("flag\n");
 	exit(0);//시그널 종료 exit코드 알아보기
 }
