@@ -7,7 +7,7 @@ void	is_directory(t_info *info, char *cmd)
 
 	if (stat(cmd, &file_stat) == ERROR)//존재하지 않는 파일이면
 	{
-		error_message(cmd, NULL, MSG_NO_FILE_OR_DIR);//존재하지 않는 파일이면 에러메세지 출력
+		error_message(cmd, NULL, strerror(errno));//존재하지 않는 파일이면 에러메세지 출력
 		exit(CODE_NO_FILE_OR_DIR);
 	}
 	file_type = file_stat.st_mode & S_IFMT;

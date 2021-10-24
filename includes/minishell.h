@@ -50,7 +50,7 @@
 # define MSG_IS_A_DIR "is a directory"
 
 # define CODE_CMD_NOT_FOUND 127
-# define CODE_NO_FILE_OR_DIR 126
+# define CODE_NO_FILE_OR_DIR 127
 # define CODE_IS_A_DIR 126
 
 
