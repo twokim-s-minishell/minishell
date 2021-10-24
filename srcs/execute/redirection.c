@@ -45,7 +45,7 @@ int	redirection(t_info *info, int fd[])
 			reval = output_redirection(info, redi[1], fd);
 		if (reval == -1)
 		{
-			error_message(redi[1], NULL, "No such file or directory");
+			error_message(redi[1], NULL, strerror(errno));
 			return (ERROR);
 		}
 		cur = cur->next;

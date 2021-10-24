@@ -46,9 +46,12 @@
 # define ISODD 1
 
 # define MSG_CMD_NOT_FOUND "command not found"
-
+# define MSG_NO_FILE_OR_DIR "No such file or directory"
+# define MSG_IS_A_DIR "is a directory"
 
 # define CODE_CMD_NOT_FOUND 127
+# define CODE_NO_FILE_OR_DIR 127
+# define CODE_IS_A_DIR 126
 
 
 /*

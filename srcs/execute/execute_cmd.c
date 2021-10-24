@@ -2,12 +2,18 @@
 
 extern int	g_exit_code;
 
+int	wexitstatus(int status)
+{
+	status = (*(int *)&(status));
+	return (((status >> 8) & 0x000000ff));
+}
+
 int	fork_process(t_info *info, int depth)
 {
 	char	*error_message;
 
 	info->pipex.pid[depth] = fork();
-	if (info->pipex.pid[depth] == -1)
+	if (info->pipex.pid[depth] == ERROR)
 	{
 		error_message = strerror(errno);
 		ft_putendl_fd((char *)error_message, STDERR_FILENO);
@@ -20,11 +26,12 @@ void	waiting_child_process(t_info *info)
 {
 	int	status;
 
-	while (wait(&status) != -1)//모든 자식 프로세스가 끝날 때 까지 대기
+	while (wait(&status) != ERROR)//모든 자식 프로세스가 끝날 때 까지 대기
 	{
 		;
 	}
-	g_exit_code = WEXITSTATUS(status);
+	g_exit_code = wexitstatus(status);
+	// printf("g_exit_code: %d\n", g_exit_code);
 }
 
 void	execute_command(t_info *info, int depth)
