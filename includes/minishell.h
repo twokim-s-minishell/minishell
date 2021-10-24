@@ -46,9 +46,12 @@
 # define ISODD 1
 
 # define MSG_CMD_NOT_FOUND "command not found"
-
+# define MSG_NO_FILE_OR_DIR "No such file or directory"
+# define MSG_IS_A_DIR "is a directory"
 
 # define CODE_CMD_NOT_FOUND 127
+# define CODE_NO_FILE_OR_DIR 127
+# define CODE_IS_A_DIR 126
 
 
 /*
@@ -167,7 +170,7 @@ void	switch_stdio(t_info *info, int fd_stdin, int fd_stdout);
 int		get_cmd_list(t_info *info);
 
 void	init_pipe_fd(t_info *info);
-void	make_pipeline(t_info *info, int depth);
+int		make_pipeline(t_info *info, int depth);
 void	close_pipeline(t_info *info);
 
 //redirection
