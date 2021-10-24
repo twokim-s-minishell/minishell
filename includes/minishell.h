@@ -263,6 +263,7 @@ int		error(void);
 void	merror(void *addr);
 void	error_message(char *cmd, char *arg, char *msg);
 void	syntax_error(char c);
+void	unclosed_quote(char c);
 
 void	set_environment_path(t_info *info);
 

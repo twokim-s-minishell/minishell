@@ -65,9 +65,9 @@ static int	check_incorrect_case(char *line, int i)
 int	check_closed_quote(t_quote data)
 {
 	if (data.squote_cnt & ISODD)
-		syntax_error('\'');
+		unclosed_quote('\'');
 	else if (data.dquote_cnt & ISODD)
-		syntax_error('\"');
+		unclosed_quote('\"');
 	else
 		return (FALSE);
 	return (TRUE);
