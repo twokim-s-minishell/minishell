@@ -4,7 +4,6 @@ void	del_env_variable(t_env *cur, t_info *info)
 {
 	t_env	*pre;
 	t_env	*next;
-	t_env	*del;
 
 	pre = cur->prev;
 	next = cur->next;

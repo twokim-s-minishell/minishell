@@ -89,9 +89,8 @@ void	print_export(t_info *info, int *fd)
 	free_double_string(str);
 }
 
-void	add_env_value(char **env, t_env *cur, t_info *info, int add)
+void	add_env_value(char **env, t_env *cur, int add)
 {
-	char	*env_str;
 	char	*del;
 	char	*new;
 
@@ -200,7 +199,7 @@ void	export(char **cmd, t_info *info, int *fd)
 		}
 		cur_env = check_listin(env[KEY], info);//리스트 안에 있는지
 		if (cur_env)
-			add_env_value(env, cur_env, info, add_flag);//그 변수 값을 새로이
+			add_env_value(env, cur_env, add_flag);//그 변수 값을 새로이
 		else
 			add_new_env(env, info);//변수 자체를 새로 추가
 		free_double_string(env);

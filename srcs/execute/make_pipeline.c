@@ -5,7 +5,7 @@ void	init_pipe_fd(t_info *info)
 	int		idx;
 
 	idx = 0;
-	info->pipex.pipe_fd = (int **)malloc(sizeof(int * ) * info->n_cmd);
+	info->pipex.pipe_fd = (int **)malloc(sizeof(int *) * info->n_cmd);
 	merror(info->pipex.pipe_fd);
 	while (idx < info->n_cmd)
 	{

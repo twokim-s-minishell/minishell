@@ -81,8 +81,6 @@ static int	is_digit_string(char *str)
 
 void	execute_exit(char **cmd, t_info *info)
 {
-	int		i;
-	char	*first_argv;
 	t_exit	tmp;
 
 	if (info->n_cmd <= 1)

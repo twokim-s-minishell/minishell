@@ -63,16 +63,6 @@ static char	**divide_by_command(char *line, t_info *info)
 	return (cmd);
 }
 
-static void	count_pipeline(char **cmd, t_info *info)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i] != NULL)
-		i++;
-	info->n_pipe = i - 1;
-}
-
 static void	make_command_array(char **cmd, t_info *info)
 {
 	int		i;
@@ -122,6 +112,5 @@ void	make_command(char *line, t_info *info)
 	char	**cmd;
 
 	cmd = divide_by_command(line, info);
-	count_pipeline(cmd, info);
 	make_command_array(cmd, info);
 }

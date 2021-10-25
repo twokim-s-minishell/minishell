@@ -33,7 +33,6 @@ char	**env_split(char *str)
 
 t_env	*check_listin(char *env_key, t_info *info)
 {
-	int	i;
 	int	len_value;
 	t_env	*cur;
 
@@ -73,8 +72,6 @@ void	register_variable(char *cmd, t_info *info, int *fd)
 	int		flag;
 	char	*export_cmd[3];
 	char	**env;
-	t_env	*end;
-	t_env	*tmp;
 
 	flag = FALSE;
 	export_cmd[0] = "export";

@@ -14,7 +14,7 @@ void	malloc_cmd_list(t_info *info)
 		cur = cur->next;
 		cnt++;
 	}
-	info->cmd_list = (char **)malloc(sizeof(char *) * (cnt + 1));
+	info->cmd_str = (char **)malloc(sizeof(char *) * (cnt + 1));
 }
 
 int	get_cmd_list(t_info *info)
@@ -24,7 +24,7 @@ int	get_cmd_list(t_info *info)
 
 	cnt = 0;
 	malloc_cmd_list(info);
-	merror(info->cmd_list);
+	merror(info->cmd_str);
 	cur = info->cmd_lst[info->cmd_sequence].text;
 	if (is_register_variable(cur->str) && cur->next != NULL)
 		cur = cur->next;
@@ -32,13 +32,13 @@ int	get_cmd_list(t_info *info)
 	{
 		if (cur->str != NULL && cur->str[0] != '\0')
 		{
-			info->cmd_list[cnt] = ft_strdup(cur->str);
+			info->cmd_str[cnt] = ft_strdup(cur->str);
 			cnt++;
 		}
 		cur = cur->next;
 	}
-	info->cmd_list[cnt] = NULL;
-	if (info->cmd_list[0])
+	info->cmd_str[cnt] = NULL;
+	if (info->cmd_str[0])
 		return (NORMAL);
 	return (ERROR);
 }
