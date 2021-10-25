@@ -42,7 +42,7 @@
 # define MID 1
 # define BACK 2
 
-# define BUF_SIZE 20000//한 명령어(인자)가 받을 수 있는 문자열의 길이
+# define BUF_SIZE 200000//한 명령어(인자)가 받을 수 있는 문자열의 길이
 # define ISODD 1
 
 # define MSG_CMD_NOT_FOUND "command not found"

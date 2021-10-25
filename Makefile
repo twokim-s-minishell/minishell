@@ -20,7 +20,6 @@ LINE_CLEAR	=	"\x1b[1A\x1b[M"
 CC			=	gcc
 CFLAGS		=	-g -fsanitize=address -Wall -Wextra -Werror
 READ_FLG	=	-lreadline -L$(HOME)/.brew/opt/readline/lib -I$(HOME)/.brew/opt/readline/include
-# -g -fsanitize=address -lreadline -L$(HOME)/.brew/opt/readline/lib -I$(HOME)/.brew/opt/readline/include
 RM			=	rm -rf
 
 # =============================================================================
