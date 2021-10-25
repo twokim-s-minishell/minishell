@@ -48,3 +48,12 @@ void	syntax_error(char c)
 		ft_putchar_fd(c, STDERR_FILENO);
 	ft_putendl_fd("\'", STDERR_FILENO);
 }
+
+void	unclosed_quote(char c)
+{
+	ft_putstr_fd("Unclosed quote '", STDERR_FILENO);
+	if (c == '\'')
+		ft_putendl_fd("''", STDERR_FILENO);
+	else
+		ft_putendl_fd("\"'", STDERR_FILENO);
+}

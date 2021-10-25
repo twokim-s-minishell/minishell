@@ -18,10 +18,24 @@ int	check_incorrect_pipe(t_info *info)
 	return (NORMAL);
 }
 
+static int	all_is_space(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (is_space(line[i]))
+		i++;
+	if (line[i] == '\0')
+		return (TRUE);
+	return (FALSE);
+}
+
 int	parse_line(char *line, t_info *info)
 {
 	char	*new_line;
 
+	if (all_is_space(line))
+		return (ERROR);
 	if (check_incorrect_line(line))
 		return (ERROR);
 	new_line = pre_processing(line, info);
