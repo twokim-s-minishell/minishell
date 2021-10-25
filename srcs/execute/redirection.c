@@ -48,7 +48,9 @@ int	redirection(t_info *info, int fd[])
 			error_message(redi[1], NULL, strerror(errno));
 			return (ERROR);
 		}
+		if (reval == 0)
+			return (ERROR);
 		cur = cur->next;
 	}
-	return (NORMAL);
+	return (reval);
 }

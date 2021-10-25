@@ -170,6 +170,8 @@ void	init_pipe_fd(t_info *info);
 int		make_pipeline(t_info *info, int depth);
 void	close_pipeline(t_info *info);
 
+int		wexitstatus(int status);
+
 //redirection
 int		redirection(t_info *info, int fd[]);
 int		here_doc(t_info *info, char *limiter, int fd[]);
