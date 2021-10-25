@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+extern int	g_exit_code;
+
 static char	*parse_env_after_dollar(char **origin, int *i, t_info *info)
 {
 	t_type	type;
@@ -19,6 +21,18 @@ static char	*parse_env_after_dollar(char **origin, int *i, t_info *info)
 	return (env_value);
 }
 
+static int	is_exit_code_key(char **env_value, char *origin, int *i)
+{
+	if (origin[*i] == '?')
+	{
+		(*i)++;
+		*env_value = ft_itoa(g_exit_code);
+		merror(*env_value);
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
 static void	replace_env_value(char **origin, int *i, t_info *info)
 {
 	char	*env_value;
@@ -30,7 +44,8 @@ static void	replace_env_value(char **origin, int *i, t_info *info)
 	front_str = (char *)malloc(sizeof(char) * *i);
 	merror(front_str);
 	ft_strlcpy(front_str, *origin, *i);
-	env_value = parse_env_after_dollar(origin, i, info);
+	if (!is_exit_code_key(&env_value, *origin, i))
+		env_value = parse_env_after_dollar(origin, i, info);
 	rest_str = ft_strdup(*origin + *i);
 	merror(rest_str);
 	*i = ft_strlen(front_str);

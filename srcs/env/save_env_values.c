@@ -51,4 +51,6 @@ void	save_env_variables(t_info *info, char **envp)
 	deq->size = size;
 	info->env_deq = deq;
 	make_env_double_string(info);
+	info->home_path = get_env_value("HOME", info);
+	info->pwd_path = getcwd(NULL, 0);
 }

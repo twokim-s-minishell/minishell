@@ -145,6 +145,8 @@ typedef struct s_info
 	int			cmd_sequence;
 	int			n_cmd;
 	char		**env_list;
+	char		*home_path;
+	char		*pwd_path;
 	t_env_deq	*env_deq;
 	t_cmd		*cmd_lst;
 	t_pipex 	pipex;
