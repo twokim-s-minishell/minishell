@@ -34,6 +34,14 @@ static void	save_old_pwd(char *cur_pwd, t_info *info, int *first_flag)
 	fd[1] = 0;
 	if (cur_pwd == NULL)
 		return ;
+	if (info->pwd_path)
+	{
+		free(info->pwd_path);
+		info->pwd_path = NULL;
+	}
+	info->pwd_path = getcwd(NULL, 0);
+	if (info->pwd_path == NULL)
+		printf("%s\n", strerror(errno));
 	*first_flag += 1;
 	cmd[0] = "export";
 	if (cur_pwd)
@@ -53,7 +61,7 @@ void	cd(char *path, t_info *info)
 	normal_flag = FALSE;
 	home = NULL;
 	getcwd(cur_pwd, 1024);//OLD_PWD에 저장하기 위해
-	if (path == NULL || (path[0] == '~' && path[1] == 0))
+	if (path == NULL)
 	{
 		home = get_env_value("HOME", info);
 		if (home == NULL)
@@ -63,6 +71,13 @@ void	cd(char *path, t_info *info)
 		else
 			normal_flag = TRUE;
 		free(home);
+	}
+	else if (path[0] == '~' && path[1] == 0)
+	{
+		if (chdir(info->home_path) == ERROR)
+			error_message("cd", home, "No such file or directory");
+		else
+			normal_flag = TRUE;
 	}
 	else if (path[0] == '-' && path[1] == 0)
 	{
