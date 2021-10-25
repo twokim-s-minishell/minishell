@@ -80,7 +80,7 @@ int	execute_execve(t_info *info, int depth)
 	char	*cmd_path;
 
 	get_pipe_fd(info, depth, fd);
-	if (redirection(info, fd))
+	if (redirection(info, fd) == ERROR)
 		return (1);//비정상 종료 리턴
 	if (get_cmd_list(info) == -1)
 		return (ERROR);
