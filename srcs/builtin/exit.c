@@ -26,7 +26,7 @@ static t_ll	save_number(const char *str, int *idx, int *digit_len)
 
 static int	long_num_len(t_ll num)
 {
-	int	len;
+	int		len;
 
 	len = 0;
 	while (num)
@@ -47,10 +47,14 @@ static int	ft_atolong(const char *str, t_ll *val)
 	if (str == NULL)
 		return (FALSE);
 	*val = save_number(str, &i, &digit_len);
+	printf("val : %lld\n", *val);
 	if (str[i] != '\0')
 		return (FALSE);
 	if (digit_len > 19 || long_num_len(*val) != digit_len)//num의 길이가 digit_len과 다른경우 => 테스트 해보기
+	{
+		printf("flag@@\n");
 		return (FALSE);
+	}
 	return (TRUE);
 }
 
