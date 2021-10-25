@@ -30,7 +30,7 @@ static t_ll	save_number(const char *str, int *idx, int *digit_len, int *plus)
 	}
 	while ((str[*idx] >= 9 && str[*idx] <= 13) || str[*idx] == ' ')
 		(*idx)++;
-	plus = minus;
+	*plus = minus;
 	return (num * minus);
 }
 
@@ -55,10 +55,7 @@ static int	ft_atolong(const char *str, t_ll *val)
 	if (str[i] != '\0')
 		return (FALSE);
 	if (digit_len > 19 || is_plus != check_sign(*val))//num의 길이가 digit_len과 다른경우 => 테스트 해보기
-	{
-		printf("flag@@\n");
 		return (FALSE);
-	}
 	return (TRUE);
 }
 
