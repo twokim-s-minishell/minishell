@@ -2,21 +2,30 @@
 
 extern int	g_exit_code;
 
+int	ft_absol(int n)
+{
+	if (n < 0)
+		return (-1 * n);
+	return (n);
+}
+
 static t_ll	save_number(const char *str, int *idx, int *digit_len)
 {
 	int			minus;
-	long long	num;
+	unsigned long long	num;
 
 	minus = 1;
 	num = 0;
 	while ((str[*idx] >= 9 && str[*idx] <= 13) || str[*idx] == ' ')
 		(*idx)++;
 	if (str[*idx] == '-' || str[*idx] == '+')
+	{
 		if (str[(*idx)++] == '-')
 			minus = -1;
+	}
 	while (str[*idx] >= '0' && str[*idx] <= '9')
 	{
-		num = num * 10 + (str[(*idx)++] - '0');
+		num = num * 10 + ft_absol(str[(*idx)++] - '0');
 		(*digit_len)++;
 	}
 	while ((str[*idx] >= 9 && str[*idx] <= 13) || str[*idx] == ' ')
@@ -47,6 +56,7 @@ static int	ft_atolong(const char *str, t_ll *val)
 	if (str == NULL)
 		return (FALSE);
 	*val = save_number(str, &i, &digit_len);
+	printf("str : %s\n", str);
 	printf("val : %lld\n", *val);
 	if (str[i] != '\0')
 		return (FALSE);
