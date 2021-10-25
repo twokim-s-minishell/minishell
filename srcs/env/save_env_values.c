@@ -3,8 +3,6 @@
 void	make_env_double_string(t_info *info)
 {
 	int		i;
-	char	*key;
-	char	*value;
 	char	*tmp;
 	t_env	*cur;
 

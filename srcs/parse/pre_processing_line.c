@@ -49,7 +49,6 @@ char	*skip_space(char *line, int *start_idx)
 {
 	int		i;
 	char	*new;
-	t_type	type;
 
 	i = *start_idx;
 	new = ft_strdup(line);

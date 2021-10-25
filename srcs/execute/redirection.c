@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	input_redirection(t_info *info, char *infile, int fd[])
+int	input_redirection(char *infile, int fd[])
 {
 	fd[READ] = open(infile, O_RDWR);
 	if (fd[READ] == -1)
@@ -8,7 +8,7 @@ int	input_redirection(t_info *info, char *infile, int fd[])
 	return (NORMAL);
 }
 
-int	output_redirection(t_info *info, char *outfile, int fd[])
+int	output_redirection(char *outfile, int fd[])
 {
 	fd[WRITE] = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd[WRITE] == -1)
@@ -16,9 +16,10 @@ int	output_redirection(t_info *info, char *outfile, int fd[])
 	return (NORMAL);
 }
 
-int	d_output_redirection(t_info *info, char *outfile, int fd[])
+/*">>" 일 때는 open() 함수 옵션에 O_APPEND*/
+int	d_output_redirection(char *outfile, int fd[])
 {
-	fd[WRITE] = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0644);//">>" 일 때는 open() 함수 옵션에 O_APPEND
+	fd[WRITE] = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd[WRITE] == -1)
 		return (ERROR);
 	return (NORMAL);
@@ -27,7 +28,6 @@ int	d_output_redirection(t_info *info, char *outfile, int fd[])
 int	redirection(t_info *info, int fd[])
 {
 	t_lst	*cur;
-	t_lst	*next;
 	int		reval;
 	char	**redi;
 
@@ -38,11 +38,11 @@ int	redirection(t_info *info, int fd[])
 		if (!ft_strncmp(redi[0], "<<", 2))
 			reval = here_doc(info, redi[1], fd);
 		else if (!ft_strncmp(redi[0], ">>", 2))
-			reval = d_output_redirection(info, redi[1], fd);
+			reval = d_output_redirection(redi[1], fd);
 		else if (redi[0][0] == '<')
-			reval = input_redirection(info, redi[1], fd);
+			reval = input_redirection(redi[1], fd);
 		else if (redi[0][0] == '>')
-			reval = output_redirection(info, redi[1], fd);
+			reval = output_redirection(redi[1], fd);
 		if (reval == -1)
 		{
 			error_message(redi[1], NULL, strerror(errno));

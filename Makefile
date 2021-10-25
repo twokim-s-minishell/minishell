@@ -18,7 +18,8 @@ LINE_CLEAR	=	"\x1b[1A\x1b[M"
 # =============================================================================
 
 CC			=	gcc
-CFLAGS		=	-g -fsanitize=address -lreadline -L$(HOME)/.brew/opt/readline/lib -I$(HOME)/.brew/opt/readline/include
+CFLAGS		=	-g -fsanitize=address -Wall -Wextra -Werror
+READ_FLG	=	-lreadline -L$(HOME)/.brew/opt/readline/lib -I$(HOME)/.brew/opt/readline/include
 # -g -fsanitize=address -lreadline -L$(HOME)/.brew/opt/readline/lib -I$(HOME)/.brew/opt/readline/include
 RM			=	rm -rf
 
@@ -77,7 +78,7 @@ OBJS_LST	=	main.o						\
 				string_utils.o				\
 				parse_utils.o				\
 				parse_utils2.o
-				
+
 OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LST))
 
 # =============================================================================
@@ -87,48 +88,41 @@ OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LST))
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(MAIN_DIR)%.c
 					@make all -C $(LIBFT)
 					@mkdir -p $(OBJS_DIR)
-					@$(CC) $(CFLAGS) -I$(INC) -c $(LIBFT)libft.a $< -o $@
+					@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(BLTIN_DIR)%.c
-					# mkdir -p $(OBJS_DIR)
-					@$(CC) $(CFLAGS) -I$(INC) -c $(LIBFT)libft.a $< -o $@
+					@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(ENV_DIR)%.c
-					# mkdir -p $(OBJS_DIR)
-					@$(CC) $(CFLAGS) -I$(INC) -c $(LIBFT)libft.a $< -o $@
+					@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(EXEC_DIR)%.c
-					# mkdir -p $(OBJS_DIR)
-					@$(CC) $(CFLAGS) -I$(INC) -c $(LIBFT)libft.a $< -o $@
+					@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(FREE_DIR)%.c
-					# mkdir -p $(OBJS_DIR)
-					@$(CC) $(CFLAGS) -I$(INC) -c $(LIBFT)libft.a $< -o $@
+					@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(PARSE_DIR)%.c
-					# mkdir -p $(OBJS_DIR)
-					@$(CC) $(CFLAGS) -I$(INC) -c $(LIBFT)libft.a $< -o $@
+					@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(SIG_DIR)%.c
-					# mkdir -p $(OBJS_DIR)
-					@$(CC) $(CFLAGS) -I$(INC) -c $(LIBFT)libft.a $< -o $@
+					@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(UTL_DIR)%.c
-					# mkdir -p $(OBJS_DIR)
-					@$(CC) $(CFLAGS) -I$(INC) -c $(LIBFT)libft.a $< -o $@
+					@$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(NAME)			:	$(OBJS)
 					@echo $(GREEN) "Source files are compiled!\n" $(EOC)
 					@echo $(WHITE) "Building '$(NAME)' for" $(YELLOW) "Mandatory" $(WHITE) "..." $(EOC)
-					@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)libft.a -I$(INC)
+					@$(CC) $(CFLAGS) $(READ_FLG) -o $@ $^ $(LIBFT)libft.a -I$(INC)
 					@echo $(CYAN) "'$(NAME)'(execute file) is created!\n" $(EOC)
 
 # =============================================================================

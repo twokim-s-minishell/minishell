@@ -21,7 +21,6 @@ static char	*parse_env_after_dollar(char **origin, int *i, t_info *info)
 
 static void	replace_env_value(char **origin, int *i, t_info *info)
 {
-	int		env_idx;
 	char	*env_value;
 	char	*front_str;
 	char	*rest_str;

@@ -5,7 +5,6 @@ int	g_exit_code;
 static void	add_slash_at_end_of_path(t_info *info, char **environment_path)
 {
 	int		idx;
-	char	*temp_for_substr;
 
 	idx = 0;
 	while (environment_path[idx])
@@ -39,8 +38,6 @@ void	set_environment_path(t_info *info)
 void	get_line(t_info *info)
 {
 	char	*line;
-	char	**command;
-	int		pid;
 	char	*str;
 
 	line = NULL;
@@ -73,11 +70,12 @@ void	get_line(t_info *info)
 	return ;
 }
 
-int	main(int arc, char *arvg[], char *envp[])
+int	main(int arc, char *argv[], char *envp[])
 {
-	char	*line;
 	t_info	info;
 
+	if (arc == 0 || argv == NULL)
+		return (ERROR);
 	info.pipex.is_here_doc = 0;
 	g_exit_code = 0;
 	save_env_variables(&info, envp);
