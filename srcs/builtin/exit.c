@@ -23,7 +23,7 @@ static t_ll	save_number(const char *str, int *idx, int *digit_len, int *plus)
 	}
 	while ((str[*idx] >= 9 && str[*idx] <= 13) || str[*idx] == ' ')
 		(*idx)++;
-	plus = minus;
+	*plus = minus;
 	return (num * minus);
 }
 
