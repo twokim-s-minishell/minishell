@@ -69,6 +69,7 @@ OBJS_LST	=	main.o						\
 				parse.o						\
 				pre_processing_line.o		\
 				signal.o					\
+				builtin_utils.o				\
 				error.o						\
 				env_list.o					\
 				env_utils.o					\

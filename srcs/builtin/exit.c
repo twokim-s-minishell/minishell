@@ -2,13 +2,6 @@
 
 extern int	g_exit_code;
 
-static int	ft_absol(int n)
-{
-	if (n < 0)
-		return (n * -1);
-	return (n);
-}
-
 static t_ll	save_number(const char *str, int *idx, int *digit_len, int *plus)
 {
 	int			minus;
@@ -34,13 +27,6 @@ static t_ll	save_number(const char *str, int *idx, int *digit_len, int *plus)
 	return (num * minus);
 }
 
-static int	check_sign(t_ll num)
-{
-	if (num >= 0)
-		return (1);
-	return (-1);
-}
-
 static int	ft_atolong(const char *str, t_ll *val)
 {
 	int		i;
@@ -55,10 +41,7 @@ static int	ft_atolong(const char *str, t_ll *val)
 	if (str[i] != '\0')
 		return (FALSE);
 	if (digit_len > 19 || is_plus != check_sign(*val))//num의 길이가 digit_len과 다른경우 => 테스트 해보기
-	{
-		printf("flag@@\n");
 		return (FALSE);
-	}
 	return (TRUE);
 }
 

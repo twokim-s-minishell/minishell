@@ -14,8 +14,6 @@ void	del_env_variable(t_env *cur, t_info *info)
 	link_env_node(pre, next);
 	free(cur);
 	info->env_deq->size -= 1;
-	free_double_string(info->env_list);
-	make_env_double_string(info);
 }
 
 void	unset(char **cmd, t_info *info)
@@ -37,5 +35,5 @@ void	unset(char **cmd, t_info *info)
 		if (cur)
 			del_env_variable(cur, info);
 	}
-	reset_env_path(info);
+	reset_env_info(info);
 }

@@ -1,13 +1,5 @@
 #include "minishell.h"
 
-void	init_quote_data(t_quote *data)
-{
-	data->squote_flag = 0;
-	data->dquote_flag = 0;
-	data->squote_cnt = 0;
-	data->dquote_cnt = 0;
-}
-
 static int	check_redirection(char *line, int *i)
 {
 	int		redi_cnt;

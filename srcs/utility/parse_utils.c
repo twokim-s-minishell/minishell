@@ -20,10 +20,6 @@ t_type	is_redirection(char c)
 		return (LRDI);
 	else if (c == '>')
 		return (RRDI);
-	// else if (c == '<<')
-	// 	return (DRRDI);
-	// else if (c == '>>')
-	// 	return (DLRDI);
 	return (FALSE);
 }
 

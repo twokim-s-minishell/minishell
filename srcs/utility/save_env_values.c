@@ -6,8 +6,8 @@ void	make_env_double_string(t_info *info)
 	char	*tmp;
 	t_env	*cur;
 
-	info->env_list = (char **)malloc(sizeof(char *) * (info->env_deq->size + 1));
-	merror(info->env_list);
+	info->env_str = (char **)malloc(sizeof(char *) * (info->env_deq->size + 1));
+	merror(info->env_str);
 	i = 0;
 	cur = info->env_deq->head;
 	while (cur)
@@ -16,15 +16,15 @@ void	make_env_double_string(t_info *info)
 		{
 			tmp = ft_strjoin(cur->key, "=");
 			merror(tmp);
-			info->env_list[i] = ft_strjoin(tmp, cur->value);
-			merror(info->env_list[i]);
+			info->env_str[i] = ft_strjoin(tmp, cur->value);
+			merror(info->env_str[i]);
 			free(tmp);
 			tmp = 0;
 			i++;
 		}
 		cur = cur->next;
 	}
-	info->env_list[i] = NULL;
+	info->env_str[i] = NULL;
 }
 
 

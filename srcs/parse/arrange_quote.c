@@ -66,6 +66,11 @@ char	*arrange_quote(char *line, int *start_idx, int sep_idx, t_info *info)
 	divide = divide_by_separator(line, *start_idx, sep_idx);
 	buf = make_buf();
 	new = fillin_buf(buf, divide[MID], info);
+	if (new == NULL)
+	{
+		error_message(NULL, NULL, "String buffer size is full");
+		exit(1);
+	}
 	new = make_arrange_string(new, divide, start_idx);
 	free_double_string(divide);
 	return (new);

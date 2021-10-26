@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	check_incorrect_pipe(t_info *info)
+static int	check_incorrect_pipe(t_info *info)
 {
 	int	i;
 

@@ -1,12 +1,6 @@
 #include "minishell.h"
 
-/*
-** =============================================================================
-** parse_utils.c
-** =============================================================================
-*/
-
-char	*remove_space(char *line, int start_idx)
+static char	*remove_space(char *line, int start_idx)
 {
 	int		i;
 	int		space_len;
@@ -32,7 +26,7 @@ char	*remove_space(char *line, int start_idx)
 	return (new);
 }
 
-void	skip_separator_not_space(char *line, int *i)
+static void	skip_separator_not_space(char *line, int *i)
 {
 	t_type	type;
 
@@ -45,7 +39,7 @@ void	skip_separator_not_space(char *line, int *i)
 	}
 }
 
-char	*skip_space(char *line, int *start_idx)
+static char	*skip_space(char *line, int *start_idx)
 {
 	int		i;
 	char	*new;
@@ -79,13 +73,13 @@ char	*pre_processing(char *line, t_info *info)
 	free(line);
 	while (TRUE)
 	{
+		new = skip_space(new, &start_idx);
 		sep_idx = find_separator(new, start_idx);
 		if (!new[sep_idx])//끝까지 다본 경우 뿐만 아니라 << EOF같은 경우도 있음.
 			end_flag = TRUE;
 		new = arrange_quote(new, &start_idx, sep_idx, info);
 		if (new == NULL)
 			return (NULL);
-		new = skip_space(new, &start_idx);
 		if (end_flag)
 			break ;
 	}

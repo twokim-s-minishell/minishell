@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+void	init_quote_data(t_quote *data)
+{
+	data->squote_flag = 0;
+	data->dquote_flag = 0;
+	data->squote_cnt = 0;
+	data->dquote_cnt = 0;
+}
+
 int	find_separator(char *line, int idx)
 {
 	int		squote_flag;
@@ -25,14 +33,6 @@ int	find_separator(char *line, int idx)
 
 static int	find_quote_idx(char *cmd, int *idx)
 {
-	/*
-	끝까지 가면 FALSE리턴
-	1. 처음에 quote만나면 idx++하면서 flag세우기
-	2. flag닫힐떄까지 쭉 넘김
-	3. 닫힌 flag의("의)idx를 리턴
-	=> 이 로직으로 하기 위해 파싱 작업에서 일반문자열 안에 "가 있으면 '로 양끝을 묶고
-		그 외의 경우는 "로 양끝을 묶도록 작업해줌.
-	*/
 	while (cmd[*idx])
 	{
 		if (cmd[*idx] == '\"')
@@ -55,6 +55,14 @@ static int	find_quote_idx(char *cmd, int *idx)
 	if (cmd[*idx] == '\"' || cmd[*idx] == '\'')
 		return (TRUE);
 	return (FALSE);
+	/*
+	끝까지 가면 FALSE리턴
+	1. 처음에 quote만나면 idx++하면서 flag세우기
+	2. flag닫힐떄까지 쭉 넘김
+	3. 닫힌 flag의("의)idx를 리턴
+	=> 이 로직으로 하기 위해 파싱 작업에서 일반문자열 안에 "가 있으면 '로 양끝을 묶고
+		그 외의 경우는 "로 양끝을 묶도록 작업해줌.
+	*/
 }
 
 static char	**create_cmd_lst(char *cmd)
