@@ -19,8 +19,13 @@ static int	check_redirection(char *line, int *i)
 
 static int separator_in_a_row(char *line, int i)
 {
+	int	pipe_flag;
+
+	pipe_flag = FALSE;
 	if (is_separator(line[i]) && !is_space(line[i]))
 	{
+		if (check_type(line[i]) == PIPE)
+			pipe_flag = TRUE;
 		if (is_redirection(line[i++]))
 			if (is_redirection(line[i]))
 				i++;
@@ -28,7 +33,12 @@ static int separator_in_a_row(char *line, int i)
 			i++;
 		if (is_separator(line[i]))
 		{
-			syntax_error(line[i]);
+			if (line[i] == '\0' && pipe_flag == TRUE)
+				syntax_error('|');
+			else if (line[i] == '\0')
+				return (FALSE);
+			else
+				syntax_error(line[i]);
 			return (TRUE);
 		}
 	}

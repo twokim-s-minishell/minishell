@@ -2,9 +2,11 @@
 
 int	builtin(char **cmd, t_info *info, int *fd)
 {
-	int	cmd_len;
+	int		cmd_len;
+	int		ret;
 
 	cmd_len = ft_strlen(cmd[0]) + 1;
+	ret = TRUE;
 	if (!ft_strncmp(cmd[0], "cd", cmd_len))
 		cd(cmd[1], info);
 	else if (!ft_strncmp(cmd[0], "pwd", cmd_len))
@@ -20,10 +22,8 @@ int	builtin(char **cmd, t_info *info, int *fd)
 	else if (is_register_variable(cmd[0]))
 		register_variable(cmd[0], info, fd);
 	else
-	{
-		free_double_string(cmd);
-		return (FALSE);//명령어 없을 때
-	}
-	free_double_string(cmd);
-	return (TRUE);
+		ret = FALSE;//명령어 없을때
+	free_double_string(info->cmd_str);
+	info->cmd_str = NULL;
+	return (ret);
 }

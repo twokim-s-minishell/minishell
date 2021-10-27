@@ -35,7 +35,6 @@ void	waiting_child_process(void)
 	g_exit_code = wexitstatus(status);
 	// printf("g_exit_code : %d\n", g_exit_code);
 }
-
 /*
 ** 1. 명령어가 2개 이상일 경우 make_pipeline()함수로 파이프 생성
 ** 2. fork_process() 함수로 자식 프로세스 생성(execve() 함수 실행하기 위함)
@@ -84,9 +83,8 @@ void	execute_command_main(t_info *info)
 	get_cmd_list(info);
 	if (is_builtin_command(info) && (info->n_cmd == 1))
 	{
-		g_exit_code = execute_execve(info, 0);
+		g_exit_code = execute_execve(info, 0);//그냥 빌트인 함수를 실행하는게 낫지 않은지??
 		return ;
 	}
 	execute_command(info, 0);
-	signal(SIGINT, sig_handler);
 }

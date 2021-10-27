@@ -19,9 +19,11 @@ static int	cd_old_pwd(t_info *info, int first_flag)
 	if (chdir(old_pwd) == ERROR)
 	{
 		error_message("cd", old_pwd, "No such file or directory");
+		free(old_pwd);
 		return (ERROR);
 	}
 	ft_putendl_fd(old_pwd, STDOUT_FILENO);
+	free(old_pwd);
 	return (TRUE);
 }
 

@@ -14,11 +14,11 @@ EOC			=	"\033[0;0m"
 LINE_CLEAR	=	"\x1b[1A\x1b[M"
 
 # =============================================================================
-# Command Variables -fsanitize=address
+# Command Variables -fsanitize=address -Wall -Wextra -Werror
 # =============================================================================
 
 CC			=	gcc
-CFLAGS		=	-g -fsanitize=address -Wall -Wextra -Werror
+CFLAGS		=	-g
 READ_FLG	=	-lreadline -L$(HOME)/.brew/opt/readline/lib -I$(HOME)/.brew/opt/readline/include
 RM			=	rm -rf
 

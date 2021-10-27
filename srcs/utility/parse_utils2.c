@@ -96,9 +96,8 @@ char	**quote_split(char *cmd)
 	i = 0;
 	quote_idx = 0;
 	pre_idx = 0;
-	while (cmd_lst[i])
+	while (find_quote_idx(cmd, &quote_idx))
 	{
-		find_quote_idx(cmd, &quote_idx);
 		cmd_lst[i] = (char *)malloc(sizeof(char) * quote_idx - pre_idx);
 		merror(cmd_lst[i]);
 		if ((cmd[quote_idx] == '\"' && cmd[pre_idx] != '\"')

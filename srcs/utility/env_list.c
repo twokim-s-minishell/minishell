@@ -34,9 +34,7 @@ t_env	*make_env_list(char **envp)
 	i = -1;
 	while (envp[++i])
 	{
-		if (i == 0)
-			env_list = cur;
-		else
+		if (i != 0)
 		{
 			tmp = create_env_node();
 			tmp->prev = cur;
@@ -44,9 +42,10 @@ t_env	*make_env_list(char **envp)
 			cur = cur->next;
 		}
 		env_str = env_split(envp[i]);
-		cur->key = env_str[KEY];
-		cur->value = env_str[VALUE];
+		cur->key = ft_strdup(env_str[KEY]);
+		cur->value = ft_strdup(env_str[VALUE]);
 		cur->env_flag = TRUE;
+		free_double_string(env_str);
 	}
 	return (env_list);
 }

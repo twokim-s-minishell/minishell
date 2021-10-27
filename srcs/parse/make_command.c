@@ -86,6 +86,8 @@ static void	make_command_array(char **cmd, t_info *info)
 				link_node(split_cmd[j], &(cmd_lst[i].text));
 			j++;
 		}
+		// if (cmd_lst[i].text == NULL)//새로 만든거
+		// 	cmd_lst[i].text = create_node();
 		free_double_string(split_cmd);
 	}
 	info->cmd_lst = cmd_lst;
@@ -113,4 +115,5 @@ void	make_command(char *line, t_info *info)
 
 	cmd = divide_by_command(line, info);
 	make_command_array(cmd, info);
+	free_double_string(cmd);
 }

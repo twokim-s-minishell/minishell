@@ -7,7 +7,7 @@ static char	**divide_by_separator(char *line, int start_idx, int sep_idx)
 	int		mid_len;
 	int		back_len;
 
-	str = (char **)malloc(sizeof(char *) * 3);
+	str = (char **)malloc(sizeof(char *) * 4);
 	merror(str);
 	front_len = start_idx + 1;
 	mid_len = sep_idx - start_idx + 1;
@@ -21,6 +21,7 @@ static char	**divide_by_separator(char *line, int start_idx, int sep_idx)
 	ft_strlcpy(str[FRONT], line, front_len);
 	ft_strlcpy(str[MID], line + start_idx, mid_len);
 	ft_strlcpy(str[BACK], line + sep_idx, back_len);
+	str[3] = NULL;
 	free(line);
 	return (str);
 }

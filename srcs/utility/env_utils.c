@@ -62,6 +62,8 @@ char	*get_env_value(char *key, t_info *info)//key문자열의 복사본 리턴, 
 
 int	is_register_variable(char *cmd)
 {
+	if (cmd == NULL)
+		return (FALSE);
 	if (ft_strchr(cmd, '=') != NULL)
 		return (TRUE);
 	return(FALSE);

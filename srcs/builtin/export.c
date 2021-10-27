@@ -94,13 +94,16 @@ void	export(char **cmd, t_info *info, int *fd)
 	{
 		env = env_split(cmd[i]);//==이 2개인 경우도 인식하는데 이거 처리 어떻게? => 무조건 첫번째 =으로 처리
 		add_flag = check_add_value(env);
-		if (incorrect_env_key(env))//문자열의 양식 판단
-			continue ;
-		cur_env = check_listin(env[KEY], info);//리스트 안에 있는지
-		if (cur_env)
-			add_env_value(env, cur_env, add_flag);//그 변수 값을 새로이
+		if (incorrect_env_key(env[KEY]))//문자열의 양식 판단
+			error_message("export", env[KEY], "not a valid identifier");
 		else
-			add_new_env(env, info);//변수 자체를 새로 추가
+		{
+			cur_env = check_listin(env[KEY], info);//리스트 안에 있는지
+			if (cur_env)
+				add_env_value(env, cur_env, add_flag);//그 변수 값을 새로이
+			else
+				add_new_env(env, info);//변수 자체를 새로 추가
+		}
 		free_double_string(env);
 	}
 	reset_env_info(info);

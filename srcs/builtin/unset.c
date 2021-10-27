@@ -12,6 +12,10 @@ void	del_env_variable(t_env *cur, t_info *info)
 	if (info->env_deq->last == cur)
 		info->env_deq->last = info->env_deq->last->prev;
 	link_env_node(pre, next);
+	if (cur->key)
+		free(cur->key);
+	if (cur->value)
+		free(cur->value);
 	free(cur);
 	info->env_deq->size -= 1;
 }

@@ -198,6 +198,8 @@ int		here_doc(t_info *info, char *limiter, int fd[]);
 
 void	free_two_dimensional(char **two_dimensional);
 void	free_double_string(char **list);
+void	clear_info(t_info *info);
+
 
 /*
 ** =============================================================================
@@ -240,7 +242,7 @@ t_env	*check_listin(char *env_key, t_info *info);
 char	*get_env_value(char *key, t_info *info);
 void	reset_env_path(t_info *info);
 void	print_env_str(char **str, int *fd);
-int		incorrect_env_key(char **env);
+int		incorrect_env_key(char *env_key);
 int		check_add_value(char **env);
 void	reset_env_info(t_info *info);
 

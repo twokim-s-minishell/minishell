@@ -19,19 +19,17 @@ void	print_env_str(char **str, int *fd)
 	}
 }
 
-int	incorrect_env_key(char **env)
+int	incorrect_env_key(char *env_key)
 {
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(env[KEY][i]))
+	if (ft_isdigit(env_key[i]))
 		return (TRUE);
-	while (env[KEY][i] && !is_special(env[KEY][i]))
+	while (env_key[i] && !is_special(env_key[i]))
 		i++;
-	if (env[KEY][i] == 0)
+	if (env_key[i] == 0)
 		return (FALSE);
-	error_message("export", env[KEY], "not a valid identifier");
-	free_double_string(env);
 	return (TRUE);
 	//특수문자 말고 확인할거 있는지 체크하기
 	// + 첫글자가 숫자인지도 체크
