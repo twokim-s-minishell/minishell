@@ -16,8 +16,8 @@ int	read_string_from_stdin(t_info *info, char *limiter)
 	{
 		signal(SIGINT, SIG_IGN);
 		wait(&status);
-		if (wexitstatus(status) == 127)
-			return (0);
+		if (wexitstatus(status) == 254)
+			return (-2);
 	}
 	else if (pid == 0)
 	{

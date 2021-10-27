@@ -79,14 +79,11 @@ int	execute_execve(t_info *info, int depth)
 	int		fd[2];
 	char	*cmd_path;
 
-	get_pipe_fd(info, depth, fd);
-	if (redirection(info, fd) == ERROR)
-		return (1);//현교 : 여기랑 여기 아래 리턴값 확인하기
 	if (get_cmd_list(info) == ERROR)
 		return (ERROR);
 	cmd_path = get_cmd_path(info->env_path, info);
-	if (!is_builtin_command(info))
-		switch_stdio(info, fd[READ], fd[WRITE]);
+	if (switch_stdio(info, fd))
+		return (TRUE);
 	if (is_builtin_command(info))//**현교 : 이 if문 한 블록을 builtin함수 안에 넣어도 될듯?
 	{
 		builtin(info->cmd_str, info, fd);
@@ -99,10 +96,6 @@ int	execute_execve(t_info *info, int depth)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
-		// printf("path : %s\n", cmd_path);
-		// printf("cmd_str : %s\n", info->cmd_str[0]);
-		// printf("cmd_str : %s\n", info->cmd_str[1]);
-		// printf("env_str : %s\n", info->env_str[0]);
 		execve(cmd_path, info->cmd_str, info->env_str);
 		error_message(info->cmd_str[0], NULL, MSG_CMD_NOT_FOUND);//++오류 확인하고 메시지 출력하는 함수로 변경
 		exit(CODE_CMD_NOT_FOUND);

@@ -18,7 +18,7 @@ void	here_doc_handler(int signo)
 	if (signo == SIGINT)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		exit(127);
+		exit(254);
 	}
 }
 

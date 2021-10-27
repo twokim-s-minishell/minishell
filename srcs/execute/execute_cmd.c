@@ -26,12 +26,14 @@ int	fork_process(t_info *info, int depth)
 ** 자식 프로세스가 끝나면 wexitstatus() 함수에 status 넣어서 exit_code 구하기
 ** 전역변수 g_exit_code에 exit_code 넣기
 */
-void	waiting_child_process(void)
+void	waiting_child_process(t_info *info, int depth)
 {
 	int	status;
 
 	while (wait(&status) != ERROR)
+	{
 		;
+	}
 	g_exit_code = wexitstatus(status);
 	// printf("g_exit_code : %d\n", g_exit_code);
 }
@@ -57,12 +59,12 @@ void	execute_command(t_info *info, int depth)
 		if (depth == info->n_cmd - 1)//마지막 명령어이면 if문 진입
 		{
 			close_pipeline(info);
-			waiting_child_process();
+			waiting_child_process(info, depth);
 			return ;
 		}
 		execute_command(info, depth + 1);
 	}
-	if (info->pipex.pid[depth] == 0)
+	else if (info->pipex.pid[depth] == 0)
 	{
 		ret = execute_execve(info, depth);
 		exit(ret);

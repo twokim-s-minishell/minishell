@@ -19,14 +19,11 @@ int	make_pipeline(t_info *info, int depth)
 {
 	char	*error_message;
 
-	if (depth < (info->n_cmd - 1))
+	if (pipe(info->pipex.pipe_fd[depth]) < 0)
 	{
-		if (pipe(info->pipex.pipe_fd[depth]) < 0)
-		{
-			error_message = strerror(errno);
-			ft_putendl_fd((char *)error_message, STDERR_FILENO);
-			return (ERROR);
-		}
+		error_message = strerror(errno);
+		ft_putendl_fd((char *)error_message, STDERR_FILENO);
+		return (ERROR);
 	}
 	return (NORMAL);
 }

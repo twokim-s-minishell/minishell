@@ -7,8 +7,10 @@ void	close_pipeline(t_info *info)
 	idx = 0;
 	while (idx < info->n_cmd)
 	{
-		close(info->pipex.pipe_fd[idx][READ]);
-		close(info->pipex.pipe_fd[idx][WRITE]);
+		if (info->pipex.pipe_fd[idx][READ] != STDIN_FILENO)
+			close(info->pipex.pipe_fd[idx][READ]);
+		if (info->pipex.pipe_fd[idx][READ] != STDOUT_FILENO)
+			close(info->pipex.pipe_fd[idx][WRITE]);
 		idx++;
 	}
 }
