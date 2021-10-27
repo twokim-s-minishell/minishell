@@ -2,54 +2,45 @@
 
 extern int	g_exit_code;
 
-static t_ll	save_number(const char *str, int *idx, int *digit_len)
+static t_ll	save_number(const char *str, int *idx, int *digit_len, int *plus)
 {
 	int			minus;
-	long long	num;
+	unsigned long long	num;
 
 	minus = 1;
 	num = 0;
 	while ((str[*idx] >= 9 && str[*idx] <= 13) || str[*idx] == ' ')
 		(*idx)++;
 	if (str[*idx] == '-' || str[*idx] == '+')
+	{
 		if (str[(*idx)++] == '-')
 			minus = -1;
+	}
 	while (str[*idx] >= '0' && str[*idx] <= '9')
 	{
-		num = num * 10 + (str[(*idx)++] - '0');
+		num = num * 10 + ft_absol(str[(*idx)++] - '0');
 		(*digit_len)++;
 	}
 	while ((str[*idx] >= 9 && str[*idx] <= 13) || str[*idx] == ' ')
 		(*idx)++;
+	*plus = minus;
 	return (num * minus);
-}
-
-static int	long_num_len(t_ll num)
-{
-	int	len;
-
-	len = 0;
-	while (num)
-	{
-		len++;
-		num /= 10;
-	}
-	return (len);
 }
 
 static int	ft_atolong(const char *str, t_ll *val)
 {
-	int			i;
-	int			digit_len;
+	int		i;
+	int		digit_len;
+	int		is_plus;
 
 	i = 0;
 	digit_len = 0;
 	if (str == NULL)
 		return (FALSE);
-	*val = save_number(str, &i, &digit_len);
+	*val = save_number(str, &i, &digit_len, &is_plus);
 	if (str[i] != '\0')
 		return (FALSE);
-	if (digit_len > 19 || long_num_len(*val) != digit_len)//num의 길이가 digit_len과 다른경우 => 테스트 해보기
+	if (digit_len > 19 || is_plus != check_sign(*val))//num의 길이가 digit_len과 다른경우 => 테스트 해보기
 		return (FALSE);
 	return (TRUE);
 }

@@ -81,8 +81,8 @@ int	execute_execve(t_info *info, int depth)
 
 	get_pipe_fd(info, depth, fd);
 	if (redirection(info, fd) == ERROR)
-		return (1);//비정상 종료 리턴
-	if (get_cmd_list(info) == -1)
+		return (1);//현교 : 여기랑 여기 아래 리턴값 확인하기
+	if (get_cmd_list(info) == ERROR)
 		return (ERROR);
 	cmd_path = get_cmd_path(info->env_path, info);
 	if (!is_builtin_command(info))
@@ -97,11 +97,17 @@ int	execute_execve(t_info *info, int depth)
 	}
 	else
 	{
-		signal(SIGINT, execve_handler);
-		execve(cmd_path, info->cmd_str, info->env_list);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
+		// printf("path : %s\n", cmd_path);
+		// printf("cmd_str : %s\n", info->cmd_str[0]);
+		// printf("cmd_str : %s\n", info->cmd_str[1]);
+		// printf("env_str : %s\n", info->env_str[0]);
+		execve(cmd_path, info->cmd_str, info->env_str);
 		error_message(info->cmd_str[0], NULL, MSG_CMD_NOT_FOUND);//++오류 확인하고 메시지 출력하는 함수로 변경
 		exit(CODE_CMD_NOT_FOUND);
 		//비정상 종료 리턴
 	}
+	free(cmd_path);
 	return (NORMAL);
 }

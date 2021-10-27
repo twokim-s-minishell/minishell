@@ -1,5 +1,5 @@
-#ifndef info_H
-# define info_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 /*
 ** =============================================================================
@@ -42,7 +42,7 @@
 # define MID 1
 # define BACK 2
 
-# define BUF_SIZE 20000//한 명령어(인자)가 받을 수 있는 문자열의 길이
+# define BUF_SIZE 200000//한 명령어(인자)가 받을 수 있는 문자열의 길이
 # define ISODD 1
 
 # define MSG_CMD_NOT_FOUND "command not found"
@@ -144,7 +144,7 @@ typedef struct s_info
 	char		**cmd_str;
 	int			cmd_sequence;
 	int			n_cmd;
-	char		**env_list;
+	char		**env_str;
 	char		*home_path;
 	char		*pwd_path;
 	t_env_deq	*env_deq;
@@ -154,11 +154,24 @@ typedef struct s_info
 
 /*
 ** =============================================================================
-** FILES
+** SOURCES / BUILTIN
 ** =============================================================================
 */
 
-//execute
+int		builtin(char **cmd, t_info *info, int *fd);
+void	cd(char *path, t_info *info);
+void	env(t_info *info, int *fd);
+void	execute_exit(char **cmd, t_info *info);
+void	export(char **cmd, t_info *info, int *fd);
+int		pwd(int *fd, t_info *info);
+void	unset(char **cmd, t_info *info);
+
+/*
+** =============================================================================
+** SOURCES / EXECUTE
+** =============================================================================
+*/
+
 void	execute_command_main(t_info *info);
 void	execute_command(t_info *info, int depth);
 int		execute_execve(t_info *info, int depth);
@@ -174,97 +187,94 @@ void	close_pipeline(t_info *info);
 
 int		wexitstatus(int status);
 
-//redirection
 int		redirection(t_info *info, int fd[]);
 int		here_doc(t_info *info, char *limiter, int fd[]);
 
-//free
+/*
+** =============================================================================
+** SOURCES / FREE
+** =============================================================================
+*/
+
 void	free_two_dimensional(char **two_dimensional);
+void	free_double_string(char **list);
+void	clear_info(t_info *info);
 
-//builtin
-void	cd(char *path, t_info *info);
-int		pwd(int *fd, t_info *info);
-void	execute_exit(char **cmd, t_info *info);
 
-//export
-int		incorrect_env_key(char *env_key);
-t_env	*check_listin(char *env_key, t_info *info);
-void	export(char **cmd, t_info *info, int *fd);
+/*
+** =============================================================================
+** SOURCES / PARSE
+** =============================================================================
+*/
 
-void	unset(char **cmd, t_info *info);
+char	*arrange_quote(char *line, int *start_idx, int sep_idx, t_info *info);
+int		check_incorrect_line(char *line);
+char	*fillin_buf(char *buf, char *origin, t_info *info);
+char	*pre_processing(char *line, t_info *info);
+void	make_command(char *line, t_info *info);
+int		parse_line(char *line, t_info *info);
 
-void	env(t_info *info, int *fd);
+/*
+** =============================================================================
+** SOURCES / SIGNAL
+** =============================================================================
+*/
 
-void	save_env_variables(t_info *info, char **envp);
-void	make_env_double_string(t_info *info);
-
-//signal
 void	sig_handler(int signo);
 void	here_doc_handler(int signo);
 void	execve_handler(int signo);
 
-int		builtin(char **cmd, t_info *info, int *fd);
+/*
+** =============================================================================
+** SOURCES / UTILITY
+** =============================================================================
+*/
 
-void	free_double_string(char **list);
-
-
-//parsing
-//util
-int		is_special(char c);
-int		is_space(char c);
-t_type	is_redirection(char c);
-t_type	check_type(char c);
-int		is_separator(char c);
-int		find_separator(char *line, int idx);
-
-char	**quote_split(char *cmd);
-
-void	init_quote_data(t_quote *data);
-int		check_incorrect_line(char *line);
-
-char	*fillin_buf(char *buf, char *origin, t_info *info);
-
-char	*arrange_quote(char *line, int *start_idx, int sep_idx, t_info *info);
-char	*pre_processing(char *line, t_info *info);
-
-void	make_command(char *line, t_info *info);
-
-int		parse_line(char *line, t_info *info);
-
-
-
-
-//env_list, utils
-char	**env_split(char *str);
-char	*get_env_value(char *key, t_info *info);
-t_env	*check_listin(char *env_key, t_info *info);
-int		check_add_value(char **env);
-
-void	reset_env_path(t_info *info);
+int		ft_absol(int n);
+int		check_sign(t_ll num);
 
 t_env	*create_env_node(void);
 void	link_env_node(t_env *front, t_env *back);
 t_env	*make_env_list(char **envp);
+
+char	**env_split(char *str);
+t_env	*check_listin(char *env_key, t_info *info);
+char	*get_env_value(char *key, t_info *info);
+void	reset_env_path(t_info *info);
+void	print_env_str(char **str, int *fd);
+int		incorrect_env_key(char *env_key);
+int		check_add_value(char **env);
+void	reset_env_info(t_info *info);
+
 int		is_register_variable(char *cmd);
 void	register_variable(char *cmd, t_info *info, int *fd);
 
-//string
-int		double_string_size(char **str);
-
-//string
-int		double_string_size(char **str);
-
-
-//list.c
-t_lst	*create_node(void);
-void	link_node(char *cmd, t_lst **list);
-
-//error
 int		error(void);
 void	merror(void *addr);
 void	error_message(char *cmd, char *arg, char *msg);
 void	syntax_error(char c);
 void	unclosed_quote(char c);
+
+t_lst	*create_node(void);
+void	link_node(char *cmd, t_lst **list);
+
+int		is_special(char c);
+int		is_space(char c);
+t_type	is_redirection(char c);
+t_type	check_type(char c);
+int		is_separator(char c);
+void	init_quote_data(t_quote *data);
+int		find_separator(char *line, int idx);
+char	**quote_split(char *cmd);
+
+void	make_env_double_string(t_info *info);
+void	save_env_variables(t_info *info, char **envp);
+
+int		double_string_size(char **str);
+int		ft_strcmp(const char *s1, const char *s2);
+void	swap_str(char **str, int i, int j);
+void	sort_env_str(char **str);
+
 
 void	set_environment_path(t_info *info);
 

@@ -35,39 +35,39 @@ void	set_environment_path(t_info *info)
 	free_two_dimensional(env_path);
 }
 
-void	get_line(t_info *info)
+char	*get_command_line(void)
 {
 	char	*line;
-	char	*str;
 
 	line = NULL;
-	if (line)
-	{
-		free(line);
-		line = NULL;
-	}
-	//함수로 따로 따기
-	// str = make_cursor_string();//주소 넣을거면 이걸로
-	str = "Minishell >";
-	line = readline(str);
+	line = readline("Minishell >");
 	if (line == NULL)//EOF(ctrl + d)만나면 NULL
 	{
-		ft_putstr_fd("\x1b[1A", STDOUT_FILENO);
-		ft_putstr_fd("\033[12C", STDOUT_FILENO);
+		ft_putstr_fd("\x1b[1A", STDOUT_FILENO);//커서 하나 위로
+		ft_putstr_fd("\033[12C", STDOUT_FILENO);//커서 뒤로
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(0);
 	}
 	if (*line == 0)//엔터 눌렀을 때 함수 종료
 	{
 		free(line);
-		return ;
+		return (NULL);
 	}
-	if (line)
-		add_history(line);
+	add_history(line);
+	return (line);
+}
+
+void	get_line(t_info *info)
+{
+	char	*line;
+
+	line = get_command_line();
+	if (line == NULL)
+		return ;
 	if (parse_line(line, info))
 		return ;
 	execute_command_main(info);
-	return ;
+	clear_info(info);
 }
 
 int	main(int arc, char *argv[], char *envp[])
@@ -76,14 +76,14 @@ int	main(int arc, char *argv[], char *envp[])
 
 	if (arc == 0 || argv == NULL)
 		return (ERROR);
-	info.pipex.is_here_doc = 0;
+	ft_memset(&info, 0, sizeof(t_info));
 	g_exit_code = 0;
 	save_env_variables(&info, envp);
 	set_environment_path(&info);
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
 	while (TRUE)
 	{
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, SIG_IGN);
 		get_line(&info);
 	}
 }

@@ -76,14 +76,6 @@ static void	make_command_array(char **cmd, t_info *info)
 	i = -1;
 	while (++i < info->n_cmd)
 	{
-		/*
-		1. cmd[i]를 "로 스필릿(일반 문자 "는 스킵하는 로직 추가)
-		2. 문자열 하나씩 봄.
-		3. check_redirect를 함.
-		4. redirect가 아니면 그 문자열 그대로 노드 만들어서 저장 후 text에 저장
-		5. redirect면 redirect + 문자열 조합이 되어서 파싱되어있으므로
-			그대로 노드 만들어서 redi리스트에 저장
-		*/
 		split_cmd = quote_split(cmd[i]);
 		j = 0;
 		while (split_cmd[j] != NULL)
@@ -94,9 +86,19 @@ static void	make_command_array(char **cmd, t_info *info)
 				link_node(split_cmd[j], &(cmd_lst[i].text));
 			j++;
 		}
+		// if (cmd_lst[i].text == NULL)//새로 만든거
+		// 	cmd_lst[i].text = create_node();
 		free_double_string(split_cmd);
 	}
 	info->cmd_lst = cmd_lst;
+	/*
+		1. cmd[i]를 "로 스필릿(일반 문자 "는 스킵하는 로직 추가)
+		2. 문자열 하나씩 봄.
+		3. check_redirect를 함.
+		4. redirect가 아니면 그 문자열 그대로 노드 만들어서 저장 후 text에 저장
+		5. redirect면 redirect + 문자열 조합이 되어서 파싱되어있으므로
+			그대로 노드 만들어서 redi리스트에 저장
+	*/
 }
 
 void	make_command(char *line, t_info *info)
@@ -113,4 +115,5 @@ void	make_command(char *line, t_info *info)
 
 	cmd = divide_by_command(line, info);
 	make_command_array(cmd, info);
+	free_double_string(cmd);
 }

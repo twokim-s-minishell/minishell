@@ -19,9 +19,11 @@ static int	cd_old_pwd(t_info *info, int first_flag)
 	if (chdir(old_pwd) == ERROR)
 	{
 		error_message("cd", old_pwd, "No such file or directory");
+		free(old_pwd);
 		return (ERROR);
 	}
 	ft_putendl_fd(old_pwd, STDOUT_FILENO);
+	free(old_pwd);
 	return (TRUE);
 }
 
@@ -51,34 +53,40 @@ static void	save_old_pwd(char *cur_pwd, t_info *info, int *first_flag)
 	free(cmd[1]);
 }
 
+static void	just_cd(t_info *info, int *flag)
+{
+	char	*home;
+
+	home = get_env_value("HOME", info);
+	if (home == NULL)
+		error_message("cd", NULL, "Home not set");
+	else if (chdir(home) == ERROR)
+		error_message("cd", home, "No such file or directory");
+	else
+		*flag = TRUE;
+	free(home);
+}
+
+static void	home_cd(t_info *info, int *flag)
+{
+	if (chdir(info->home_path) == ERROR)
+		error_message("cd", info->home_path, "No such file or directory");
+	else
+		*flag = TRUE;
+}
+
 void	cd(char *path, t_info *info)
 {
 	int			normal_flag;
 	static int	first_flag;
-	char		*home;
 	char		cur_pwd[1024];
 
 	normal_flag = FALSE;
-	home = NULL;
 	getcwd(cur_pwd, 1024);//OLD_PWD에 저장하기 위해
 	if (path == NULL)
-	{
-		home = get_env_value("HOME", info);
-		if (home == NULL)
-			return (error_message("cd", NULL, "Home not set"));
-		if (chdir(home) == ERROR)
-			error_message("cd", home, "No such file or directory");
-		else
-			normal_flag = TRUE;
-		free(home);
-	}
+		just_cd(info, &normal_flag);
 	else if (path[0] == '~' && path[1] == 0)
-	{
-		if (chdir(info->home_path) == ERROR)
-			error_message("cd", home, "No such file or directory");
-		else
-			normal_flag = TRUE;
-	}
+		home_cd(info, &normal_flag);
 	else if (path[0] == '-' && path[1] == 0)
 	{
 		if (cd_old_pwd(info, first_flag) != ERROR)

@@ -111,6 +111,8 @@ char	*fillin_buf(char *buf, char *origin, t_info *info)
 			replace_env_value(&origin, &i, info);
 		else
 			buf[j++] = origin[i++];
+		if (j > BUF_SIZE)
+			return (NULL);
 	}
 	return (make_new_string(buf, j));
 }
