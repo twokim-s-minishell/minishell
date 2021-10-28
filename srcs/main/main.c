@@ -80,6 +80,7 @@ int	main(int arc, char *argv[], char *envp[])
 	g_exit_code = 0;
 	save_env_variables(&info, envp);
 	set_environment_path(&info);
+	signal(SIGUSR1, execve_handler);
 	while (TRUE)
 	{
 		signal(SIGINT, sig_handler);

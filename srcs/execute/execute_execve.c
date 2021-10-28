@@ -94,6 +94,7 @@ int	execute_execve(t_info *info, int depth)
 	}
 	else
 	{
+		kill(0, SIGUSR1);
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
 		execve(cmd_path, info->cmd_str, info->env_str);
