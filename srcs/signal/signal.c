@@ -32,7 +32,6 @@ void	execve_handler(int signo)
 		signal(SIGINT, execve_sigint);
 		signal(SIGQUIT, execve_sigint);
 		wait(&status);
-		g_exit_code = status;
 	}
 }
 
@@ -41,9 +40,11 @@ void	execve_sigint(int signo)
 	if (signo == SIGINT)
 	{
 		ft_putchar_fd('\n', STDERR_FILENO);
+		g_exit_code = 130;
 	}
 	else if (signo == SIGQUIT)
 	{
 		ft_putendl_fd("Quit: 3", STDERR_FILENO);
+		g_exit_code = 131;
 	}
 }

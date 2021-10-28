@@ -15,7 +15,7 @@ void	init_pipe_fd(t_info *info)
 	}
 }
 
-int	make_pipeline(t_info *info, int depth)
+void	make_pipeline(t_info *info, int depth)
 {
 	char	*error_message;
 
@@ -23,7 +23,6 @@ int	make_pipeline(t_info *info, int depth)
 	{
 		error_message = strerror(errno);
 		ft_putendl_fd((char *)error_message, STDERR_FILENO);
-		return (ERROR);
+		exit(EXIT_FAILURE);
 	}
-	return (NORMAL);
 }

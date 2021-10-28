@@ -25,7 +25,7 @@ int	read_string_from_stdin(t_info *info, char *limiter)
 		while (TRUE)
 		{
 			str = readline(">");//readline으로 변경, ctrl + d받으면 NULL
-			if (str == NULL || strcmp(str, limiter) == 0)//
+			if (str == NULL || ft_strcmp(str, limiter) == 0)//
 				break ;
 			ft_putendl_fd(str, pipe_fd[WRITE]);//받은 문자열을 파이프에 저장
 			free(str);

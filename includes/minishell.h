@@ -179,10 +179,10 @@ int		is_builtin_command(t_info *info);
 
 void	get_pipe_fd(t_info *info, int depth, int fd[]);
 int		switch_stdio(t_info *info, int fd[]);
-int		get_cmd_list(t_info *info);
+void	get_cmd_list(t_info *info);
 
 void	init_pipe_fd(t_info *info);
-int		make_pipeline(t_info *info, int depth);
+void	make_pipeline(t_info *info, int depth);
 void	close_pipeline(t_info *info);
 
 int		wexitstatus(int status);
