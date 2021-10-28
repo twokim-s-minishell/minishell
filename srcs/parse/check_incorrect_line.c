@@ -3,15 +3,25 @@
 static int	check_redirection(char *line, int *i)
 {
 	int		redi_cnt;
+	int		j;
 	t_type	type;
 
 	redi_cnt = 1;
+	j = 0;
 	type = is_redirection(line[*i]);
 	while (type == is_redirection(line[*i + redi_cnt]) && line[*i + redi_cnt])
 		redi_cnt++;
 	if (redi_cnt > 2 || is_redirection(line[*i + redi_cnt]))
 	{
 		*i += redi_cnt;
+		return (TRUE);
+	}
+	type = check_type(line[*i + redi_cnt + j]);
+	while (type == SPCE)
+		type = check_type(line[*i + redi_cnt + ++j]);
+	if (line[*i + redi_cnt + j] == '\0')
+	{
+		*i += redi_cnt + j; 
 		return (TRUE);
 	}
 	return (FALSE);
