@@ -25,11 +25,14 @@ void	here_doc_handler(int signo)
 
 void	execve_handler(int signo)
 {
+	int	status;
+
 	if (signo == SIGUSR1)
 	{
-		ft_putchar_fd('\n', STDERR_FILENO);
-		rl_on_new_line();
-		rl_redisplay();
+		signal(SIGINT, execve_sigint);
+		signal(SIGQUIT, execve_sigint);
+		wait(&status);
+		g_exit_code = status;
 	}
 }
 
@@ -37,7 +40,10 @@ void	execve_sigint(int signo)
 {
 	if (signo == SIGINT)
 	{
-		kill(0, SIGUSR1);
-		exit(0);//확인하기
+		ft_putchar_fd('\n', STDERR_FILENO);
+	}
+	else if (signo == SIGQUIT)
+	{
+		ft_putendl_fd("Quit: 3", STDERR_FILENO);
 	}
 }

@@ -94,8 +94,9 @@ int	execute_execve(t_info *info, int depth)
 	}
 	else
 	{
+		kill(0, SIGUSR1);
 		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, execve_sigint);
+		signal(SIGINT, SIG_DFL);
 		execve(cmd_path, info->cmd_str, info->env_str);
 		error_message(info->cmd_str[0], NULL, MSG_CMD_NOT_FOUND);//++오류 확인하고 메시지 출력하는 함수로 변경
 		exit(CODE_CMD_NOT_FOUND);
