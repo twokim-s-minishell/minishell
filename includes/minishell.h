@@ -178,7 +178,7 @@ int		execute_execve(t_info *info, int depth);
 int		is_builtin_command(t_info *info);
 
 void	get_pipe_fd(t_info *info, int depth, int fd[]);
-void	switch_stdio(t_info *info, int fd_stdin, int fd_stdout);
+int		switch_stdio(t_info *info, int fd[]);
 int		get_cmd_list(t_info *info);
 
 void	init_pipe_fd(t_info *info);
