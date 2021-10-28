@@ -84,6 +84,7 @@ int	main(int arc, char *argv[], char *envp[])
 	{
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
+		signal(SIGUSR1, execve_handler);
 		get_line(&info);
 	}
 }

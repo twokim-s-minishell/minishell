@@ -223,6 +223,7 @@ int		parse_line(char *line, t_info *info);
 void	sig_handler(int signo);
 void	here_doc_handler(int signo);
 void	execve_handler(int signo);
+void	execve_sigint(int signo);
 
 /*
 ** =============================================================================

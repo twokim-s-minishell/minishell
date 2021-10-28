@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include <signal.h>
 
 extern int	g_exit_code;
 
@@ -24,11 +25,19 @@ void	here_doc_handler(int signo)
 
 void	execve_handler(int signo)
 {
-	// if (signo == SIGUSR1)
-	// {
-	// 	while (waitpid(0, NULL, 0) != ERROR)
-	// 		;
-	// 	rl_on_new_line();
-	// 	rl_redisplay();
-	// }
+	if (signo == SIGUSR1)
+	{
+		ft_putchar_fd('\n', STDERR_FILENO);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	execve_sigint(int signo)
+{
+	if (signo == SIGINT)
+	{
+		kill(0, SIGUSR1);
+		exit(0);//확인하기
+	}
 }
