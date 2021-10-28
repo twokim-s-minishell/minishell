@@ -63,7 +63,6 @@ static int	check_incorrect_case(char *line, int i)
 		syntax_error(line[i]);
 	else if (is_redirection(line[i]) && check_redirection(line, &i))
 		syntax_error(line[i]);
-	else if (is_redirection(line[i]))
 	else if (separator_in_a_row(line, i))
 		return (TRUE);
 	else

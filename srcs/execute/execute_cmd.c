@@ -7,7 +7,7 @@ int	wexitstatus(int status)
 	return ((int)status >> 8 & (0x000000ff));
 }
 
-int	fork_process(t_info *info, int depth)
+void	fork_process(t_info *info, int depth)
 {
 	char	*error_message;
 
@@ -16,9 +16,8 @@ int	fork_process(t_info *info, int depth)
 	{
 		error_message = strerror(errno);
 		ft_putendl_fd((char *)error_message, STDERR_FILENO);
-		return (ERROR);
+		exit(EXIT_FAILURE);
 	}
-	return (NORMAL);
 }
 
 /*
@@ -34,6 +33,10 @@ void	waiting_child_process(t_info *info, int depth)
 	{
 		;
 	}
+	// while (waitpid(info->pipex.pipe_fd[depth], &status, 0) != ERROR)
+	// {
+	// 	;
+	// }
 	g_exit_code = wexitstatus(status);
 	// printf("g_exit_code : %d\n", g_exit_code);
 }
@@ -49,10 +52,8 @@ void	execute_command(t_info *info, int depth)
 	int	ret;
 
 	info->cmd_sequence = depth;
-	if (make_pipeline(info, depth) == ERROR)
-		return ;
-	if (fork_process(info, depth) == ERROR)
-		return ;
+	make_pipeline(info, depth);
+	fork_process(info, depth);
 	if (info->pipex.pid[depth] > 0)
 	{
 		signal(SIGINT, SIG_IGN);
@@ -82,7 +83,6 @@ void	execute_command_main(t_info *info)
 	init_pipe_fd(info);
 	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);
 	info->cmd_sequence = 0;
-	get_cmd_list(info);
 	if (is_builtin_command(info) && (info->n_cmd == 1))
 	{
 		g_exit_code = execute_execve(info, 0);//그냥 빌트인 함수를 실행하는게 낫지 않은지??
