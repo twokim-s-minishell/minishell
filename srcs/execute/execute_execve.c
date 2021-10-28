@@ -35,8 +35,8 @@ char	*get_cmd_path(char **env_path, t_info *info)
 	idx = 0;
 	path_of_cmd = NULL;
 	cmd = info->cmd_str[0];
-	if (cmd[0] == '\0')
-		cmd = info->cmd_str[1];
+	if (cmd == NULL)
+		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
 		is_directory(cmd);
@@ -59,7 +59,9 @@ int	is_builtin_command(t_info *info)
 	char	*cmd;
 	int		cmd_len;
 
-	cmd = info->cmd_str[0];
+	if (info->cmd_lst[info->cmd_sequence].text == NULL)
+		return (FALSE);
+	cmd = info->cmd_lst[info->cmd_sequence].text->str;
 	cmd_len = ft_strlen(cmd);
 	if (cmd_len <= 0)
 		return (FALSE);
@@ -79,8 +81,7 @@ int	execute_execve(t_info *info, int depth)
 	int		fd[2];
 	char	*cmd_path;
 
-	if (get_cmd_list(info) == ERROR)
-		return (ERROR);
+	get_cmd_list(info);
 	cmd_path = get_cmd_path(info->env_path, info);
 	if (switch_stdio(info, fd))
 		return (TRUE);
@@ -92,7 +93,7 @@ int	execute_execve(t_info *info, int depth)
 		/*execve()는 알아서 프로세스가 교체되지만 builtin함수는 직접 exit을 해줘야한다. 안그러면 무한반복
 		커맨드가 하나 일 때는 부모에서 실행되기 때문에 exit되면 안됨*/
 	}
-	else
+	else if (info->cmd_str[0])
 	{
 		kill(0, SIGUSR1);
 		signal(SIGQUIT, SIG_DFL);
