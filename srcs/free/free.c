@@ -28,6 +28,20 @@ void	clear_cmd_lst_node(t_lst *lst)
 	}
 }
 
+void	clear_pipex(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->n_cmd - 1)
+		free(info->pipex.pipe_fd[i++]);
+	if (info->pipex.pipe_fd)
+		free(info->pipex.pipe_fd);
+	info->pipex.pipe_fd = NULL;
+	free(info->pipex.pid);
+	info->pipex.pid = NULL;
+}
+
 void	clear_info(t_info *info)
 {
 	int		i;
@@ -48,11 +62,5 @@ void	clear_info(t_info *info)
 	}
 	free(info->cmd_lst);
 	info->cmd_lst = NULL;
-	i = 0;
-	while (i < info->n_cmd)
-		free(info->pipex.pipe_fd[i++]);
-	free(info->pipex.pipe_fd);
-	info->pipex.pipe_fd = NULL;
-	free(info->pipex.pid);
-	info->pipex.pid = NULL;
+	clear_pipex(info);
 }
