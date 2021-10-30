@@ -65,12 +65,12 @@ int	is_builtin_command(t_info *info)
 	cmd_len = ft_strlen(cmd);
 	if (cmd_len <= 0)
 		return (FALSE);
-	if (!ft_strncmp(cmd, "cd", cmd_len)
-		|| !ft_strncmp(cmd, "pwd", cmd_len)
-		|| !ft_strncmp(cmd, "export", cmd_len)
-		|| !ft_strncmp(cmd, "unset", cmd_len)
-		|| !ft_strncmp(cmd, "env", cmd_len)
-		|| !ft_strncmp(cmd, "exit", cmd_len)
+	if (!ft_strcmp(cmd, "cd")
+		|| !ft_strcmp(cmd, "pwd")
+		|| !ft_strcmp(cmd, "export")
+		|| !ft_strcmp(cmd, "unset")
+		|| !ft_strcmp(cmd, "env")
+		|| !ft_strcmp(cmd, "exit")
 		|| is_register_variable(cmd))
 		return (TRUE);
 	return (FALSE);
