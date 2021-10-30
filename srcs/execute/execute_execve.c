@@ -76,6 +76,13 @@ int	is_builtin_command(t_info *info)
 	return (FALSE);
 }
 
+/*
+** 1. get_cmd_list() 함수로 info->cmd_str에 명령어, 옵션, 아규먼트 저장
+** 2. get_cmd_path() 함수로 명령어가 위치한 절대경로 받아오기
+** 3. switch_stdio() 함수로 표준입출력 변경
+** 4. 빌트인 명령어이면 빌트인 함수 실행
+** 5. 일반 명령어이면 execve() 함수로 명령어 실행
+*/
 int	execute_execve(t_info *info, int depth)
 {
 	int		fd[2];
@@ -85,23 +92,16 @@ int	execute_execve(t_info *info, int depth)
 	cmd_path = get_cmd_path(info->env_path, info);
 	if (switch_stdio(info, fd))
 		return (TRUE);
-	if (is_builtin_command(info))//**현교 : 이 if문 한 블록을 builtin함수 안에 넣어도 될듯?
-	{
+	if (is_builtin_command(info))
 		builtin(info->cmd_str, info, fd);
-		if (info->n_cmd > 1)
-			exit(EXIT_SUCCESS);
-		/*execve()는 알아서 프로세스가 교체되지만 builtin함수는 직접 exit을 해줘야한다. 안그러면 무한반복
-		커맨드가 하나 일 때는 부모에서 실행되기 때문에 exit되면 안됨*/
-	}
 	else if (info->cmd_str[0])
 	{
 		kill(0, SIGUSR1);
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
 		execve(cmd_path, info->cmd_str, info->env_str);
-		error_message(info->cmd_str[0], NULL, MSG_CMD_NOT_FOUND);//++오류 확인하고 메시지 출력하는 함수로 변경
+		error_message(info->cmd_str[0], NULL, MSG_CMD_NOT_FOUND);
 		exit(CODE_CMD_NOT_FOUND);
-		//비정상 종료 리턴
 	}
 	free(cmd_path);
 	return (NORMAL);
