@@ -51,6 +51,7 @@ OBJS_LST	=	main.o						\
 				free.o						\
 				pwd.o						\
 				unset.o						\
+				echo.o						\
 				save_env_values.o			\
 				execute_cmd.o				\
 				execute_execve.o			\

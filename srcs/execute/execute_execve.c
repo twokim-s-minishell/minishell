@@ -71,6 +71,7 @@ int	is_builtin_command(t_info *info)
 		|| !ft_strcmp(cmd, "unset")
 		|| !ft_strcmp(cmd, "env")
 		|| !ft_strcmp(cmd, "exit")
+		|| !ft_strcmp(cmd, "echo")
 		|| is_register_variable(cmd))
 		return (TRUE);
 	return (FALSE);

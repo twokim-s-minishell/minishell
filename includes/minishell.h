@@ -167,6 +167,7 @@ void	execute_exit(char **cmd, t_info *info);
 void	export(char **cmd, t_info *info, int *fd);
 int		pwd(int *fd, t_info *info);
 void	unset(char **cmd, t_info *info);
+void	echo(t_info *info, int *fd);
 
 /*
 ** =============================================================================
