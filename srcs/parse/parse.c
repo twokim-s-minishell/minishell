@@ -56,12 +56,11 @@ int	parse_line(char *line, t_info *info)
 {
 	char	*new_line;
 
-	if (all_is_space(line))
+	if (all_is_space(line) || check_incorrect_line(line) || check_pipe(line))
+	{
+		free(line);
 		return (ERROR);
-	if (check_incorrect_line(line))
-		return (ERROR);
-	if (check_pipe(line))
-		return (ERROR);
+	}
 	new_line = pre_processing(line, info);
 	make_command(new_line, info);
 	// if (check_incorrect_pipe(info) == ERROR)//**얘 필요한지 체크해보기

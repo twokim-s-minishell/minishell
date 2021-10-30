@@ -41,7 +41,6 @@ void	execve_handler(int signo)
 	{
 		signal(SIGINT, execve_sigint);
 		signal(SIGQUIT, execve_sigint);
-		wait(&status);
 	}
 }
 

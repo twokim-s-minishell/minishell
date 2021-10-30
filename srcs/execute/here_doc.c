@@ -57,3 +57,9 @@ int	here_doc(t_info *info, char *limiter, int fd[])
 		return (ERROR);
 	return (fd[READ]);
 }
+
+//
+//  |  가 실행이 되는게 맞는지?
+// fsdfasdfas;fsdfsadf- | dasdas
+//$USER$HOME
+//
