@@ -4,6 +4,7 @@ extern int	g_exit_code;
 
 int	wexitstatus(int status)
 {
+	status = (*(int *)&status);
 	return ((int)status >> 8 & (0x000000ff));
 }
 
@@ -37,8 +38,8 @@ void	waiting_child_process(t_info *info, int depth)
 	// {
 	// 	;
 	// }
-	g_exit_code = wexitstatus(status);
-	// printf("g_exit_code : %d\n", g_exit_code);
+	// g_exit_code = wexitstatus(status);
+	g_exit_code = WEXITSTATUS(status);
 }
 /*
 ** 1. 명령어가 2개 이상일 경우 make_pipeline()함수로 파이프 생성
@@ -67,6 +68,7 @@ void	execute_command(t_info *info, int depth)
 	}
 	else if (info->pipex.pid[depth] == 0)
 	{
+		signal(SIGUSR1, SIG_IGN);
 		ret = execute_execve(info, depth);
 		exit(ret);
 	}
