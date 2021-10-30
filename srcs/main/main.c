@@ -37,15 +37,16 @@ void	set_environment_path(t_info *info)
 
 char	*get_command_line(void)
 {
+	int		ret;
 	char	*line;
 
 	line = NULL;
 	line = readline("Minishell >");
 	if (line == NULL)//EOF(ctrl + d)만나면 NULL
 	{
-		ft_putstr_fd("\x1b[1A", STDOUT_FILENO);//커서 하나 위로
-		ft_putstr_fd("\033[12C", STDOUT_FILENO);//커서 뒤로
-		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		ft_putstr_fd("\x1b[1A", STDERR_FILENO);//커서 하나 위로
+		ft_putstr_fd("\033[12C", STDERR_FILENO);//커서 뒤로
+		ft_putstr_fd("exit\n", STDERR_FILENO);
 		exit(0);
 	}
 	if (*line == 0)//엔터 눌렀을 때 함수 종료
@@ -53,7 +54,13 @@ char	*get_command_line(void)
 		free(line);
 		return (NULL);
 	}
+	ret = check_pipe_input(&line);
 	add_history(line);
+	if (ret == ERROR)
+	{
+		free(line);
+		return (NULL);
+	}
 	return (line);
 }
 

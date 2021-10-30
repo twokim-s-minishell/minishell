@@ -13,7 +13,7 @@ static int	check_pipe(char *line)
 		return (FALSE);
 	j = 0;
 	while (j < i)
-		if (!is_separator(line[j++]))
+		if (!is_separator(line[j++]))//파이프 앞에 문자가 있으면 정상, separator만 있으면 에러임.
 			return (FALSE);
 	syntax_error('|');
 	return (TRUE);
