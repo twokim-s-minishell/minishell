@@ -91,28 +91,31 @@ char	*fillin_buf(char *buf, char *origin, t_info *info)
 {
 	int		i;
 	int		j;
+	char	*new;
 	t_quote	data;
 
 	i = 0;
 	j = 0;
 	init_quote_data(&data);
-	while (origin[i])
+	new = ft_strdup(origin);
+	while (new[i])
 	{
-		if ((origin[i] == '\'' && !data.dquote_flag)
-			|| (origin[i] == '\"' && !data.squote_flag))
+		if ((new[i] == '\'' && !data.dquote_flag)
+			|| (new[i] == '\"' && !data.squote_flag))
 		{
-			if (origin[i] == '\'')
+			if (new[i] == '\'')
 				data.squote_flag ^= TRUE;
 			else
 				data.dquote_flag ^= TRUE;
 			i++;
 		}
-		else if (data.squote_flag == FALSE && origin[i] == '$')
-			replace_env_value(&origin, &i, info);
+		else if (data.squote_flag == FALSE && new[i] == '$')
+			replace_env_value(&new, &i, info);
 		else
-			buf[j++] = origin[i++];
+			buf[j++] = new[i++];
 		if (j > BUF_SIZE)
 			return (NULL);
 	}
+	free(new);
 	return (make_new_string(buf, j));
 }

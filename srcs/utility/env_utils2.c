@@ -24,9 +24,9 @@ int	incorrect_env_key(char *env_key)
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(env_key[i]))
+	if (!(ft_isalpha(env_key[i]) || env_key[i] == '_'))
 		return (TRUE);
-	while (env_key[i] && !is_special(env_key[i]))
+	while ((ft_isalpha(env_key[i]) || env_key[i] == '_' || ft_isdigit(env_key[i])))
 		i++;
 	if (env_key[i] == 0)
 		return (FALSE);

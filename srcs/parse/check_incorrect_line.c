@@ -13,6 +13,8 @@ static int	check_redirection(char *line, int *i)
 		redi_cnt++;
 	if (redi_cnt > 2 || is_redirection(line[*i + redi_cnt]))
 	{
+		if (!line[*i + redi_cnt])
+			redi_cnt--;
 		*i += redi_cnt;
 		return (TRUE);
 	}
@@ -21,7 +23,7 @@ static int	check_redirection(char *line, int *i)
 		type = check_type(line[*i + redi_cnt + ++j]);
 	if (line[*i + redi_cnt + j] == '\0')
 	{
-		*i += redi_cnt + j; 
+		*i += redi_cnt + j;
 		return (TRUE);
 	}
 	return (FALSE);
