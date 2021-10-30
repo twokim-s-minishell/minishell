@@ -2,6 +2,26 @@
 
 extern int	g_exit_code;
 
+static int	check_pipe(char *line)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (line[++i])
+		if (check_type(line[i]) == PIPE)
+			break ;
+	if (line[i] == '\0')
+		return (FALSE);
+	j = 0;
+	while (j < i)
+		if (!is_separator(line[j++]))//파이프 앞에 문자가 있으면 정상, separator만 있으면 에러임.
+			return (FALSE);
+	syntax_error('|');
+	return (TRUE);
+	//여기에 파이프 뒤에 아무것도 안오는 경우 체크
+}
+
 int	check_pipe_input(char **line)
 {
 	int		i;
@@ -9,6 +29,8 @@ int	check_pipe_input(char **line)
 	char	*add;
 	char	*tmp;
 
+	if (check_pipe(*line))
+		return (ERROR);
 	i = 0;
 	while ((*line)[i] && (*line)[i] != '|')
 		i++;
