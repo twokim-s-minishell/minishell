@@ -32,15 +32,10 @@ void	waiting_child_process(t_info *info, int depth)
 
 	while (wait(&status) != ERROR)
 	{
-		;
 	}
-	// while (waitpid(info->pipex.pipe_fd[depth], &status, 0) != ERROR)
-	// {
-	// 	;
-	// }
-	// g_exit_code = wexitstatus(status);
-	g_exit_code = WEXITSTATUS(status);
+	g_exit_code = wexitstatus(status);
 }
+
 /*
 ** 1. 명령어가 2개 이상일 경우 make_pipeline()함수로 파이프 생성
 ** 2. fork_process() 함수로 자식 프로세스 생성(execve() 함수 실행하기 위함)
@@ -58,7 +53,7 @@ void	execute_command(t_info *info, int depth)
 	if (info->pipex.pid[depth] > 0)
 	{
 		signal(SIGINT, SIG_IGN);
-		if (depth == info->n_cmd - 1)//마지막 명령어이면 if문 진입
+		if (depth == info->n_cmd - 1)
 		{
 			close_pipeline(info);
 			waiting_child_process(info, depth);
@@ -87,7 +82,7 @@ void	execute_command_main(t_info *info)
 	info->cmd_sequence = 0;
 	if (is_builtin_command(info) && (info->n_cmd == 1))
 	{
-		g_exit_code = execute_execve(info, 0);//그냥 빌트인 함수를 실행하는게 낫지 않은지??
+		g_exit_code = execute_execve(info, 0);
 		return ;
 	}
 	execute_command(info, 0);

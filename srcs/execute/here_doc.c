@@ -2,6 +2,17 @@
 
 extern int	g_exit_code;
 
+/*
+** 1. fork() 함수로 자식 프로세스 생성
+** 2. pipe() 함수로 파이프 생성하고 이 파이프에다가 문자열 저장
+** 3. 자식 프로세스에서 limiter 입력받을 때 까지 readline()으로 문자열 입력받음
+** 4. readline()으로 입력받는 중 시그널 처리 위해 signal(SIGINT, here_doc_handler) 추가
+** 5. 만약 SIGINT 시그널을 받으면 자식프로세스가 exit(254) 를 하게함.
+** 6. if (wexitstatus(status) == 254) 로 시그널을 입력받았는지 판단
+** 7. readline() 중 SIGINT를 받으면 명령어 실행하면 안되고 멈춰야되니까 일부로 -2를 리턴해서
+	  플래그를 줌
+** 8. 정상 종료 시 fd[1] 닫고 파이프 fd[0]을 반환
+*/
 int	read_string_from_stdin(t_info *info, char *limiter)
 {
 	char	*str;
@@ -24,10 +35,10 @@ int	read_string_from_stdin(t_info *info, char *limiter)
 		signal(SIGINT, here_doc_handler);
 		while (TRUE)
 		{
-			str = readline(">");//readline으로 변경, ctrl + d받으면 NULL
-			if (str == NULL || ft_strcmp(str, limiter) == 0)//
+			str = readline(">");
+			if (str == NULL || ft_strcmp(str, limiter) == 0)
 				break ;
-			ft_putendl_fd(str, pipe_fd[WRITE]);//받은 문자열을 파이프에 저장
+			ft_putendl_fd(str, pipe_fd[WRITE]);
 			free(str);
 			str = NULL;
 		}
@@ -35,7 +46,7 @@ int	read_string_from_stdin(t_info *info, char *limiter)
 	}
 	info->pipex.is_here_doc = 0;
 	close(pipe_fd[WRITE]);
-	return (pipe_fd[READ]);//문자열이 저장된 파이프의 fd를 반환
+	return (pipe_fd[READ]);
 }
 
 int	here_doc(t_info *info, char *limiter, int fd[])
