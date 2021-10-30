@@ -64,6 +64,7 @@ OBJS_LST	=	main.o						\
 				free_two_dimensional.o		\
 				arrange_quote.o				\
 				check_incorrect_line.o		\
+				check_pipe_input.o			\
 				fillin_buffer.o				\
 				make_command.o				\
 				parse.o						\

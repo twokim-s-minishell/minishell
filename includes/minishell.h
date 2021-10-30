@@ -18,6 +18,8 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <sys/ioctl.h>
+# include <termios.h>
 # include "libft.h"
 
 /*
@@ -207,6 +209,7 @@ void	clear_info(t_info *info);
 ** =============================================================================
 */
 
+int		check_pipe_input(char **line);
 char	*arrange_quote(char *line, int *start_idx, int sep_idx, t_info *info);
 int		check_incorrect_line(char *line);
 char	*fillin_buf(char *buf, char *origin, t_info *info);
@@ -221,6 +224,7 @@ int		parse_line(char *line, t_info *info);
 */
 
 void	sig_handler(int signo);
+void	pipe_input_handler(int signo);
 void	here_doc_handler(int signo);
 void	execve_handler(int signo);
 void	execve_sigint(int signo);
