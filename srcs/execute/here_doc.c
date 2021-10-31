@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-extern int	g_exit_code;
-
 /*
 ** 1. fork() 함수로 자식 프로세스 생성
 ** 2. pipe() 함수로 파이프 생성하고 이 파이프에다가 문자열 저장

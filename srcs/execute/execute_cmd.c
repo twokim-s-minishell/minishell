@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern int	g_exit_code;
+extern t_exit_code	g_exit_code;
 
 int	wexitstatus(int status)
 {
@@ -32,7 +32,8 @@ void	waiting_child_process(t_info *info, int depth)
 	while (waitpid(info->pipex.pid[depth], &status, 0) != ERROR)
 	{
 	}
-	g_exit_code = wexitstatus(status);
+	if (g_exit_code.sigusr1_flag == FALSE)
+		g_exit_code.exit_code = wexitstatus(status);
 }
 
 /*
@@ -87,12 +88,13 @@ void	execute_command(t_info *info, int depth)
 */
 void	execute_command_main(t_info *info)
 {
+	g_exit_code.sigusr1_flag = 0;
 	init_pipe_fd(info);
 	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);
 	info->cmd_sequence = 0;
 	if (is_builtin_command(info) && (info->n_cmd == 1))
 	{
-		g_exit_code = execute_execve(info, 0);
+		g_exit_code.exit_code = execute_execve(info, 0);
 		return ;
 	}
 	execute_command(info, 0);

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern int	g_exit_code;
+extern t_exit_code	g_exit_code;
 
 static char	*parse_env_after_dollar(char **origin, int *i, t_info *info)
 {
@@ -26,7 +26,7 @@ static int	is_exit_code_key(char **env_value, char *origin, int *i)
 	if (origin[*i] == '?')
 	{
 		(*i)++;
-		*env_value = ft_itoa(g_exit_code);
+		*env_value = ft_itoa(g_exit_code.exit_code);
 		merror(*env_value);
 		return (TRUE);
 	}
