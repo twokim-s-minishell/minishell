@@ -6,7 +6,7 @@ int	switch_stdio(t_info *info, int fd[])
 
 	get_pipe_fd(info, info->cmd_sequence, fd);
 	if (redirection(info, fd) == ERROR)
-		return (TRUE);//현교 : 여기랑 여기 아래 리턴값 확인하기
+		return (TRUE);
 	if (!is_builtin_command(info))
 	{
 		if (fd[READ] != STDIN_FILENO)

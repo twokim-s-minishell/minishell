@@ -13,13 +13,31 @@ extern int	g_exit_code;
 	  플래그를 줌
 ** 8. 정상 종료 시 fd[1] 닫고 파이프 fd[0]을 반환
 */
-int	read_string_from_stdin(t_info *info, char *limiter)
+int	read_string_from_stdin(t_info *info, char *limiter, int pipe_fd[])
+{
+	char	*str;
+
+	signal(SIGINT, here_doc_handler);
+	while (TRUE)
+	{
+		str = readline(">");
+		if (str == NULL || ft_strcmp(str, limiter) == 0)
+			break ;
+		ft_putendl_fd(str, pipe_fd[WRITE]);
+		free(str);
+		str = NULL;
+	}
+	exit(1);
+}
+
+int	here_doc(t_info *info, char *limiter, int fd[])
 {
 	char	*str;
 	int		pipe_fd[2];
 	int		pid;
 	int		status;
 
+	info->pipex.is_here_doc = 1;
 	if (pipe(pipe_fd) == -1)
 		return (-1);
 	pid = fork();
@@ -31,35 +49,9 @@ int	read_string_from_stdin(t_info *info, char *limiter)
 			return (-2);
 	}
 	else if (pid == 0)
-	{
-		signal(SIGINT, here_doc_handler);
-		while (TRUE)
-		{
-			str = readline(">");
-			if (str == NULL || ft_strcmp(str, limiter) == 0)
-				break ;
-			ft_putendl_fd(str, pipe_fd[WRITE]);
-			free(str);
-			str = NULL;
-		}
-		exit(1);
-	}
+		read_string_from_stdin(info, limiter, pipe_fd);
 	info->pipex.is_here_doc = 0;
+	fd[READ] = pipe_fd[READ];
 	close(pipe_fd[WRITE]);
 	return (pipe_fd[READ]);
 }
-
-int	here_doc(t_info *info, char *limiter, int fd[])
-{
-	info->pipex.is_here_doc = 1;
-	fd[READ] = read_string_from_stdin(info, limiter);//파이프의 fd 리턴, 에러 시 -1 리턴
-	if (fd[READ] == -1)
-		return (ERROR);
-	return (fd[READ]);
-}
-
-//
-//  |  가 실행이 되는게 맞는지?
-// fsdfasdfas;fsdfsadf- | dasdas
-//$USER$HOME
-//

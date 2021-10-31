@@ -25,6 +25,9 @@ int	d_output_redirection(char *outfile, int fd[])
 	return (NORMAL);
 }
 
+/*
+** if (reval <= -1)//here_doc 상태에서 ctrl+c 받거나 open() 함수 에러났을 때 if문 들어감
+*/
 int	redirection(t_info *info, int fd[])
 {
 	t_lst	*cur;
@@ -43,7 +46,7 @@ int	redirection(t_info *info, int fd[])
 			reval = input_redirection(redi[1], fd);
 		else if (redi[0][0] == '>')
 			reval = output_redirection(redi[1], fd);
-		if (reval <= -1)//here_doc 상태에서 ctrl+c 받거나 open() 함수 에러났을 때 if문 들어감
+		if (reval <= -1)
 		{
 			if (reval == ERROR)
 				error_message(redi[1], NULL, strerror(errno));
