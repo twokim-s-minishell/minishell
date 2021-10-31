@@ -74,6 +74,7 @@ void	get_line(t_info *info)
 	if (parse_line(line, info))
 		return ;
 	execute_command_main(info);
+	printf("exitcode2 %d\n", g_exit_code);
 	clear_info(info);
 }
 
@@ -90,8 +91,9 @@ int	main(int arc, char *argv[], char *envp[])
 	signal(SIGUSR1, execve_handler);
 	while (TRUE)
 	{
-		signal(SIGINT, sig_handler);
+		signal(SIGINT, main_sig_handler);
 		signal(SIGQUIT, SIG_IGN);
+		printf("exitcode %d\n", g_exit_code);
 		get_line(&info);
 	}
 }
