@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+extern int	g_exit_code;
 /*
 ** 파일이 존재하지 않거나 디렉토리 파일이면 에러메세지 출력 후 종료
 */
@@ -98,8 +99,8 @@ int	execute_execve(t_info *info, int depth)
 	else if (info->cmd_str[0])
 	{
 		kill(0, SIGUSR1);
-		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		execve(cmd_path, info->cmd_str, info->env_str);
 		error_message(info->cmd_str[0], NULL, MSG_CMD_NOT_FOUND);
 		exit(CODE_CMD_NOT_FOUND);

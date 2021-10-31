@@ -48,17 +48,13 @@ void	newline_handler(int signo)
 	wait(&status);
 	if (signo == SIGINT)
 	{
-		if (g_exit_code == 130)
-			return ;
 		g_exit_code = 130;
-		printf("flag : %d\n", g_exit_code);
 		ft_putchar_fd('\n', STDERR_FILENO);
 	}
 	else if (signo == SIGQUIT)
 	{
-		if (g_exit_code == 131)
-			return ;
 		g_exit_code = 131;
 		ft_putendl_fd("Quit: 3", STDERR_FILENO);
 	}
 }
+

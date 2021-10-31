@@ -283,5 +283,4 @@ void	sort_env_str(char **str);
 
 
 void	set_environment_path(t_info *info);
-
 #endif
