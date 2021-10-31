@@ -4,7 +4,6 @@ extern int	g_exit_code;
 
 int	wexitstatus(int status)
 {
-	status = (*(int *)&status);
 	return ((int)status >> 8 & (0x000000ff));
 }
 
@@ -30,7 +29,7 @@ void	waiting_child_process(t_info *info, int depth)
 {
 	int	status;
 
-	while (wait(&status) != ERROR)
+	while (waitpid(info->pipex.pid[depth], &status, 0) != ERROR)
 	{
 	}
 	g_exit_code = wexitstatus(status);
