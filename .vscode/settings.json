@@ -2,6 +2,7 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"cstdlib": "c",
-		"locale": "c"
+		"locale": "c",
+		"readline.h": "c"
 	}
 }

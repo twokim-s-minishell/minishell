@@ -53,13 +53,24 @@ void	execute_command(t_info *info, int depth)
 	if (info->pipex.pid[depth] > 0)
 	{
 		signal(SIGINT, SIG_IGN);
-		if (depth == info->n_cmd - 1)
+		if (!ft_strcmp("./minishell", info->cmd_lst[info->cmd_sequence].text->str))
 		{
-			close_pipeline(info);
+			signal(SIGUSR1, SIG_IGN);
+			if (depth != info->n_cmd - 1)
+				execute_command(info, depth + 1);
 			waiting_child_process(info, depth);
-			return ;
+			signal(SIGUSR1, execve_handler);
 		}
-		execute_command(info, depth + 1);
+		else
+		{
+			if (depth == info->n_cmd - 1)
+			{
+				close_pipeline(info);
+				waiting_child_process(info, depth);
+				return ;
+			}
+			execute_command(info, depth + 1);
+		}
 	}
 	else if (info->pipex.pid[depth] == 0)
 	{

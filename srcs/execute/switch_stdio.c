@@ -7,6 +7,8 @@ int	switch_stdio(t_info *info, int fd[])
 	get_pipe_fd(info, info->cmd_sequence, fd);
 	if (redirection(info, fd) == ERROR)
 		return (TRUE);
+	if (!ft_strcmp(info->cmd_str[0], "./minishell"))
+		fd[WRITE] = STDOUT_FILENO;
 	if (!is_builtin_command(info))
 	{
 		if (fd[READ] != STDIN_FILENO)
