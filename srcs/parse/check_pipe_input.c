@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern int	g_exit_code;
+extern t_exit_code	g_exit;
 
 static int	check_pipe(char *line)
 {
@@ -45,10 +45,10 @@ int	check_pipe_input(char **line)
 		while (TRUE)
 		{
 			add = readline("> ");
-			if (g_exit_code == -42)
+			if (g_exit.code == -42)
 			{
 				free(add);
-				g_exit_code = 1;
+				g_exit.code = 1;
 				return (ERROR);
 			}
 			if (add == NULL)

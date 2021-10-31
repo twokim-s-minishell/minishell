@@ -1,6 +1,6 @@
 # include "minishell.h"
 
-t_exit_code g_exit_code;
+t_exit_code	g_exit;
 
 static void	add_slash_at_end_of_path(t_info *info, char **environment_path)
 {
@@ -84,8 +84,8 @@ int	main(int arc, char *argv[], char *envp[])
 	if (arc == 0 || argv == NULL)
 		return (ERROR);
 	ft_memset(&info, 0, sizeof(t_info));
-	g_exit_code.exit_code = 0;
-	g_exit_code.sigusr1_flag = FALSE;
+	g_exit.code = 0;
+	g_exit.sig_flag = FALSE;
 	save_env_variables(&info, envp);
 	set_environment_path(&info);
 	signal(SIGUSR1, execve_handler);

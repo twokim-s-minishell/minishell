@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern int	g_exit_code;
+extern t_exit_code	g_exit;
 
 static t_ll	save_number(const char *str, int *idx, int *digit_len, int *plus)
 {
@@ -82,8 +82,8 @@ void	execute_exit(char **cmd, t_info *info)
 	{
 		if (cmd[2] == NULL)
 		{
-			g_exit_code = tmp.c[0];
-			exit(g_exit_code);//exit안의 값 exitcode로 변경해주어야함.
+			g_exit.code = tmp.c[0];
+			exit(g_exit.code);//exit안의 값 exitcode로 변경해주어야함.
 		}
 		error_message(cmd[0], NULL, "too many arguments");
 		return ;
