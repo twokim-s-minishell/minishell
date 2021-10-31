@@ -90,7 +90,7 @@ int	main(int arc, char *argv[], char *envp[])
 	signal(SIGUSR1, execve_handler);
 	while (TRUE)
 	{
-		signal(SIGINT, sig_handler);
+		signal(SIGINT, main_sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 		get_line(&info);
 	}

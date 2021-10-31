@@ -75,7 +75,7 @@ void	execute_exit(char **cmd, t_info *info)
 	t_exit	tmp;
 
 	if (info->n_cmd <= 1)
-		ft_putendl_fd("exit", STDOUT_FILENO);
+		ft_putendl_fd("exit", STDERR_FILENO);
 	if (cmd[1] == NULL)
 		exit(0);
 	if (is_digit_string(cmd[1]) && ft_atolong(cmd[1], &(tmp.num)))

@@ -1,9 +1,8 @@
 #include "minishell.h"
-#include <signal.h>
 
 extern int	g_exit_code;
 
-void	sig_handler(int signo)
+void	main_sig_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
@@ -35,25 +34,27 @@ void	here_doc_handler(int signo)
 
 void	execve_handler(int signo)
 {
-	int	status;
-
 	if (signo == SIGUSR1)
 	{
-		signal(SIGINT, execve_sigint);
-		signal(SIGQUIT, execve_sigint);
+		signal(SIGINT, newline_handler);
+		signal(SIGQUIT, newline_handler);
 	}
 }
 
-void	execve_sigint(int signo)
+void	newline_handler(int signo)
 {
+	int	status;
+
+	wait(&status);
 	if (signo == SIGINT)
 	{
-		ft_putchar_fd('\n', STDERR_FILENO);
 		g_exit_code = 130;
+		ft_putchar_fd('\n', STDERR_FILENO);
 	}
 	else if (signo == SIGQUIT)
 	{
-		ft_putendl_fd("Quit: 3", STDERR_FILENO);
 		g_exit_code = 131;
+		ft_putendl_fd("Quit: 3", STDERR_FILENO);
 	}
 }
+
