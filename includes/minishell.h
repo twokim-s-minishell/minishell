@@ -96,6 +96,12 @@ typedef union u_exit
 ** =============================================================================
 */
 
+typedef struct s_exit_code
+{
+	int	exit_code;
+	int	sigusr1_flag;
+}			t_exit_code;
+
 typedef struct s_env
 {
 	char			*key;

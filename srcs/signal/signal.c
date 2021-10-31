@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include <signal.h>
 
-extern int	g_exit_code;
+extern t_exit_code	g_exit_code;
 
 void	sig_handler(int signo)
 {
@@ -18,7 +18,7 @@ void	pipe_input_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		g_exit_code = -42;
+		g_exit_code.exit_code = -42;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		ft_putstr_fd("\x1b[1A", STDERR_FILENO);
 	}
@@ -48,12 +48,14 @@ void	execve_sigint(int signo)
 {
 	if (signo == SIGINT)
 	{
+		g_exit_code.exit_code = 130;
+		g_exit_code.sigusr1_flag = TRUE;
 		ft_putchar_fd('\n', STDERR_FILENO);
-		g_exit_code = 130;
 	}
 	else if (signo == SIGQUIT)
 	{
+		g_exit_code.exit_code = 131;
+		g_exit_code.sigusr1_flag = TRUE;
 		ft_putendl_fd("Quit: 3", STDERR_FILENO);
-		g_exit_code = 131;
 	}
 }
