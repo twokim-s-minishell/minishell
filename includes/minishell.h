@@ -20,8 +20,8 @@
 */
 
 # include <stdio.h>
-# include "readline/history.h"
-# include "readline/readline.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/stat.h>
