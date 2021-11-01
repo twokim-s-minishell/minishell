@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:23:39 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -37,14 +49,14 @@
 # define READ 0
 # define WRITE 1
 
-#define KEY 0
-#define VALUE 1
+# define KEY 0
+# define VALUE 1
 
 # define FRONT 0
 # define MID 1
 # define BACK 2
 
-# define BUF_SIZE 200000//한 명령어(인자)가 받을 수 있는 문자열의 길이
+# define BUF_SIZE 200000
 # define ISODD 1
 
 # define MSG_CMD_NOT_FOUND "command not found"
@@ -54,7 +66,6 @@
 # define CODE_CMD_NOT_FOUND 127
 # define CODE_NO_FILE_OR_DIR 127
 # define CODE_IS_A_DIR 126
-
 
 /*
 ** =============================================================================
@@ -75,7 +86,7 @@ typedef enum e_type
 	NORM = 0,
 	SQUOTE, DQUOTE,
 	SPCE, SPEC, DOLR, PIPE, END,
-	RRDI, LRDI, DRRDI, DLRDI
+	RRDI, LRDI
 }			t_type;
 
 /*
@@ -98,8 +109,8 @@ typedef union u_exit
 
 typedef struct s_exit_code
 {
-	int	exit_code;
-	int	sigusr1_flag;
+	int	code;
+	int	sig_flag;
 }			t_exit_code;
 
 typedef struct s_env
@@ -157,7 +168,7 @@ typedef struct s_info
 	char		*pwd_path;
 	t_env_deq	*env_deq;
 	t_cmd		*cmd_lst;
-	t_pipex 	pipex;
+	t_pipex		pipex;
 }			t_info;
 
 /*
@@ -208,7 +219,6 @@ int		here_doc(t_info *info, char *limiter, int fd[]);
 void	free_two_dimensional(char **two_dimensional);
 void	free_double_string(char **list);
 void	clear_info(t_info *info);
-
 
 /*
 ** =============================================================================
@@ -278,6 +288,8 @@ int		is_separator(char c);
 void	init_quote_data(t_quote *data);
 int		find_separator(char *line, int idx);
 char	**quote_split(char *cmd);
+char	choose_enclose_quote_type(char *buf, int buf_len);
+void	turn_on_quote_flag(char c, t_quote *data);
 
 void	make_env_double_string(t_info *info);
 void	save_env_variables(t_info *info, char **envp);
@@ -287,6 +299,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	swap_str(char **str, int i, int j);
 void	sort_env_str(char **str);
 
-
 void	set_environment_path(t_info *info);
+
 #endif

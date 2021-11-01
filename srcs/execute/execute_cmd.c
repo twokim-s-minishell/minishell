@@ -36,10 +36,15 @@ void	waiting_child_process(t_info *info, int depth)
 		if (info->last_pid == ret && g_exit.sig_flag == FALSE)
 			g_exit.code = wexitstatus(status);
 	}
+<<<<<<< HEAD
 	// if (WIFSIGNALED(status))
 	// {
 	// 	perror("ERROR\n");
 	// }
+=======
+	if (g_exit.sig_flag == FALSE)
+		g_exit.code = wexitstatus(status);
+>>>>>>> 3fc5124ac9a889c895569d305b8824cea186f31e
 }
 
 /*

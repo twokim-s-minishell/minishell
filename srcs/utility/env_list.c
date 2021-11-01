@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_list.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:26:47 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:26:48 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_env	*create_env_node(void)
@@ -18,7 +30,6 @@ void	link_env_node(t_env *front, t_env *back)
 		front->next = back;
 	if (back != NULL)
 		back->prev = front;
-		
 }
 
 t_env	*make_env_list(char **envp)

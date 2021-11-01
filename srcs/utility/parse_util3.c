@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   parse_util3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/01 15:29:45 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:29:46 by hyeonkki         ###   ########.fr       */
+/*   Created: 2021/11/01 15:19:34 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:30:34 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lst	*create_node(void)
+char	choose_enclose_quote_type(char *buf, int buf_len)
 {
-	t_lst	*lst;
+	int	i;
 
-	lst = (t_lst *)malloc(sizeof(t_lst));
-	merror(lst);
-	ft_memset(lst, 0, sizeof(t_lst));
-	return (lst);
+	i = 0;
+	while (i < buf_len)
+	{
+		if (buf[i++] == '\"')
+			return ('\'');
+	}
+	return ('\"');
 }
 
-void	link_node(char *cmd, t_lst **list)
+void	turn_on_quote_flag(char c, t_quote *data)
 {
-	t_lst	*cur;
-	t_lst	*tmp;
-
-	cur = *list;
-	tmp = create_node();
-	tmp->str = ft_strdup(cmd);
-	merror(tmp->str);
-	if (cur == NULL)
-		*list = tmp;
+	if (c == '\'')
+		data->squote_flag ^= TRUE;
 	else
-	{
-		while (cur->next)
-			cur = cur->next;
-		cur->next = tmp;
-	}
+		data->dquote_flag ^= TRUE;
 }

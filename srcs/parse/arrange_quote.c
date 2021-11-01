@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arrange_quote.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:08:45 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:08:45 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	**divide_by_separator(char *line, int start_idx, int sep_idx)
@@ -30,7 +42,7 @@ static char	*make_buf(void)
 {
 	char	*buf;
 
-	buf = (char *)malloc(sizeof(char) * BUF_SIZE);//나중에 디파인 상수로 변경
+	buf = (char *)malloc(sizeof(char) * BUF_SIZE);
 	merror(buf);
 	return (buf);
 }
@@ -52,14 +64,6 @@ static char	*make_arrange_string(char *mid, char **divide, int *start_idx)
 
 char	*arrange_quote(char *line, int *start_idx, int sep_idx, t_info *info)
 {
-	/*
-	1. start, sep인덱스를 구분자로 3개의 문자열로 쪼개기
-	2. 넉넉한 버퍼 할당. -> 기준 세우기
-	3. 가운데 문자열을 환경 변수 처리, quote처리 등 해서 버퍼 채우기
-	4. 채워진 버퍼 + 스페이스 + \0만큼 재할당후 문자열 만들어주고 버퍼 프리
-	5. 재할당 문자열과 기존 문자열 join
-	6. start인덱스를 구분자의 인덱스 위치로 변경해줌.
-	*/
 	char	*buf;
 	char	*new;
 	char	**divide;

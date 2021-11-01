@@ -1,14 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:29:32 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:29:32 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	error(void)
+int	error(void)//얘 사용하는지?
 {
 	const char	*error_message;
 
 	error_message = strerror(errno);
 	ft_putendl_fd((char *)error_message, STDERR_FILENO);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
 	return (ERROR);
 }
 
@@ -39,7 +48,6 @@ void	error_message(char *cmd, char *arg, char *msg)
 
 void	syntax_error(char c)
 {
-	//bash: syntax error near unexpected token `<'
 	ft_putstr_fd("Minishell: ", STDERR_FILENO);
 	ft_putstr_fd("syntax error near unexpected token '", STDERR_FILENO);
 	if (c == '\0')

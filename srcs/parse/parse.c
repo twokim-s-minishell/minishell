@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:15:25 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:15:27 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static int	check_incorrect_pipe(t_info *info)//**얘 필요한지 체크해보기
+static int	check_incorrect_pipe(t_info *info)
 {
 	int		i;
 	t_cmd	*cmd_lst;
@@ -9,7 +21,6 @@ static int	check_incorrect_pipe(t_info *info)//**얘 필요한지 체크해보�
 	cmd_lst = info->cmd_lst;
 	while (i < info->n_cmd)
 	{
-		//(cmd_lst[i].text->str == NULL || cmd_lst[i].text->str[0] == '\0')를 바꿈
 		if (cmd_lst[i].text == NULL && cmd_lst[i].redi == NULL)
 		{
 			syntax_error('|');

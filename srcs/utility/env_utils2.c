@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils2.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:28:58 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:28:58 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	reset_env_path(t_info *info)
@@ -26,13 +38,12 @@ int	incorrect_env_key(char *env_key)
 	i = 0;
 	if (!(ft_isalpha(env_key[i]) || env_key[i] == '_'))
 		return (TRUE);
-	while ((ft_isalpha(env_key[i]) || env_key[i] == '_' || ft_isdigit(env_key[i])))
+	while ((ft_isalpha(env_key[i]) || env_key[i] == '_'
+			|| ft_isdigit(env_key[i])))
 		i++;
 	if (env_key[i] == 0)
 		return (FALSE);
 	return (TRUE);
-	//특수문자 말고 확인할거 있는지 체크하기
-	// + 첫글자가 숫자인지도 체크
 }
 
 int	check_add_value(char **env)
@@ -41,7 +52,7 @@ int	check_add_value(char **env)
 	char	*tmp;
 
 	len = (int)ft_strlen(env[KEY]);
-	if (env[KEY][len - 1] == '+')//맨뒤에 +가 있으면 그거 지워줌.
+	if (env[KEY][len - 1] == '+')
 	{
 		tmp = (char *)malloc(sizeof(char) * len);
 		merror(tmp);
