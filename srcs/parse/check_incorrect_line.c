@@ -59,7 +59,7 @@ static int	separator_in_a_row(char *line, int i)
 		{
 			if (line[i] == '\0' && pipe_flag == TRUE)
 				syntax_error("|");
-			else if (pipe_flag == FALSE && is_redirection(line[i]))//추가한 내용
+			else if (pipe_flag == FALSE && is_redirection(line[i]))
 				syntax_error(&line[i]);
 			else
 				return (FALSE);

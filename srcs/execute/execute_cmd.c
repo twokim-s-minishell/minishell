@@ -2,24 +2,6 @@
 
 extern t_exit_code	g_exit;
 
-int	wexitstatus(int status)
-{
-	return ((int)status >> 8 & (0x000000ff));
-}
-
-void	fork_process(t_info *info, int depth)
-{
-	char	*error_message;
-
-	info->pipex.pid[depth] = fork();
-	if (info->pipex.pid[depth] == ERROR)
-	{
-		error_message = strerror(errno);
-		ft_putendl_fd((char *)error_message, STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
-}
-
 /*
 ** wait() 함수로 모든 자식 프로세스가 끝날 때 까지 대기
 ** 자식 프로세스가 끝나면 wexitstatus() 함수에 status 넣어서 exit_code 구하기
@@ -31,11 +13,25 @@ void	waiting_child_process(t_info *info, int depth)
 	int	ret;
 
 	ret = -1;
-	while ((ret = waitpid(0, &status, 0)) != ERROR)
+	info->last_pid = info->pipex.pid[depth];
+	close_pipeline(info);
+	while (TRUE)
 	{
+		ret = waitpid(0, &status, 0);
+		if (ret == ERROR)
+			break ;
 		if (info->last_pid == ret && g_exit.sig_flag == FALSE)
 			g_exit.code = wexitstatus(status);
 	}
+}
+
+void	ignoring_sigusr1_command(t_info *info, int depth)
+{
+	signal(SIGUSR1, SIG_IGN);
+	if (depth != info->n_cmd - 1)
+		execute_command(info, depth + 1);
+	waiting_child_process(info, depth);
+	signal(SIGUSR1, execve_handler);
 }
 
 /*
@@ -45,7 +41,6 @@ void	waiting_child_process(t_info *info, int depth)
 ** 3. 부모프로세스에선 명령어 개수 만큼 반복해서 execute_command() 재귀 호출
 ** 4. 자식프로세스에선 execute_execve() 함수 들어가서 명령어 실행
 */
-
 void	execute_command(t_info *info, int depth)
 {
 	int	ret;
@@ -56,20 +51,13 @@ void	execute_command(t_info *info, int depth)
 	if (info->pipex.pid[depth] > 0)
 	{
 		signal(SIGINT, SIG_IGN);
-		if (!ft_strcmp("./minishell", info->cmd_lst[info->cmd_sequence].text->str))
-		{
-			signal(SIGUSR1, SIG_IGN);
-			if (depth != info->n_cmd - 1)
-				execute_command(info, depth + 1);
-			waiting_child_process(info, depth);
-			signal(SIGUSR1, execve_handler);
-		}
+		if (info->cmd_lst[depth].text != NULL
+			&& !ft_strcmp("./minishell", info->cmd_lst[depth].text->str))
+			ignoring_sigusr1_command(info, depth);
 		else
 		{
 			if (depth == info->n_cmd - 1)
 			{
-				info->last_pid = info->pipex.pid[depth];
-				close_pipeline(info);
 				waiting_child_process(info, depth);
 				return ;
 			}
@@ -79,8 +67,7 @@ void	execute_command(t_info *info, int depth)
 	else if (info->pipex.pid[depth] == 0)
 	{
 		signal(SIGUSR1, SIG_IGN);
-		ret = execute_execve(info, depth);
-		exit(ret);
+		exit(execute_execve(info, depth));
 	}
 }
 

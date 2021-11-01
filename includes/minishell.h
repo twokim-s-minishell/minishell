@@ -20,8 +20,8 @@
 */
 
 # include <stdio.h>
-# include "readline/history.h"
-# include "readline/readline.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/stat.h>
@@ -205,6 +205,8 @@ void	get_cmd_list(t_info *info);
 void	init_pipe_fd(t_info *info);
 void	make_pipeline(t_info *info, int depth);
 void	close_pipeline(t_info *info);
+
+void	fork_process(t_info *info, int depth);
 
 int		wexitstatus(int status);
 

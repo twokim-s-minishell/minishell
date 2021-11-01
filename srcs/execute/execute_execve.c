@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-extern int	g_exit_code;
 /*
 ** 파일이 존재하지 않거나 디렉토리 파일이면 에러메세지 출력 후 종료
 */

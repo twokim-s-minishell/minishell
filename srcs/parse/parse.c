@@ -12,25 +12,6 @@
 
 #include "minishell.h"
 
-static int	check_incorrect_pipe(t_info *info)
-{
-	int		i;
-	t_cmd	*cmd_lst;
-
-	i = 0;
-	cmd_lst = info->cmd_lst;
-	while (i < info->n_cmd)
-	{
-		if (cmd_lst[i].text == NULL && cmd_lst[i].redi == NULL)
-		{
-			syntax_error("|");
-			return (ERROR);
-		}
-		i++;
-	}
-	return (NORMAL);
-}
-
 static int	all_is_space(char *line)
 {
 	int	i;

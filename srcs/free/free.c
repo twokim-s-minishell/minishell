@@ -7,7 +7,7 @@ void	free_double_string(char **list)
 	i = 0;
 	if (list == NULL)
 		return ;
-	while(list[i] != NULL)
+	while (list[i] != NULL)
 		free(list[i++]);
 	free(list);
 }
@@ -52,7 +52,7 @@ void	clear_info(t_info *info)
 	if (info->cmd_str)
 	{
 		free_double_string(info->cmd_str);
-		info->cmd_str = NULL; 
+		info->cmd_str = NULL;
 	}
 	while (i < info->n_cmd)
 	{
