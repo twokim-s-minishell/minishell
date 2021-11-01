@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern t_exit_code	g_exit_code;
+extern t_exit_code	g_exit;
 
 int	wexitstatus(int status)
 {
@@ -28,12 +28,18 @@ void	fork_process(t_info *info, int depth)
 void	waiting_child_process(t_info *info, int depth)
 {
 	int	status;
+	int	ret;
 
-	while (waitpid(info->pipex.pid[depth], &status, 0) != ERROR)
+	ret = -1;
+	while ((ret = waitpid(0, &status, 0)) != ERROR)
 	{
+		if (info->last_pid == ret && g_exit.sig_flag == FALSE)
+			g_exit.code = wexitstatus(status);
 	}
-	if (g_exit_code.sigusr1_flag == FALSE)
-		g_exit_code.exit_code = wexitstatus(status);
+	// if (WIFSIGNALED(status))
+	// {
+	// 	perror("ERROR\n");
+	// }
 }
 
 /*
@@ -43,6 +49,7 @@ void	waiting_child_process(t_info *info, int depth)
 ** 3. 부모프로세스에선 명령어 개수 만큼 반복해서 execute_command() 재귀 호출
 ** 4. 자식프로세스에선 execute_execve() 함수 들어가서 명령어 실행
 */
+
 void	execute_command(t_info *info, int depth)
 {
 	int	ret;
@@ -65,6 +72,7 @@ void	execute_command(t_info *info, int depth)
 		{
 			if (depth == info->n_cmd - 1)
 			{
+				info->last_pid = info->pipex.pid[depth];
 				close_pipeline(info);
 				waiting_child_process(info, depth);
 				return ;
@@ -88,13 +96,15 @@ void	execute_command(t_info *info, int depth)
 */
 void	execute_command_main(t_info *info)
 {
-	g_exit_code.sigusr1_flag = 0;
+	g_exit.sig_flag = 0;
 	init_pipe_fd(info);
-	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);
 	info->cmd_sequence = 0;
+	g_exit.code = 0;
+	g_exit.sig_flag = FALSE;
+	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);
 	if (is_builtin_command(info) && (info->n_cmd == 1))
 	{
-		g_exit_code.exit_code = execute_execve(info, 0);
+		g_exit.code = execute_execve(info, 0);
 		return ;
 	}
 	execute_command(info, 0);
