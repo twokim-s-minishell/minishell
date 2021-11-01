@@ -206,6 +206,8 @@ void	init_pipe_fd(t_info *info);
 void	make_pipeline(t_info *info, int depth);
 void	close_pipeline(t_info *info);
 
+void	fork_process(t_info *info, int depth);
+
 int		wexitstatus(int status);
 
 int		redirection(t_info *info, int fd[]);

@@ -12,23 +12,35 @@
 
 #include "minishell.h"
 
-static int	check_incorrect_pipe(t_info *info)
+void	print_line(t_info *info)
 {
 	int		i;
-	t_cmd	*cmd_lst;
+	t_cmd	*cur;
+	t_lst	*text;
+	t_lst	*redi;
 
-	i = 0;
-	cmd_lst = info->cmd_lst;
-	while (i < info->n_cmd)
+	i = -1;
+	while (++i < info->n_cmd)
 	{
-		if (cmd_lst[i].text == NULL && cmd_lst[i].redi == NULL)
+		cur = &(info->cmd_lst[i]);
+		text = cur->text;
+		redi = cur->redi;
+		printf("text : ");
+		while (text)
 		{
-			syntax_error('|');
-			return (ERROR);
+			printf("%s  ", text->str);
+			text = text->next;
 		}
-		i++;
+		printf("\nredi : ");
+		while (redi)
+		{
+			printf("%s  ", redi->str);
+			redi = redi->next;
+		}
+		printf("\n\n");
 	}
-	return (NORMAL);
+
+
 }
 
 static int	all_is_space(char *line)

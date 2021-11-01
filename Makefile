@@ -58,10 +58,12 @@ OBJS_LST	=	main.o						\
 				get_cmd_list.o				\
 				make_pipeline.o				\
 				close_pipeline.o			\
+				fork_process.o				\
 				get_pipe_fd.o				\
 				redirection.o				\
 				here_doc.o					\
 				switch_stdio.o				\
+				wexitstatus.o				\
 				free_two_dimensional.o		\
 				arrange_quote.o				\
 				check_incorrect_line.o		\

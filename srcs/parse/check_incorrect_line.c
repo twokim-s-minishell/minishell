@@ -57,11 +57,11 @@ static int	separator_in_a_row(char *line, int i)
 			i++;
 		if (is_separator(line[i]))
 		{
-			if (line[i] == '\0' && pipe_flag == TRUE)
+			if ((line[i] == '\0' && pipe_flag == TRUE) || line[i] == '|')
 				syntax_error('|');
 			else if (line[i] == '\0')
 				return (FALSE);
-			else
+			else//asd | > 인 경우 여기 수정
 				syntax_error(line[i]);
 			return (TRUE);
 		}
