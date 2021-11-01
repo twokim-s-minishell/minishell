@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:29:32 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 16:41:55 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 19:40:17 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,19 @@ void	error_message(char *cmd, char *arg, char *msg)
 	ft_putendl_fd(msg, STDERR_FILENO);
 }
 
-void	syntax_error(char c)
+void	syntax_error(char *c)
 {
 	ft_putstr_fd("Minishell: ", STDERR_FILENO);
 	ft_putstr_fd("syntax error near unexpected token '", STDERR_FILENO);
-	if (c == '\0')
+	if (*c == '\0')
 		ft_putstr_fd("newline", STDERR_FILENO);
+	else if (is_redirection(*c) && is_redirection(*(c + 1)))
+	{
+		ft_putchar_fd(*c, STDERR_FILENO);
+		ft_putchar_fd(*(c + 1), STDERR_FILENO);
+	}
 	else
-		ft_putchar_fd(c, STDERR_FILENO);
+		ft_putchar_fd(*c, STDERR_FILENO);
 	ft_putendl_fd("\'", STDERR_FILENO);
 }
 

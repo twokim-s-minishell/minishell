@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:09:23 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:09:24 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 19:43:07 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ static int	separator_in_a_row(char *line, int i)
 		if (is_separator(line[i]))
 		{
 			if (line[i] == '\0' && pipe_flag == TRUE)
-				syntax_error('|');
-			else if (line[i] == '\0')
-				return (FALSE);
+				syntax_error("|");
+			else if (pipe_flag == FALSE && is_redirection(line[i]))//추가한 내용
+				syntax_error(&line[i]);
 			else
-				syntax_error(line[i]);
+				return (FALSE);
 			return (TRUE);
 		}
 	}
@@ -72,11 +72,11 @@ static int	separator_in_a_row(char *line, int i)
 static int	check_incorrect_case(char *line, int i)
 {
 	if ((line[i] == ';' || line[i] == '\\'))
-		syntax_error(line[i]);
+		syntax_error(&line[i]);
 	else if (check_type(line[i]) == PIPE && check_type(line[i + 1]) == PIPE)
-		syntax_error(line[i]);
+		syntax_error(&line[i]);
 	else if (is_redirection(line[i]) && check_redirection(line, &i))
-		syntax_error(line[i]);
+		syntax_error(&line[i]);
 	else if (separator_in_a_row(line, i))
 		return (TRUE);
 	else

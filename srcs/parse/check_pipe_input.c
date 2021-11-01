@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:12:52 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 16:53:03 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 19:40:52 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	check_pipe(char *line)
 	while (j < i)
 		if (!is_separator(line[j++]))
 			return (FALSE);
-	syntax_error('|');
+	syntax_error("|");
 	return (TRUE);
 }
 
