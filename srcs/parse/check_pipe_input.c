@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:12:52 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:12:53 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 16:53:03 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,51 @@ static int	check_pipe(char *line)
 	return (TRUE);
 }
 
+static int	check_is_pipe_stdin_input(char **line)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while ((*line)[i] && (*line)[i] != '|')
+		i++;
+	if ((*line)[i] == '\0')
+		return (FALSE);
+	j = i + 1;
+	while (is_space((*line)[j]))
+		j++;
+	if ((*line)[j] == '\0')
+		return (TRUE);
+	return (FALSE);
+}
+
+static char	*put_in_pipe_input(void)
+{
+	char	*add;
+
+	while (TRUE)
+	{
+		add = readline("> ");
+		if (g_exit.code == -42)
+		{
+			free(add);
+			g_exit.code = 1;
+			return (NULL);
+		}
+		if (add == NULL)
+		{
+			ft_putstr_fd("\x1b[1A", STDERR_FILENO);
+			ft_putstr_fd("\033[2C", STDERR_FILENO);
+			error_message("syntax error", NULL, "unexpected end of file");
+			return (NULL);
+		}
+		if (add[0] != '\0')
+			break ;
+		free(add);
+	}
+	return (add);
+}
+
 int	check_pipe_input(char **line)
 {
 	int		i;
@@ -42,36 +87,12 @@ int	check_pipe_input(char **line)
 
 	if (check_pipe(*line))
 		return (ERROR);
-	i = 0;
-	while ((*line)[i] && (*line)[i] != '|')
-		i++;
-	if ((*line)[i] == '\0')
-		return (NORMAL);
-	j = i + 1;
-	while (is_space((*line)[j]))
-		j++;
-	if ((*line)[j] == '\0')
+	if (check_is_pipe_stdin_input(line))
 	{
 		signal(SIGINT, pipe_input_handler);
-		while (TRUE)
-		{
-			add = readline("> ");
-			if (g_exit.code == -42)
-			{
-				free(add);
-				g_exit.code = 1;
-				return (ERROR);
-			}
-			if (add == NULL)
-			{
-				ft_putstr_fd("\x1b[1A", STDERR_FILENO);
-				ft_putstr_fd("\033[2C", STDERR_FILENO);
-				error_message("syntax error", NULL, "unexpected end of file");
-				return (ERROR);
-			}
-			if (add[0] != '\0')
-				break ;
-		}
+		add = put_in_pipe_input();
+		if (add == NULL)
+			return (ERROR);
 		tmp = *line;
 		*line = ft_strjoin(tmp, add);
 		merror(*line);

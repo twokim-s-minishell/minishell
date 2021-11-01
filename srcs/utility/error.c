@@ -6,20 +6,11 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:29:32 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:29:32 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 16:41:55 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	error(void)//얘 사용하는지?
-{
-	const char	*error_message;
-
-	error_message = strerror(errno);
-	ft_putendl_fd((char *)error_message, STDERR_FILENO);
-	return (ERROR);
-}
 
 void	merror(void *addr)
 {
