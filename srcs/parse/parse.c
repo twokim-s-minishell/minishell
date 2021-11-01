@@ -6,42 +6,11 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:15:25 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:15:27 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 19:40:42 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_line(t_info *info)
-{
-	int		i;
-	t_cmd	*cur;
-	t_lst	*text;
-	t_lst	*redi;
-
-	i = -1;
-	while (++i < info->n_cmd)
-	{
-		cur = &(info->cmd_lst[i]);
-		text = cur->text;
-		redi = cur->redi;
-		printf("text : ");
-		while (text)
-		{
-			printf("%s  ", text->str);
-			text = text->next;
-		}
-		printf("\nredi : ");
-		while (redi)
-		{
-			printf("%s  ", redi->str);
-			redi = redi->next;
-		}
-		printf("\n\n");
-	}
-
-
-}
 
 static int	all_is_space(char *line)
 {

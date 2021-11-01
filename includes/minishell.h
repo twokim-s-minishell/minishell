@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:23:39 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 19:39:12 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,10 +274,9 @@ void	reset_env_info(t_info *info);
 int		is_register_variable(char *cmd);
 void	register_variable(char *cmd, t_info *info, int *fd);
 
-int		error(void);
 void	merror(void *addr);
 void	error_message(char *cmd, char *arg, char *msg);
-void	syntax_error(char c);
+void	syntax_error(char *c);
 void	unclosed_quote(char c);
 
 t_lst	*create_node(void);
