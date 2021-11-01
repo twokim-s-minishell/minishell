@@ -79,7 +79,8 @@ OBJS_LST	=	main.o						\
 				list.o						\
 				string_utils.o				\
 				parse_utils.o				\
-				parse_utils2.o
+				parse_utils2.o				\
+				parse_utils3.o
 
 OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LST))
 

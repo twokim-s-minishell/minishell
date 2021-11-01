@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_pipe_input.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:12:52 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:12:53 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-extern int	g_exit_code;
+extern t_exit_code	g_exit;
 
 static int	check_pipe(char *line)
 {
@@ -15,11 +27,10 @@ static int	check_pipe(char *line)
 		return (FALSE);
 	j = 0;
 	while (j < i)
-		if (!is_separator(line[j++]))//파이프 앞에 문자가 있으면 정상, separator만 있으면 에러임.
+		if (!is_separator(line[j++]))
 			return (FALSE);
 	syntax_error('|');
 	return (TRUE);
-	//여기에 파이프 뒤에 아무것도 안오는 경우 체크
 }
 
 int	check_pipe_input(char **line)
@@ -45,10 +56,10 @@ int	check_pipe_input(char **line)
 		while (TRUE)
 		{
 			add = readline("> ");
-			if (g_exit_code == -42)
+			if (g_exit.code == -42)
 			{
 				free(add);
-				g_exit_code = 1;
+				g_exit.code = 1;
 				return (ERROR);
 			}
 			if (add == NULL)
@@ -69,8 +80,3 @@ int	check_pipe_input(char **line)
 	}
 	return (NORMAL);
 }
-//경우 체크 -> 파이프 만나고 그 뒤에 스페이스나 아무것도 없는 경우
-//인풋 리드라인으로 받음.
-//두 문자열 join
-//라인에 새로 할당
-//시그널 처리 추가

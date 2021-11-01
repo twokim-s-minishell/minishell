@@ -1,4 +1,16 @@
-# include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   save_env_values.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:31:44 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:31:45 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
 
 void	make_env_double_string(t_info *info)
 {
@@ -26,7 +38,6 @@ void	make_env_double_string(t_info *info)
 	}
 	info->env_str[i] = NULL;
 }
-
 
 void	save_env_variables(t_info *info, char **envp)
 {

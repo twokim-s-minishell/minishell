@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:06:59 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:07:01 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	print_export(t_info *info, int *fd)
@@ -21,7 +33,6 @@ void	print_export(t_info *info, int *fd)
 			str[i] = ft_strjoin(tmp, cur->value);
 			merror(str[i++]);
 			free(tmp);
-			tmp = NULL;
 		}
 		cur = cur->next;
 	}
@@ -79,12 +90,22 @@ void	add_new_env(char **env, t_info *info)
 	merror(end->value);
 }
 
+static void	fillin_new_env(char	**env, t_info *info, int add_flag)
+{
+	t_env	*cur_env;
+
+	cur_env = check_listin(env[KEY], info);
+	if (cur_env)
+		add_env_value(env, cur_env, add_flag);
+	else
+		add_new_env(env, info);
+}
+
 void	export(char **cmd, t_info *info, int *fd)
 {
 	int		i;
 	int		add_flag;
 	char	**env;
-	t_env	*cur_env;
 
 	i = 0;
 	add_flag = FALSE;
@@ -92,32 +113,13 @@ void	export(char **cmd, t_info *info, int *fd)
 		return (print_export(info, fd));
 	while (cmd[++i] != NULL)
 	{
-		env = env_split(cmd[i]);//==이 2개인 경우도 인식하는데 이거 처리 어떻게? => 무조건 첫번째 =으로 처리
+		env = env_split(cmd[i]);
 		add_flag = check_add_value(env);
-		if (incorrect_env_key(env[KEY]))//문자열의 양식 판단
+		if (incorrect_env_key(env[KEY]))
 			error_message("export", env[KEY], "not a valid identifier");
 		else
-		{
-			cur_env = check_listin(env[KEY], info);//리스트 안에 있는지
-			if (cur_env)
-				add_env_value(env, cur_env, add_flag);//그 변수 값을 새로이
-			else
-				add_new_env(env, info);//변수 자체를 새로 추가
-		}
+			fillin_new_env(env, info, add_flag);
 		free_double_string(env);
 	}
 	reset_env_info(info);
 }
-
-/*
-cmd[0] = export
-cmd[1] = QQ or QQ=asd
-1. =앞의 변수 이름 QQ가 이미 환경변수에 있는지 확인
-	환경변수list마다 변수 길이만큼 strncmp
-		-> 통과하면 변수길이 다음 문자가 =인지 확인
-			-> 있으면 그 값만 추가하거나 변경
-2. 없으면 그냥 추가
-	1. 환경변수 리스트 확장
-	2. QQ=~~그대로 추가.
-*/
-// ++export qq+=asd -> value값에 이어붙이는 로직

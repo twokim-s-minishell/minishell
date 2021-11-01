@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_incorrect_line.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:09:23 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:09:24 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	check_redirection(char *line, int *i)
@@ -29,7 +41,7 @@ static int	check_redirection(char *line, int *i)
 	return (FALSE);
 }
 
-static int separator_in_a_row(char *line, int i)
+static int	separator_in_a_row(char *line, int i)
 {
 	int	pipe_flag;
 
@@ -70,10 +82,6 @@ static int	check_incorrect_case(char *line, int i)
 	else
 		return (FALSE);
 	return (TRUE);
-	//; or \
-	//더블 파이프
-	//리다이렉션 <> >< or >>>처럼 3개 이상인 경우
-	//체크
 }
 
 int	check_closed_quote(t_quote data)
@@ -111,9 +119,4 @@ int	check_incorrect_line(char *line)
 				return (TRUE);
 	}
 	return (check_closed_quote(data));
-	/*
-	1. quote가 짝수개인지
-	2. quote안이 아닌 곳에 ; \ 있는지
-	3. double pipe인지
-	*/
 }
