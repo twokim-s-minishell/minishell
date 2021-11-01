@@ -163,6 +163,7 @@ typedef struct s_info
 	char		**cmd_str;
 	int			cmd_sequence;
 	int			n_cmd;
+	int			last_pid;
 	char		**env_str;
 	char		*home_path;
 	char		*pwd_path;
