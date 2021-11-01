@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_cmd.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 19:55:10 by kyunkim           #+#    #+#             */
+/*   Updated: 2021/11/01 19:57:56 by kyunkim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 extern t_exit_code	g_exit;
@@ -45,6 +57,8 @@ void	execute_command(t_info *info, int depth)
 {
 	int	ret;
 
+	if (depth > info->n_cmd - 1)
+		return ;
 	info->cmd_sequence = depth;
 	make_pipeline(info, depth);
 	fork_process(info, depth);
@@ -57,10 +71,7 @@ void	execute_command(t_info *info, int depth)
 		else
 		{
 			if (depth == info->n_cmd - 1)
-			{
 				waiting_child_process(info, depth);
-				return ;
-			}
 			execute_command(info, depth + 1);
 		}
 	}
