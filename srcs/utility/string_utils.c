@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:32:19 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:32:19 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	double_string_size(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str == NULL)
@@ -53,7 +65,7 @@ void	sort_env_str(char **str)
 			swap_str(str, j - 1, j);
 			j--;
 			if (j <= 0)
-				break;
+				break ;
 		}
 		i++;
 	}

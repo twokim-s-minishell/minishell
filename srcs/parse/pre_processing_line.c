@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pre_processing_line.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:15:58 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:15:58 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*remove_space(char *line, int start_idx)
@@ -75,7 +87,7 @@ char	*pre_processing(char *line, t_info *info)
 	{
 		new = skip_space(new, &start_idx);
 		sep_idx = find_separator(new, start_idx);
-		if (!new[sep_idx])//끝까지 다본 경우 뿐만 아니라 << EOF같은 경우도 있음.
+		if (!new[sep_idx])
 			end_flag = TRUE;
 		new = arrange_quote(new, &start_idx, sep_idx, info);
 		if (new == NULL)

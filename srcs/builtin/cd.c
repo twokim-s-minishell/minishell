@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 14:59:37 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 14:59:56 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	cd_old_pwd(t_info *info, int first_flag)
@@ -82,7 +94,7 @@ void	cd(char *path, t_info *info)
 	char		cur_pwd[1024];
 
 	normal_flag = FALSE;
-	getcwd(cur_pwd, 1024);//OLD_PWD에 저장하기 위해
+	getcwd(cur_pwd, 1024);
 	if (path == NULL)
 		just_cd(info, &normal_flag);
 	else if (path[0] == '~' && path[1] == 0)
@@ -99,8 +111,3 @@ void	cd(char *path, t_info *info)
 	if (normal_flag)
 		save_old_pwd(cur_pwd, info, &first_flag);
 }
-
-/*
-1. (상대, 절대)경로 문자열을 인자로 받음.
-2. cd성공시 0리턴, 실패시 1리턴
-*/

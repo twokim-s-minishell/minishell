@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:28:19 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:28:20 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	**env_split(char *str)
@@ -25,15 +37,11 @@ char	**env_split(char *str)
 	merror(env[VALUE]);
 	env[2] = NULL;
 	return (env);
-	//처음 만나는 =으로 2등분
-	//만약 export qq만 오면
-	//env 2차원 배열의 env[1]은 1만큼 할당 후 '\0'을 넣어줌.
-	//env[2] == NULL
 }
 
 t_env	*check_listin(char *env_key, t_info *info)
 {
-	int	len_value;
+	int		len_value;
 	t_env	*cur;
 
 	len_value = (int)ft_strlen(env_key) + 1;
@@ -47,7 +55,7 @@ t_env	*check_listin(char *env_key, t_info *info)
 	return (NULL);
 }
 
-char	*get_env_value(char *key, t_info *info)//key문자열의 복사본 리턴, 없으면 null
+char	*get_env_value(char *key, t_info *info)
 {
 	t_env	*cur;
 	char	*ret;
@@ -66,7 +74,7 @@ int	is_register_variable(char *cmd)
 		return (FALSE);
 	if (ft_strchr(cmd, '=') != NULL)
 		return (TRUE);
-	return(FALSE);
+	return (FALSE);
 }
 
 void	register_variable(char *cmd, t_info *info, int *fd)
@@ -86,7 +94,7 @@ void	register_variable(char *cmd, t_info *info, int *fd)
 		flag = TRUE;
 	free_double_string(env);
 	export(export_cmd, info, fd);
-	if (flag == FALSE)//이미 있는 변수의 값만 바꾸는 경우
+	if (flag == FALSE)
 		info->env_deq->last->env_flag = FALSE;
 	free(export_cmd[1]);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:08:04 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:08:05 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 extern t_exit_code	g_exit;
@@ -7,9 +19,9 @@ void	main_sig_handler(int signo)
 	if (signo == SIGINT)
 	{
 		ft_putchar_fd('\n', STDERR_FILENO);
-		rl_on_new_line();// 새로운 리드라인으로 이동
-		rl_replace_line("", 0);//리드라인에 입력 하던내용 새롭게 변경
-		rl_redisplay();//새로운 리드라인 출력
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
@@ -59,4 +71,3 @@ void	newline_handler(int signo)
 		ft_putendl_fd("Quit: 3", STDERR_FILENO);
 	}
 }
-

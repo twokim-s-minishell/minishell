@@ -1,4 +1,16 @@
-# include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:25:44 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:25:45 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
 
 t_exit_code	g_exit;
 
@@ -22,7 +34,7 @@ void	set_environment_path(t_info *info)
 	char	**env_path;
 
 	idx = 0;
-	path_value = get_env_value("PATH", info);//에러 처리 추가
+	path_value = get_env_value("PATH", info);
 	if (path_value == NULL)
 		return ;
 	env_path = ft_split(path_value, ':');
@@ -42,14 +54,14 @@ char	*get_command_line(void)
 
 	line = NULL;
 	line = readline("Minishell >");
-	if (line == NULL)//EOF(ctrl + d)만나면 NULL
+	if (line == NULL)
 	{
-		ft_putstr_fd("\x1b[1A", STDERR_FILENO);//커서 하나 위로
-		ft_putstr_fd("\033[12C", STDERR_FILENO);//커서 뒤로
+		ft_putstr_fd("\x1b[1A", STDERR_FILENO);
+		ft_putstr_fd("\033[12C", STDERR_FILENO);
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		exit(0);
 	}
-	if (*line == 0)//엔터 눌렀을 때 함수 종료
+	if (*line == 0)
 	{
 		free(line);
 		return (NULL);

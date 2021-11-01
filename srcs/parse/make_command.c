@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   make_command.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/01 15:14:29 by hyeonkki          #+#    #+#             */
+/*   Updated: 2021/11/01 15:14:29 by hyeonkki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	count_command(char *line)
 {
-	int sep_idx;
+	int	sep_idx;
 	int	sep_cnt;
 
 	sep_idx = 0;
@@ -86,31 +98,13 @@ static void	make_command_array(char **cmd, t_info *info)
 				link_node(split_cmd[j], &(cmd_lst[i].text));
 			j++;
 		}
-		// if (cmd_lst[i].text == NULL)//새로 만든거
-		// 	cmd_lst[i].text = create_node();
 		free_double_string(split_cmd);
 	}
 	info->cmd_lst = cmd_lst;
-	/*
-		1. cmd[i]를 "로 스필릿(일반 문자 "는 스킵하는 로직 추가)
-		2. 문자열 하나씩 봄.
-		3. check_redirect를 함.
-		4. redirect가 아니면 그 문자열 그대로 노드 만들어서 저장 후 text에 저장
-		5. redirect면 redirect + 문자열 조합이 되어서 파싱되어있으므로
-			그대로 노드 만들어서 redi리스트에 저장
-	*/
 }
 
 void	make_command(char *line, t_info *info)
 {
-	/*
-	1. 구분자로 split, 구분자는 ", |, >, <, but, | < > >> <<는 살리거나 flag에 값을 넣어줌
-	2. ""는 1차원 배열 구분자
-	3. 파이프, 리다이렉션은 2차원 배열 구분자
-	4. 파이프 리다이렉션으로 먼저 split, 리다이렉션은 구조체 플래그에 값 넣어줌.
-	5. 쪼개진 문자열 만큼 구조체 할당하고
-	6. 각 구조체에 쪼개진 문자열하나씩 ""로 split
-	*/
 	char	**cmd;
 
 	cmd = divide_by_command(line, info);
