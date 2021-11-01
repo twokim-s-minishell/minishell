@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 19:39:12 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 20:01:28 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,15 @@ typedef long long	t_ll;
 typedef enum e_type
 {
 	NORM = 0,
-	SQUOTE, DQUOTE,
-	SPCE, SPEC, DOLR, PIPE, END,
-	RRDI, LRDI
+	SQUOTE,
+	DQUOTE,
+	SPCE,
+	SPEC,
+	DOLR,
+	PIPE,
+	END,
+	RRDI,
+	LRDI
 }			t_type;
 
 /*
