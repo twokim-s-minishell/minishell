@@ -3,7 +3,14 @@
 		"minishell.h": "c",
 		"cstdlib": "c",
 		"locale": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"__config": "c",
+		"__errc": "c",
+		"__hash_table": "c",
+		"__locale": "c",
+		"__tuple": "c",
+		"bitset": "c",
+		"ios": "c"
 	},
 	"C_Cpp.errorSquiggles": "Disabled"
 }
