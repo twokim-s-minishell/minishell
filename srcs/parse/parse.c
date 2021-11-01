@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:15:25 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:15:27 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/01 19:40:42 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	check_incorrect_pipe(t_info *info)
 	{
 		if (cmd_lst[i].text == NULL && cmd_lst[i].redi == NULL)
 		{
-			syntax_error('|');
+			syntax_error("|");
 			return (ERROR);
 		}
 		i++;
