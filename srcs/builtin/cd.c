@@ -6,11 +6,13 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:59:37 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 14:59:56 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:24:59 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_exit_code	g_exit;
 
 static int	cd_old_pwd(t_info *info, int first_flag)
 {
@@ -20,17 +22,20 @@ static int	cd_old_pwd(t_info *info, int first_flag)
 	if (first_flag == 0)
 	{
 		error_message("cd", NULL, "OLDPWD not set");
+		g_exit.code = 1;
 		return (ERROR);
 	}
 	old_pwd = get_env_value("OLDPWD", info);
 	if (old_pwd == NULL)
 	{
 		error_message("cd", NULL, "OLDPWD not set");
+		g_exit.code = 1;
 		return (ERROR);
 	}
 	if (chdir(old_pwd) == ERROR)
 	{
 		error_message("cd", old_pwd, "No such file or directory");
+		g_exit.code = 1;
 		free(old_pwd);
 		return (ERROR);
 	}
@@ -54,8 +59,6 @@ static void	save_old_pwd(char *cur_pwd, t_info *info, int *first_flag)
 		info->pwd_path = NULL;
 	}
 	info->pwd_path = getcwd(NULL, 0);
-	if (info->pwd_path == NULL)
-		printf("%s\n", strerror(errno));
 	*first_flag += 1;
 	cmd[0] = "export";
 	if (cur_pwd)
@@ -71,9 +74,15 @@ static void	just_cd(t_info *info, int *flag)
 
 	home = get_env_value("HOME", info);
 	if (home == NULL)
+	{
 		error_message("cd", NULL, "Home not set");
+		g_exit.code = 1;
+	}
 	else if (chdir(home) == ERROR)
+	{
 		error_message("cd", home, "No such file or directory");
+		g_exit.code = 1;
+	}
 	else
 		*flag = TRUE;
 	free(home);
@@ -82,12 +91,15 @@ static void	just_cd(t_info *info, int *flag)
 static void	home_cd(t_info *info, int *flag)
 {
 	if (chdir(info->home_path) == ERROR)
+	{
 		error_message("cd", info->home_path, "No such file or directory");
+		g_exit.code = 1;
+	}
 	else
 		*flag = TRUE;
 }
 
-void	cd(char *path, t_info *info)
+int	cd(char *path, t_info *info)
 {
 	int			normal_flag;
 	static int	first_flag;
@@ -110,4 +122,5 @@ void	cd(char *path, t_info *info)
 		normal_flag = TRUE;
 	if (normal_flag)
 		save_old_pwd(cur_pwd, info, &first_flag);
+	return (g_exit.code);
 }

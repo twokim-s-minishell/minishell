@@ -6,13 +6,13 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:00:14 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:00:15 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:28:16 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(t_info *info, int *fd)
+int	env(t_info *info, int *fd)
 {
 	t_env	*cur;
 
@@ -27,4 +27,5 @@ void	env(t_info *info, int *fd)
 		}
 		cur = cur->next;
 	}
+	return (NORMAL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 20:01:28 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:31:04 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,13 +185,13 @@ typedef struct s_info
 */
 
 int		builtin(char **cmd, t_info *info, int *fd);
-void	cd(char *path, t_info *info);
-void	env(t_info *info, int *fd);
-void	execute_exit(char **cmd, t_info *info);
-void	export(char **cmd, t_info *info, int *fd);
+int		cd(char *path, t_info *info);
+int		env(t_info *info, int *fd);
+int		execute_exit(char **cmd, t_info *info);
+int		export(char **cmd, t_info *info, int *fd);
 int		pwd(int *fd, t_info *info);
-void	unset(char **cmd, t_info *info);
-void	echo(t_info *info, int *fd);
+int		unset(char **cmd, t_info *info);
+int		echo(t_info *info, int *fd);
 
 /*
 ** =============================================================================
@@ -278,10 +278,10 @@ int		check_add_value(char **env);
 void	reset_env_info(t_info *info);
 
 int		is_register_variable(char *cmd);
-void	register_variable(char *cmd, t_info *info, int *fd);
+int		register_variable(char *cmd, t_info *info, int *fd);
 
 void	merror(void *addr);
-void	error_message(char *cmd, char *arg, char *msg);
+int		error_message(char *cmd, char *arg, char *msg);
 void	syntax_error(char *c);
 void	unclosed_quote(char c);
 

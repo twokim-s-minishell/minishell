@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:29:32 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 19:40:17 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:24:43 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	merror(void *addr)
 	}
 }
 
-void	error_message(char *cmd, char *arg, char *msg)
+int	error_message(char *cmd, char *arg, char *msg)
 {
 	ft_putstr_fd("Minishell: ", STDERR_FILENO);
 	if (cmd)
@@ -35,6 +35,7 @@ void	error_message(char *cmd, char *arg, char *msg)
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	ft_putendl_fd(msg, STDERR_FILENO);
+	return (1);
 }
 
 void	syntax_error(char *c)

@@ -6,11 +6,13 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:07:23 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:07:24 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:31:42 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_exit_code	g_exit;
 
 void	del_env_variable(t_env *cur, t_info *info)
 {
@@ -32,7 +34,7 @@ void	del_env_variable(t_env *cur, t_info *info)
 	info->env_deq->size -= 1;
 }
 
-void	unset(char **cmd, t_info *info)
+int	unset(char **cmd, t_info *info)
 {
 	int		i;
 	char	*key;
@@ -45,6 +47,7 @@ void	unset(char **cmd, t_info *info)
 		if (incorrect_env_key(key))
 		{
 			error_message(cmd[0], key, "not a valid identifier");
+			g_exit.code = 1;
 			continue ;
 		}
 		cur = check_listin(key, info);
@@ -52,4 +55,5 @@ void	unset(char **cmd, t_info *info)
 			del_env_variable(cur, info);
 	}
 	reset_env_info(info);
+	return (g_exit.code);
 }

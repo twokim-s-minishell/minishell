@@ -6,11 +6,13 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:06:59 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:07:01 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:27:39 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_exit_code	g_exit;
 
 void	print_export(t_info *info, int *fd)
 {
@@ -101,7 +103,7 @@ static void	fillin_new_env(char	**env, t_info *info, int add_flag)
 		add_new_env(env, info);
 }
 
-void	export(char **cmd, t_info *info, int *fd)
+int	export(char **cmd, t_info *info, int *fd)
 {
 	int		i;
 	int		add_flag;
@@ -110,16 +112,21 @@ void	export(char **cmd, t_info *info, int *fd)
 	i = 0;
 	add_flag = FALSE;
 	if (cmd[1] == NULL)
-		return (print_export(info, fd));
+	{
+		print_export(info, fd);
+		return (NORMAL);
+	}
 	while (cmd[++i] != NULL)
 	{
 		env = env_split(cmd[i]);
 		add_flag = check_add_value(env);
 		if (incorrect_env_key(env[KEY]))
+			g_exit.code =
 			error_message("export", env[KEY], "not a valid identifier");
 		else
 			fillin_new_env(env, info, add_flag);
 		free_double_string(env);
 	}
 	reset_env_info(info);
+	return (g_exit.code);
 }

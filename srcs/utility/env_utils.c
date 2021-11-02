@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:28:19 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:28:20 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:29:23 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,24 @@ char	*get_env_value(char *key, t_info *info)
 
 int	is_register_variable(char *cmd)
 {
+	char	**tmp;
+
 	if (cmd == NULL)
 		return (FALSE);
 	if (ft_strchr(cmd, '=') != NULL)
-		return (TRUE);
+	{
+		tmp = env_split(cmd);
+		if (!incorrect_env_key(tmp[KEY]))
+		{
+			free_double_string(tmp);
+			return (TRUE);
+		}
+		free_double_string(tmp);
+	}
 	return (FALSE);
 }
 
-void	register_variable(char *cmd, t_info *info, int *fd)
+int	register_variable(char *cmd, t_info *info, int *fd)
 {
 	int		flag;
 	char	*export_cmd[3];
@@ -97,4 +107,5 @@ void	register_variable(char *cmd, t_info *info, int *fd)
 	if (flag == FALSE)
 		info->env_deq->last->env_flag = FALSE;
 	free(export_cmd[1]);
+	return (NORMAL);
 }

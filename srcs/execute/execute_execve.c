@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_execve.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:17 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:55:17 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:21:36 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,16 @@ int	is_builtin_command(t_info *info)
 int	execute_execve(t_info *info, int depth)
 {
 	int		fd[2];
+	int		ret;
 	char	*cmd_path;
 
+	ret = 0;
 	get_cmd_list(info);
 	cmd_path = get_cmd_path(info->env_path, info);
 	if (switch_stdio(info, fd))
 		return (TRUE);
 	if (is_builtin_command(info))
-		builtin(info->cmd_str, info, fd);
+		ret = builtin(info->cmd_str, info, fd);
 	else if (info->cmd_str[0])
 	{
 		kill(0, SIGUSR1);
@@ -117,5 +119,5 @@ int	execute_execve(t_info *info, int depth)
 		exit(CODE_CMD_NOT_FOUND);
 	}
 	free(cmd_path);
-	return (NORMAL);
+	return (ret);
 }

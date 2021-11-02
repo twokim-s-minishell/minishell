@@ -6,11 +6,13 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:00:07 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:00:08 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:58:54 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_exit_code	g_exit;
 
 int	check_correct_n_option(char *n_option)
 {
