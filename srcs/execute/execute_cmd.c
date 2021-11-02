@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:10 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:57:56 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:39:22 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void	ignoring_sigusr1_command(t_info *info, int depth)
 */
 void	execute_command(t_info *info, int depth)
 {
-	int	ret;
-
 	if (depth > info->n_cmd - 1)
 		return ;
 	info->cmd_sequence = depth;
@@ -78,7 +76,7 @@ void	execute_command(t_info *info, int depth)
 	else if (info->pipex.pid[depth] == 0)
 	{
 		signal(SIGUSR1, SIG_IGN);
-		exit(execute_execve(info, depth));
+		exit(execute_execve(info));
 	}
 }
 
@@ -96,9 +94,10 @@ void	execute_command_main(t_info *info)
 	g_exit.code = 0;
 	g_exit.sig_flag = FALSE;
 	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);
+	merror(info->pipex.pid);
 	if (is_builtin_command(info) && (info->n_cmd == 1))
 	{
-		g_exit.code = execute_execve(info, 0);
+		g_exit.code = execute_execve(info);
 		return ;
 	}
 	execute_command(info, 0);

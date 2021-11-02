@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillin_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:13:32 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:24:07 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:32:53 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,11 @@ char	*make_new_string(char *buf, int buf_len)
 	char	*str;
 	char	quote;
 
+	if (buf_len >= BUF_SIZE - 1)
+	{
+		free(buf);
+		return (NULL);
+	}
 	str = (char *)malloc(sizeof(char) * (buf_len + 3));
 	merror(str);
 	quote = choose_enclose_quote_type(buf, buf_len);
@@ -106,8 +111,8 @@ char	*fillin_buf(char *buf, char *origin, t_info *info)
 			replace_env_value(&new, &i, info);
 		else
 			buf[j++] = new[i++];
-		if (j > BUF_SIZE)
-			return (NULL);
+		if (j >= BUF_SIZE - 1)
+			break ;
 	}
 	free(new);
 	return (make_new_string(buf, j));

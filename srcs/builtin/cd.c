@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:59:37 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 14:59:56 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:51:30 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern	t_exit_code g_exit;
 
 static int	cd_old_pwd(t_info *info, int first_flag)
 {
@@ -54,8 +56,6 @@ static void	save_old_pwd(char *cur_pwd, t_info *info, int *first_flag)
 		info->pwd_path = NULL;
 	}
 	info->pwd_path = getcwd(NULL, 0);
-	if (info->pwd_path == NULL)
-		printf("%s\n", strerror(errno));
 	*first_flag += 1;
 	cmd[0] = "export";
 	if (cur_pwd)

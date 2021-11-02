@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 20:01:28 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:40:09 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/ioctl.h>
-# include <termios.h>
 # include "libft.h"
 
 /*
@@ -201,7 +200,7 @@ void	echo(t_info *info, int *fd);
 
 void	execute_command_main(t_info *info);
 void	execute_command(t_info *info, int depth);
-int		execute_execve(t_info *info, int depth);
+int		execute_execve(t_info *info);
 int		is_builtin_command(t_info *info);
 
 void	get_pipe_fd(t_info *info, int depth, int fd[]);

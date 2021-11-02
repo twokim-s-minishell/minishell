@@ -6,7 +6,7 @@
 #    By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:16:04 by kyunkim           #+#    #+#              #
-#    Updated: 2021/11/01 20:16:06 by kyunkim          ###   ########.fr        #
+#    Updated: 2021/11/02 17:38:26 by kyunkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,9 @@ LINE_CLEAR	=	"\x1b[1A\x1b[M"
 # =============================================================================
 
 CC			=	gcc
-CFLAGS		=	-g
-READ_FLG	=	-L$(HOME)/.brew/opt/readline/lib -I$(HOME)/.brew/opt/readline/include
+CFLAGS		=	-g -Wextra -Werror -Wall
+READ_FLG	=	-I$(HOME)/.brew/opt/readline/include
+MAIN_FLG	=	-L$(HOME)/.brew/opt/readline/lib  -lreadline
 RM			=	rm -rf
 
 # =============================================================================
@@ -139,7 +140,7 @@ $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(UTL_DIR)%.c
 $(NAME)			:	$(OBJS)
 					@echo $(GREEN) "Source files are compiled!\n" $(EOC)
 					@echo $(WHITE) "Building '$(NAME)' for" $(YELLOW) "Mandatory" $(WHITE) "..." $(EOC)
-					@$(CC) $(CFLAGS) $(READ_FLG) -lreadline -o $@ $^ $(LIBFT)libft.a -I$(INC)
+					@$(CC) $(CFLAGS) $(READ_FLG) $(MAIN_FLG) -o $@ $^ $(LIBFT)libft.a -I$(INC)
 					@echo $(CYAN) "'$(NAME)'(execute file) is created!\n" $(EOC)
 
 # =============================================================================
