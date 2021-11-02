@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   check_pipe_input.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:12:52 by hyeonkki          #+#    #+#             */
 /*   Updated: 2021/11/02 18:45:19 by hyeonkki         ###   ########.fr       */

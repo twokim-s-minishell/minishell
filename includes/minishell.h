@@ -31,7 +31,6 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/ioctl.h>
-# include <termios.h>
 # include "libft.h"
 
 /*

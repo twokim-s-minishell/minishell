@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:10 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/02 18:46:00 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:39:22 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	execute_command_main(t_info *info)
 	g_exit.code = 0;
 	g_exit.sig_flag = FALSE;
 	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);
+	merror(info->pipex.pid);
 	if (is_builtin_command(info) && (info->n_cmd == 1))
 	{
 		g_exit.code = execute_execve(info);
