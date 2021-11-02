@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:17 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:55:17 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:35:28 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	is_builtin_command(t_info *info)
 ** 4. 빌트인 명령어이면 빌트인 함수 실행
 ** 5. 일반 명령어이면 execve() 함수로 명령어 실행
 */
-int	execute_execve(t_info *info, int depth)
+int	execute_execve(t_info *info)
 {
 	int		fd[2];
 	char	*cmd_path;
