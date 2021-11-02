@@ -6,13 +6,28 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:10 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:57:56 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 12:01:06 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_exit_code	g_exit;
+
+void	increase_here_sequence(t_info *info, int depth)
+{
+	t_lst	*cur;
+	char	**redi;
+
+	cur = info->cmd_lst[depth].redi;
+	while (cur != NULL)
+	{
+		redi = ft_split(cur->str, '\"');
+		if (!ft_strcmp(redi[0], "<<"))
+			info->pipex.here_sequence++;
+		cur = cur->next;
+	}
+}
 
 /*
 ** wait() 함수로 모든 자식 프로세스가 끝날 때 까지 대기
@@ -70,6 +85,7 @@ void	execute_command(t_info *info, int depth)
 			ignoring_sigusr1_command(info, depth);
 		else
 		{
+			increase_here_sequence(info, depth);
 			if (depth == info->n_cmd - 1)
 				waiting_child_process(info, depth);
 			execute_command(info, depth + 1);
@@ -93,6 +109,7 @@ void	execute_command_main(t_info *info)
 	g_exit.sig_flag = 0;
 	init_pipe_fd(info);
 	info->cmd_sequence = 0;
+	info->pipex.here_sequence = 0;
 	g_exit.code = 0;
 	g_exit.sig_flag = FALSE;
 	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);

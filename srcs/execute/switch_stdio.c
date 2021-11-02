@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:54 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:55:55 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 11:41:41 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	switch_stdio(t_info *info, int fd[])
 {
 	int		ret;
+	char	buff[1024];
 
 	get_pipe_fd(info, info->cmd_sequence, fd);
 	if (redirection(info, fd) == ERROR)
@@ -32,6 +33,10 @@ int	switch_stdio(t_info *info, int fd[])
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
 			exit(EXIT_FAILURE);
 		}
+		if (fd[READ] != STDIN_FILENO)
+			close(fd[READ]);
+		if (fd[WRITE] != STDOUT_FILENO)
+			close(fd[WRITE]);
 		close_pipeline(info);
 	}
 	return (NORMAL);

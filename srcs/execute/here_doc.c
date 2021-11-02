@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:44 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:55:45 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 11:55:55 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,16 @@ int	read_string_from_stdin(t_info *info, char *limiter, int pipe_fd[])
 		free(str);
 		str = NULL;
 	}
-	exit(1);
+	exit(EXIT_SUCCESS);
 }
 
-int	here_doc(t_info *info, char *limiter, int fd[])
+int	here_doc(t_info *info, char *limiter)
 {
 	char	*str;
 	int		pipe_fd[2];
 	int		pid;
 	int		status;
 
-	info->pipex.is_here_doc = 1;
 	if (pipe(pipe_fd) == -1)
 		return (-1);
 	pid = fork();
@@ -56,12 +55,17 @@ int	here_doc(t_info *info, char *limiter, int fd[])
 		signal(SIGINT, SIG_IGN);
 		wait(&status);
 		if (wexitstatus(status) == 254)
-			return (-2);
+			return (ERROR);
 	}
 	else if (pid == 0)
 		read_string_from_stdin(info, limiter, pipe_fd);
-	info->pipex.is_here_doc = 0;
-	fd[READ] = pipe_fd[READ];
 	close(pipe_fd[WRITE]);
 	return (pipe_fd[READ]);
+}
+
+int	get_here_doc_fd(t_info *info, int fd[])
+{
+	fd[READ] = info->pipex.here_doc_fd[info->pipex.here_sequence];
+	info->pipex.here_sequence++;
+	return (fd[READ]);
 }

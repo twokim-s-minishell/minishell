@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_incorrect_line.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:09:23 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 19:43:07 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 15:48:38 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,20 @@ static int	separator_in_a_row(char *line, int i)
 	return (FALSE);
 }
 
-static int	check_incorrect_case(char *line, int i)
+static int	check_incorrect_case(char *line, int i)//info변수 받기
 {
 	if ((line[i] == ';' || line[i] == '\\'))
 		syntax_error(&line[i]);
 	else if (check_type(line[i]) == PIPE && check_type(line[i + 1]) == PIPE)
 		syntax_error(&line[i]);
 	else if (is_redirection(line[i]) && check_redirection(line, &i))
+	{
+		//flag 추가
 		syntax_error(&line[i]);
-	else if (separator_in_a_row(line, i))
-		return (TRUE);
+		return (FALSE);
+	}
+	// else if (separator_in_a_row(line, i))//뒤애서 출력
+	// 	return (TRUE);
 	else
 		return (FALSE);
 	return (TRUE);

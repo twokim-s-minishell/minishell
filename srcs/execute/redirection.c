@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:51 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:55:52 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 10:53:48 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	redirection(t_info *info, int fd[])
 	{
 		redi = ft_split(cur->str, '\"');
 		if (!ft_strncmp(redi[0], "<<", 2))
-			reval = here_doc(info, redi[1], fd);
+			reval = get_here_doc_fd(info, fd);
 		else if (!ft_strncmp(redi[0], ">>", 2))
 			reval = d_output_redirection(redi[1], fd);
 		else if (redi[0][0] == '<')

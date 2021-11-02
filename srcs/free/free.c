@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 20:03:34 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 20:03:39 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 15:16:55 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,19 @@ void	clear_pipex(t_info *info)
 
 	i = 0;
 	while (i < info->n_cmd - 1)
+	{
+		if (info->pipex.pipe_fd == NULL
+			|| info->pipex.pipe_fd[i] == NULL)
+			break ;
 		free(info->pipex.pipe_fd[i++]);
+	}
 	if (info->pipex.pipe_fd)
 		free(info->pipex.pipe_fd);
 	info->pipex.pipe_fd = NULL;
-	free(info->pipex.pid);
+	if (info->pipex.pid)
+		free(info->pipex.pid);
+	if (info->pipex.here_doc_fd)
+		free(info->pipex.here_doc_fd);
 	info->pipex.pid = NULL;
 }
 

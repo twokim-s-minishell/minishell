@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 20:01:28 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 11:53:21 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ typedef struct s_env_deq
 typedef struct s_pipex
 {
 	int		**pipe_fd;
+	int		*here_doc_fd;
+	int		here_sequence;
 	int		*pid;
 	char	*limiter;
 	int		is_here_doc;
@@ -217,7 +219,8 @@ void	fork_process(t_info *info, int depth);
 int		wexitstatus(int status);
 
 int		redirection(t_info *info, int fd[]);
-int		here_doc(t_info *info, char *limiter, int fd[]);
+int		here_doc(t_info *info, char *limiter);
+int		get_here_doc_fd(t_info *info, int fd[]);
 
 /*
 ** =============================================================================
