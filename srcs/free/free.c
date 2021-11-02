@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 20:03:34 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 20:03:39 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 19:48:38 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,14 @@ void	clear_info(t_info *info)
 	}
 	while (i < info->n_cmd)
 	{
-		clear_cmd_lst_node(tmp[i].text);
-		clear_cmd_lst_node(tmp[i].redi);
+		if (tmp[i].text)
+			clear_cmd_lst_node(tmp[i].text);
+		if (tmp[i].redi)
+			clear_cmd_lst_node(tmp[i].redi);
 		i++;
 	}
-	free(info->cmd_lst);
+	if (info->cmd_lst)
+		free(info->cmd_lst);
 	info->cmd_lst = NULL;
 	clear_pipex(info);
 }

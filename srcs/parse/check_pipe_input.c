@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:12:52 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 17:36:31 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:45:19 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*put_in_pipe_input(void)
 		{
 			ft_putstr_fd("\x1b[1A", STDERR_FILENO);
 			ft_putstr_fd("\033[2C", STDERR_FILENO);
-			error_message("syntax error", NULL, "unexpected end of file");
+			error_msg("syntax error", NULL, "unexpected end of file");
 			return (NULL);
 		}
 		if (add[0] != '\0')

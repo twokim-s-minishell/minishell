@@ -26,13 +26,13 @@ EOC			=	"\033[0;0m"
 LINE_CLEAR	=	"\x1b[1A\x1b[M"
 
 # =============================================================================
-# Command Variables
+# Command Variables  
 # =============================================================================
 
 CC			=	gcc
-CFLAGS		=	-g -Wextra -Werror -Wall
-READ_FLG	=	-I$(HOME)/.brew/opt/readline/include
-MAIN_FLG	=	-L$(HOME)/.brew/opt/readline/lib  -lreadline
+CFLAGS		=	-g3
+READ_INC_FG	=	-I$(HOME)/.brew/opt/readline/include
+READ_LIB_FG	=	-L$(HOME)/.brew/opt/readline/lib
 RM			=	rm -rf
 
 # =============================================================================
@@ -130,7 +130,7 @@ $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(PARSE_DIR)%.c
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(SIG_DIR)%.c
-					@$(CC) $(CFLAGS) $(READ_FLG) -I$(INC) -c $< -o $@
+					@$(CC) $(CFLAGS) $(READ_INC_FG) -I$(INC) -c $< -o $@
 					@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 
 $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(UTL_DIR)%.c
@@ -140,7 +140,7 @@ $(OBJS_DIR)%.o	:	$(SRCS_DIR)$(UTL_DIR)%.c
 $(NAME)			:	$(OBJS)
 					@echo $(GREEN) "Source files are compiled!\n" $(EOC)
 					@echo $(WHITE) "Building '$(NAME)' for" $(YELLOW) "Mandatory" $(WHITE) "..." $(EOC)
-					@$(CC) $(CFLAGS) $(READ_FLG) $(MAIN_FLG) -o $@ $^ $(LIBFT)libft.a -I$(INC)
+					@$(CC) $(CFLAGS) $(READ_INC_FG) $(READ_LIB_FG) -lreadline -o $@ $^ $(LIBFT)libft.a -I$(INC)
 					@echo $(CYAN) "'$(NAME)'(execute file) is created!\n" $(EOC)
 
 # =============================================================================

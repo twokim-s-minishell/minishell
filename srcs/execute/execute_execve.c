@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execute_execve.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:17 by kyunkim           #+#    #+#             */
 /*   Updated: 2021/11/02 17:35:28 by kyunkim          ###   ########.fr       */
@@ -22,13 +22,13 @@ void	is_directory(char *cmd)
 
 	if (stat(cmd, &file_stat) == ERROR)
 	{
-		error_message(cmd, NULL, strerror(errno));
+		error_msg(cmd, NULL, strerror(errno));
 		exit(CODE_NO_FILE_OR_DIR);
 	}
 	file_type = file_stat.st_mode & S_IFMT;
 	if (file_type == S_IFDIR)
 	{
-		error_message(cmd, NULL, MSG_IS_A_DIR);
+		error_msg(cmd, NULL, MSG_IS_A_DIR);
 		exit(CODE_IS_A_DIR);
 	}
 }
@@ -99,23 +99,25 @@ int	is_builtin_command(t_info *info)
 int	execute_execve(t_info *info)
 {
 	int		fd[2];
+	int		ret;
 	char	*cmd_path;
 
+	ret = 0;
 	get_cmd_list(info);
 	cmd_path = get_cmd_path(info->env_path, info);
 	if (switch_stdio(info, fd))
 		return (TRUE);
 	if (is_builtin_command(info))
-		builtin(info->cmd_str, info, fd);
+		ret = builtin(info->cmd_str, info, fd);
 	else if (info->cmd_str[0])
 	{
 		kill(0, SIGUSR1);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		execve(cmd_path, info->cmd_str, info->env_str);
-		error_message(info->cmd_str[0], NULL, MSG_CMD_NOT_FOUND);
+		error_msg(info->cmd_str[0], NULL, MSG_CMD_NOT_FOUND);
 		exit(CODE_CMD_NOT_FOUND);
 	}
 	free(cmd_path);
-	return (NORMAL);
+	return (ret);
 }
