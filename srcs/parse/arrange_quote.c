@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:08:45 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:08:45 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:39:41 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*arrange_quote(char *line, int *start_idx, int sep_idx, t_info *info)
 	new = fillin_buf(buf, divide[MID], info);
 	if (new == NULL)
 	{
-		error_message(NULL, NULL, "String buffer size is full");
+		error_msg(NULL, NULL, "String buffer size is full");
 		exit(1);
 	}
 	new = make_arrange_string(new, divide, start_idx);

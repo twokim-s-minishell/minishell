@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:07:23 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 18:31:42 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:39:43 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	unset(char **cmd, t_info *info)
 		key = cmd[i];
 		if (incorrect_env_key(key))
 		{
-			error_message(cmd[0], key, "not a valid identifier");
+			error_msg(cmd[0], key, "not a valid identifier");
 			g_exit.code = 1;
 			continue ;
 		}

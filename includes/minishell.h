@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 18:31:04 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:44:17 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ int		echo(t_info *info, int *fd);
 
 void	execute_command_main(t_info *info);
 void	execute_command(t_info *info, int depth);
-int		execute_execve(t_info *info, int depth);
+int		execute_execve(t_info *info);
 int		is_builtin_command(t_info *info);
 
 void	get_pipe_fd(t_info *info, int depth, int fd[]);
@@ -281,7 +281,7 @@ int		is_register_variable(char *cmd);
 int		register_variable(char *cmd, t_info *info, int *fd);
 
 void	merror(void *addr);
-int		error_message(char *cmd, char *arg, char *msg);
+int		error_msg(char *cmd, char *arg, char *msg);
 void	syntax_error(char *c);
 void	unclosed_quote(char c);
 

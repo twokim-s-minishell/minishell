@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:00:07 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 17:58:54 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:41:30 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	echo_with_n(t_info *info, int *fd)
 	}
 }
 
-void	echo(t_info *info, int *fd)
+int	echo(t_info *info, int *fd)
 {
 	int	idx;
 	int	echo_len;
@@ -60,12 +60,12 @@ void	echo(t_info *info, int *fd)
 	if (!(info->cmd_str[1]))
 	{
 		ft_putstr_fd("\n", fd[WRITE]);
-		return ;
+		return (NORMAL);
 	}
 	if (check_correct_n_option(info->cmd_str[1]))
 	{
 		echo_with_n(info, fd);
-		return ;
+		return (NORMAL);
 	}
 	while (info->cmd_str[idx])
 	{
@@ -75,4 +75,5 @@ void	echo(t_info *info, int *fd)
 		idx++;
 	}
 	ft_putstr_fd("\n", fd[WRITE]);
+	return (NORMAL);
 }

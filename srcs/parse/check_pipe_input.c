@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:12:52 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 19:40:52 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:45:19 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*put_in_pipe_input(void)
 		{
 			ft_putstr_fd("\x1b[1A", STDERR_FILENO);
 			ft_putstr_fd("\033[2C", STDERR_FILENO);
-			error_message("syntax error", NULL, "unexpected end of file");
+			error_msg("syntax error", NULL, "unexpected end of file");
 			return (NULL);
 		}
 		if (add[0] != '\0')
@@ -80,8 +80,6 @@ static char	*put_in_pipe_input(void)
 
 int	check_pipe_input(char **line)
 {
-	int		i;
-	int		j;
 	char	*add;
 	char	*tmp;
 

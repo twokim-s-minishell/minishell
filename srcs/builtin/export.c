@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:06:59 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 18:27:39 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:40:04 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,7 @@ int	export(char **cmd, t_info *info, int *fd)
 		env = env_split(cmd[i]);
 		add_flag = check_add_value(env);
 		if (incorrect_env_key(env[KEY]))
-			g_exit.code =
-			error_message("export", env[KEY], "not a valid identifier");
+			g_exit.code = error_msg("export", env[0], "not a valid identifier");
 		else
 			fillin_new_env(env, info, add_flag);
 		free_double_string(env);

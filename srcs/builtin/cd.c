@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:59:37 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 18:24:59 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:39:36 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,22 @@ static int	cd_old_pwd(t_info *info, int first_flag)
 {
 	char	*old_pwd;
 
-	old_pwd = NULL;
 	if (first_flag == 0)
 	{
-		error_message("cd", NULL, "OLDPWD not set");
+		error_msg("cd", NULL, "OLDPWD not set");
 		g_exit.code = 1;
 		return (ERROR);
 	}
 	old_pwd = get_env_value("OLDPWD", info);
 	if (old_pwd == NULL)
 	{
-		error_message("cd", NULL, "OLDPWD not set");
+		error_msg("cd", NULL, "OLDPWD not set");
 		g_exit.code = 1;
 		return (ERROR);
 	}
 	if (chdir(old_pwd) == ERROR)
 	{
-		error_message("cd", old_pwd, "No such file or directory");
+		error_msg("cd", old_pwd, "No such file or directory");
 		g_exit.code = 1;
 		free(old_pwd);
 		return (ERROR);
@@ -75,12 +74,12 @@ static void	just_cd(t_info *info, int *flag)
 	home = get_env_value("HOME", info);
 	if (home == NULL)
 	{
-		error_message("cd", NULL, "Home not set");
+		error_msg("cd", NULL, "Home not set");
 		g_exit.code = 1;
 	}
 	else if (chdir(home) == ERROR)
 	{
-		error_message("cd", home, "No such file or directory");
+		error_msg("cd", home, "No such file or directory");
 		g_exit.code = 1;
 	}
 	else
@@ -92,7 +91,7 @@ static void	home_cd(t_info *info, int *flag)
 {
 	if (chdir(info->home_path) == ERROR)
 	{
-		error_message("cd", info->home_path, "No such file or directory");
+		error_msg("cd", info->home_path, "No such file or directory");
 		g_exit.code = 1;
 	}
 	else
@@ -117,7 +116,7 @@ int	cd(char *path, t_info *info)
 			normal_flag = TRUE;
 	}
 	else if (chdir(path) == ERROR)
-		return (error_message("cd", path, "No such file or directory"));
+		return (error_msg("cd", path, "No such file or directory"));
 	else
 		normal_flag = TRUE;
 	if (normal_flag)

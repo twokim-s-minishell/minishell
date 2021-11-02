@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:44 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:55:45 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:45:02 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 	  플래그를 줌
 ** 8. 정상 종료 시 fd[1] 닫고 파이프 fd[0]을 반환
 */
-int	read_string_from_stdin(t_info *info, char *limiter, int pipe_fd[])
+static int	read_string_from_stdin(char *limiter, int pipe_fd[])
 {
 	char	*str;
 
@@ -42,7 +42,6 @@ int	read_string_from_stdin(t_info *info, char *limiter, int pipe_fd[])
 
 int	here_doc(t_info *info, char *limiter, int fd[])
 {
-	char	*str;
 	int		pipe_fd[2];
 	int		pid;
 	int		status;
@@ -59,7 +58,7 @@ int	here_doc(t_info *info, char *limiter, int fd[])
 			return (-2);
 	}
 	else if (pid == 0)
-		read_string_from_stdin(info, limiter, pipe_fd);
+		read_string_from_stdin(limiter, pipe_fd);
 	info->pipex.is_here_doc = 0;
 	fd[READ] = pipe_fd[READ];
 	close(pipe_fd[WRITE]);

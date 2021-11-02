@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:51 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:55:52 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:55:50 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	redirection(t_info *info, int fd[])
 		if (reval <= -1)
 		{
 			if (reval == ERROR)
-				error_message(redi[1], NULL, strerror(errno));
+				error_msg(redi[1], NULL, strerror(errno));
 			return (ERROR);
 		}
 		cur = cur->next;

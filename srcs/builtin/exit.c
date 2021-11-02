@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:00:20 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 18:31:24 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:39:37 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int	execute_exit(char **cmd, t_info *info)
 			g_exit.code = tmp.c[0];
 			exit(g_exit.code);
 		}
-		return (error_message(cmd[0], NULL, "too many arguments"));
+		return (error_msg(cmd[0], NULL, "too many arguments"));
 	}
-	error_message("exit", cmd[1], "numeric argument required");
+	error_msg("exit", cmd[1], "numeric argument required");
 	exit(255);
 }
