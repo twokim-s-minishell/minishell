@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 19:08:53 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 20:08:37 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,9 +278,6 @@ int		incorrect_env_key(char *env_key);
 int		check_add_value(char **env);
 void	reset_env_info(t_info *info);
 
-int		is_register_variable(char *cmd);
-int		register_variable(char *cmd, t_info *info, int *fd);
-
 void	merror(void *addr);
 int		error_msg(char *cmd, char *arg, char *msg);
 void	syntax_error(char *c);
@@ -299,6 +296,10 @@ int		find_separator(char *line, int idx);
 char	**quote_split(char *cmd);
 char	choose_enclose_quote_type(char *buf, int buf_len);
 void	turn_on_quote_flag(char c, t_quote *data);
+
+int		is_register_variable_string(char *cmd);
+int		is_register_variable(t_lst *text);
+int		register_variable(char **cmd, t_info *info, int *fd);
 
 void	make_env_double_string(t_info *info);
 void	save_env_variables(t_info *info, char **envp);

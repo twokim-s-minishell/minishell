@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:17 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/03 17:42:14 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 19:50:04 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,6 @@ char	*get_cmd_path(char **env_path, t_info *info)
 		idx++;
 	}
 	return (path_of_cmd);
-}
-
-int	is_builtin_command(t_info *info)
-{
-	char	*cmd;
-	int		cmd_len;
-
-	if (info->cmd_lst[info->cmd_sequence].text == NULL)
-		return (FALSE);
-	cmd = info->cmd_lst[info->cmd_sequence].text->str;
-	cmd_len = ft_strlen(cmd);
-	if (cmd_len <= 0)
-		return (FALSE);
-	if (!ft_strcmp(cmd, "cd")
-		|| !ft_strcmp(cmd, "pwd")
-		|| !ft_strcmp(cmd, "export")
-		|| !ft_strcmp(cmd, "unset")
-		|| !ft_strcmp(cmd, "env")
-		|| !ft_strcmp(cmd, "exit")
-		|| !ft_strcmp(cmd, "echo")
-		|| is_register_variable(cmd))
-		return (TRUE);
-	return (FALSE);
 }
 
 /*
