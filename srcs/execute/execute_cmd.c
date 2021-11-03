@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:10 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/02 17:39:22 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 14:21:03 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 extern t_exit_code	g_exit;
 
 /*
-** wait() 함수로 모든 자식 프로세스가 끝날 때 까지 대기
+** close_pipeline(info); 파이프 모두 닫음
+	(마지막 재귀에서 닫기 때문에 그 전 재귀에서 실행된 자식프로세스에는 영향이 없다)
+** waitpid() 함수로 모든 자식 프로세스가 끝날 때 까지 대기
 ** 자식 프로세스가 끝나면 wexitstatus() 함수에 status 넣어서 exit_code 구하기
+** waitpid() 반환값이 -1이면 g_exit_code에 넣지말고 break ;
 ** 전역변수 g_exit_code에 exit_code 넣기
+** 마지막 명령어의 상태코드만 넣어야되기 때문에 info->last_pid == ret를
+   if문 조건식에 넣어서 마지막 프로세스 pid일 때만 g_exit_code 넣음
 */
 void	waiting_child_process(t_info *info, int depth)
 {
@@ -37,6 +42,9 @@ void	waiting_child_process(t_info *info, int depth)
 	}
 }
 
+/*
+** ./minishell 실행 시 부모에서 SIGUSR1 시그널을 무시해야됨
+*/
 void	ignoring_sigusr1_command(t_info *info, int depth)
 {
 	signal(SIGUSR1, SIG_IGN);
