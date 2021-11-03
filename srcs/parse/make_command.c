@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:14:29 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 16:05:18 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 17:40:48 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ static void	make_command_array(char **cmd, t_info *info)
 	cmd_lst = NULL;
 	cmd_lst = (t_cmd *)malloc(sizeof(t_cmd) * info->n_cmd);
 	merror(cmd_lst);
-	printf("address1 : %p\n", cmd_lst);
 	ft_memset(cmd_lst, 0, sizeof(t_cmd) * info->n_cmd);
 	i = -1;
 	while (++i < info->n_cmd)
@@ -101,10 +100,6 @@ static void	make_command_array(char **cmd, t_info *info)
 			j++;
 		}
 		free_double_string(split_cmd);
-		if (cmd_lst[i].text != NULL)
-			printf("\ncmd_lst[%d].text->str : %s\n", i, cmd_lst[i].text->str);
-		if (cmd_lst[i].redi != NULL)
-			printf("\ncmd_lst[%d].redi->str : %s\n", i, cmd_lst[i].redi->str);
 	}
 	info->cmd_lst = cmd_lst;
 }
@@ -114,9 +109,6 @@ void	make_command(char *line, t_info *info)
 	char	**cmd;
 
 	cmd = divide_by_command(line, info);
-	printf("\ncmd[0] : %s\n", cmd[0]);
-	printf("cmd[1] : %s\n", cmd[1]);
 	make_command_array(cmd, info);
-	printf("address2 : %p\n", info->cmd_lst);
 	free_double_string(cmd);
 }

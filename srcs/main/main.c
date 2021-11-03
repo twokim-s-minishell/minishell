@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:25:44 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 15:53:57 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 17:41:41 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,8 @@ void	get_line(t_info *info)
 	line = get_command_line();
 	if (line == NULL)
 		return ;
-	printf("\n=================================\n\n");
 	if (parse_line(line, info))
 		return ;
-	printf("%s\n", info->cmd_lst[0].text->str);
 	execute_command_main(info);
 	clear_info(info);
 }
@@ -98,16 +96,6 @@ int	main(int arc, char *argv[], char *envp[])
 	if (arc == 0 || argv == NULL)
 		return (ERROR);
 	ft_memset(&info, 0, sizeof(t_info));
-	// info.last_pid = 0;
-	// info.n_cmd = 0;
-	// info.cmd_sequence = 0;
-	// info.env_path = NULL;
-	// info.cmd_str = NULL;
-	// info.env_str = NULL;
-	// info.home_path = NULL;
-	// info.pwd_path = NULL;
-	// info.env_deq = NULL;
-	// info.cmd_lst = NULL;
 	g_exit.code = 0;
 	g_exit.sig_flag = FALSE;
 	save_env_variables(&info, envp);

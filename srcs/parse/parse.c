@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:15:25 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 16:02:36 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 17:41:55 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,5 @@ int	parse_line(char *line, t_info *info)
 	}
 	new_line = pre_processing(line, info);
 	make_command(new_line, info);
-	printf("\naddress3 : %p\n", info->cmd_lst);
-	printf("\ninfo->textstr : %s\n", info->cmd_lst[0].text->str);
-	printf("\n=================================\n\n");
 	return (NORMAL);
 }

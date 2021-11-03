@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_pipe_input.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:12:52 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 18:45:19 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 18:04:52 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,20 @@ static int	check_pipe(char *line)
 	return (TRUE);
 }
 
-static int	check_is_pipe_stdin_input(char **line)
+static int	check_is_pipe_stdin_input(char *line)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	i = 0;
-	while ((*line)[i] && (*line)[i] != '|')
-		i++;
-	if ((*line)[i] == '\0')
+	i = ft_strlen(line) - 1;
+	while (i >= 0 && line[i] != '|')
+		i--;
+	if (i < 0)
 		return (FALSE);
 	j = i + 1;
-	while (is_space((*line)[j]))
+	while (is_space(line[j]))
 		j++;
-	if ((*line)[j] == '\0')
+	if (line[j] == '\0')
 		return (TRUE);
 	return (FALSE);
 }
@@ -85,7 +85,7 @@ int	check_pipe_input(char **line)
 
 	if (check_pipe(*line))
 		return (ERROR);
-	if (check_is_pipe_stdin_input(line))
+	if (check_is_pipe_stdin_input(*line))
 	{
 		signal(SIGINT, pipe_input_handler);
 		add = put_in_pipe_input();

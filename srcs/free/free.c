@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 20:03:34 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 16:10:36 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 16:37:06 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	clear_info(t_info *info)
 	}
 	while (i < info->n_cmd)
 	{
-		if (tmp[i].text)
-			clear_cmd_lst_node(tmp[i].text);
 		if (tmp[i].redi)
 			clear_cmd_lst_node(tmp[i].redi);
+		if (tmp[i].text)
+			clear_cmd_lst_node(tmp[i].text);
 		i++;
 	}
 	if (info->cmd_lst)
