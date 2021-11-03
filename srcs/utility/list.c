@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:29:45 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:29:46 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 17:42:24 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_lst	*create_node(void)
 
 	lst = (t_lst *)malloc(sizeof(t_lst));
 	merror(lst);
-	ft_memset(lst, 0, sizeof(t_lst));
+	lst->str = NULL;
+	lst->next = NULL;
 	return (lst);
 }
 
@@ -35,7 +36,7 @@ void	link_node(char *cmd, t_lst **list)
 		*list = tmp;
 	else
 	{
-		while (cur->next)
+		while (cur->next != NULL)
 			cur = cur->next;
 		cur->next = tmp;
 	}

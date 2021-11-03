@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:31:23 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 15:25:16 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 17:41:07 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ static char	**create_cmd_lst(char *cmd)
 	}
 	cmd_lst = (char **)malloc(sizeof(char *) * (str_cnt + 1));
 	merror(cmd_lst);
-	cmd_lst[str_cnt] = NULL;
+	i = 0;
+	while (i <= str_cnt)
+		cmd_lst[i++] = NULL;
 	return (cmd_lst);
 }
 
@@ -101,11 +103,11 @@ char	**quote_split(char *cmd)
 	pre_idx = 0;
 	while (find_quote_idx(cmd, &quote_idx))
 	{
-		cmd_str[i] = (char *)malloc(sizeof(char) * (quote_idx - pre_idx));
-		merror(cmd_str[i]);
 		if ((cmd[quote_idx] == '\"' && cmd[pre_idx] != '\"')
 			|| (cmd[quote_idx] == '\'' && cmd[pre_idx] != '\''))
 			pre_idx--;
+		cmd_str[i] = (char *)malloc(sizeof(char) * (quote_idx - pre_idx));
+		merror(cmd_str[i]);
 		ft_strlcpy(cmd_str[i], cmd + pre_idx + 1, quote_idx - pre_idx);
 		pre_idx = ++quote_idx;
 		i++;

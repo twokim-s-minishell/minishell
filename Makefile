@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+         #
+#    By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:16:04 by kyunkim           #+#    #+#              #
-#    Updated: 2021/11/03 16:02:23 by kyunkim          ###   ########.fr        #
+#    Updated: 2021/11/03 18:07:49 by hyeonkki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ LINE_CLEAR	=	"\x1b[1A\x1b[M"
 # =============================================================================
 
 CC			=	gcc
-CFLAGS		=	-g3
+CFLAGS		=	-Wall -Werror -Wextra
 READ_INC_FG	=	-I$(HOME)/.brew/opt/readline/include
 READ_LIB_FG	=	-L$(HOME)/.brew/opt/readline/lib
 RM			=	rm -rf
