@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+         #
+#    By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:16:04 by kyunkim           #+#    #+#              #
-#    Updated: 2021/11/03 19:11:29 by kyunkim          ###   ########.fr        #
+#    Updated: 2021/11/03 21:21:13 by hyeonkki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ LINE_CLEAR	=	"\x1b[1A\x1b[M"
 # =============================================================================
 
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		=	-Wall -Werror -Wextra -g
 READ_INC_FG	=	-I$(HOME)/.brew/opt/readline/include
 READ_LIB_FG	=	-L$(HOME)/.brew/opt/readline/lib
 RM			=	rm -rf
@@ -61,6 +61,7 @@ OBJS_LST	=	main.o						\
 				env.o						\
 				exit.o						\
 				export.o					\
+				print_export.o				\
 				free.o						\
 				pwd.o						\
 				unset.o						\
@@ -95,7 +96,8 @@ OBJS_LST	=	main.o						\
 				string_utils.o				\
 				parse_utils.o				\
 				parse_utils2.o				\
-				parse_utils3.o
+				parse_utils3.o				\
+				register_variable.o
 
 OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LST))
 

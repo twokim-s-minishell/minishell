@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:28:19 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 18:29:23 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 19:55:13 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,46 +66,4 @@ char	*get_env_value(char *key, t_info *info)
 	ret = ft_strdup(cur->value);
 	merror(ret);
 	return (ret);
-}
-
-int	is_register_variable(char *cmd)
-{
-	char	**tmp;
-
-	if (cmd == NULL)
-		return (FALSE);
-	if (ft_strchr(cmd, '=') != NULL)
-	{
-		tmp = env_split(cmd);
-		if (!incorrect_env_key(tmp[KEY]))
-		{
-			free_double_string(tmp);
-			return (TRUE);
-		}
-		free_double_string(tmp);
-	}
-	return (FALSE);
-}
-
-int	register_variable(char *cmd, t_info *info, int *fd)
-{
-	int		flag;
-	char	*export_cmd[3];
-	char	**env;
-
-	flag = FALSE;
-	export_cmd[0] = "export";
-	export_cmd[1] = ft_strdup(cmd);
-	merror(export_cmd[1]);
-	export_cmd[2] = NULL;
-	env = env_split(cmd);
-	check_add_value(env);
-	if (check_listin(env[KEY], info))
-		flag = TRUE;
-	free_double_string(env);
-	export(export_cmd, info, fd);
-	if (flag == FALSE)
-		info->env_deq->last->env_flag = FALSE;
-	free(export_cmd[1]);
-	return (NORMAL);
 }
