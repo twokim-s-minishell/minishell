@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 21:20:56 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 21:09:34 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ typedef struct s_pipex
 	int		*pid;
 	char	*limiter;
 	int		is_here_doc;
+	int		*here_fd;
 	int		here_flag;
 }	t_pipex;
 
@@ -168,6 +169,7 @@ typedef struct s_info
 	char		**env_path;
 	char		**cmd_str;
 	int			cmd_sequence;
+	int			here_sequence;
 	int			n_cmd;
 	int			last_pid;
 	char		**env_str;
@@ -218,8 +220,11 @@ void	fork_process(t_info *info, int depth);
 int		wexitstatus(int status);
 
 int		redirection(t_info *info, int fd[]);
-int		here_doc(t_info *info, char *limiter, int fd[]);
+int		here_doc(t_info *info, char *limiter);
 void	is_here_doc(t_info *info, int depth);
+int		run_here_doc(t_info *info);
+int		get_here_doc_count(t_info *info);
+void	init_here_fd(t_info *info);
 
 /*
 ** =============================================================================

@@ -6,13 +6,26 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:10 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/03 20:22:23 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 21:09:30 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_exit_code	g_exit;
+
+static void	incread_here_sequence(t_info *info)
+{
+	t_lst	*cur;
+
+	cur = info->cmd_lst[info->cmd_sequence].redi;
+	while (cur != NULL)
+	{
+		if (!ft_strncmp(cur->str, "<<", 2))
+			info->here_sequence++;
+		cur = cur->next;
+	}
+}
 
 /*
 ** close_pipeline(info); 파이프 모두 닫음
@@ -24,7 +37,7 @@ extern t_exit_code	g_exit;
 ** 마지막 명령어의 상태코드만 넣어야되기 때문에 info->last_pid == ret를
    if문 조건식에 넣어서 마지막 프로세스 pid일 때만 g_exit_code 넣음
 */
-void	waiting_child_process(t_info *info, int depth)
+static void	waiting_child_process(t_info *info, int depth)
 {
 	int	status;
 	int	ret;
@@ -45,7 +58,7 @@ void	waiting_child_process(t_info *info, int depth)
 /*
 ** ./minishell 실행 시 부모에서 SIGUSR1 시그널을 무시해야됨
 */
-void	ignoring_sigusr1_command(t_info *info, int depth)
+static void	ignoring_sigusr1_command(t_info *info, int depth)
 {
 	signal(SIGUSR1, SIG_IGN);
 	if (depth != info->n_cmd - 1)
@@ -66,12 +79,12 @@ void	execute_command(t_info *info, int depth)
 	if (depth > info->n_cmd - 1)
 		return ;
 	info->cmd_sequence = depth;
-	is_here_doc(info, depth);
 	make_pipeline(info, depth);
 	fork_process(info, depth);
 	if (info->pipex.pid[depth] > 0)
 	{
 		signal(SIGINT, SIG_IGN);
+		incread_here_sequence(info);
 		if (info->cmd_lst[depth].text != NULL
 			&& !ft_strcmp("./minishell", info->cmd_lst[depth].text->str))
 			ignoring_sigusr1_command(info, depth);
@@ -98,12 +111,18 @@ void	execute_command(t_info *info, int depth)
 void	execute_command_main(t_info *info)
 {
 	init_pipe_fd(info);
-	info->pipex.here_flag = 0;
-	info->cmd_sequence = 0;
 	g_exit.code = 0;
 	g_exit.sig_flag = FALSE;
+	info->pipex.here_flag = 0;
+	info->cmd_sequence = 0;
+	info->here_sequence = 0;
 	info->pipex.pid = (int *)malloc(sizeof(int) * info->n_cmd);
 	merror(info->pipex.pid);
+	if (get_here_doc_count(info))
+	{
+		if (run_here_doc(info) == ERROR)
+			return ;
+	}
 	if (is_builtin_command(info) && (info->n_cmd == 1))
 	{
 		g_exit.code = execute_execve(info);
