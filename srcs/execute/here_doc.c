@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:44 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/03 19:08:44 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 21:17:57 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	read_string_from_stdin(char *limiter, int pipe_fd[])
 	exit(1);
 }
 
-int	here_doc(t_info *info, char *limiter, int fd[])
+int	here_doc(t_info *info, char *limiter)
 {
 	int		pipe_fd[2];
 	int		pid;
@@ -55,29 +55,77 @@ int	here_doc(t_info *info, char *limiter, int fd[])
 		signal(SIGINT, SIG_IGN);
 		wait(&status);
 		if (wexitstatus(status) == 254)
-			return (-2);
+			return (ERROR);
 	}
 	else if (pid == 0)
 		read_string_from_stdin(limiter, pipe_fd);
 	info->pipex.is_here_doc = 0;
-	fd[READ] = pipe_fd[READ];
 	close(pipe_fd[WRITE]);
 	return (pipe_fd[READ]);
 }
 
-void	wait_here_doc(t_info *info, int depth)
+int	get_here_doc_count(t_info *info)
 {
-	if (info->pipex.here_flag)
-		waitpid(info->pipex.pid[depth - 1], NULL, 0);
+	int		idx;
+	int		here_doc_cnt;
+	t_lst	*cur;
+
+	idx = 0;
+	here_doc_cnt = 0;
+	while (idx < info->n_cmd)
+	{
+		cur = info->cmd_lst[idx].redi;
+		while (cur != NULL)
+		{
+			if (ft_strcmp(info->cmd_lst[idx].redi->str, "<<"))
+				here_doc_cnt++;
+			cur = cur->next;
+		}
+		idx++;
+	}
+	return (here_doc_cnt);
 }
 
-void	is_here_doc(t_info *info, int depth)
+int	check_here_doc(t_info *info, t_lst *cur, int *here_doc_cnt)
 {
-	if (depth > 0)
+	char	**redi;
+
+	redi = ft_split(cur->str, '\"');
+	if (!ft_strcmp(redi[0], "<<"))
 	{
-		if (info->cmd_lst[depth - 1].redi != NULL
-			&& ft_strcmp(info->cmd_lst[depth - 1].redi->str, "<<"))
-			info->pipex.here_flag = 1;
-		wait_here_doc(info, depth);
+		info->pipex.here_fd[*here_doc_cnt] = here_doc(info, redi[1]);
+		if (info->pipex.here_fd[*here_doc_cnt] == ERROR)
+		{
+			free_double_string(redi);
+			redi = NULL;
+			return (ERROR);
+		}
+		(*here_doc_cnt)++;
 	}
+	free_double_string(redi);
+	redi = NULL;
+	return (NORMAL);
+}
+
+int	run_here_doc(t_info *info)
+{
+	t_lst	*cur;
+	int		idx;
+	int		here_doc_cnt;
+
+	idx = 0;
+	here_doc_cnt = 0;
+	init_here_fd(info);
+	while (idx < info->n_cmd)
+	{
+		cur = info->cmd_lst[idx].redi;
+		while (cur != NULL)
+		{
+			if (check_here_doc(info, cur, &here_doc_cnt) == ERROR)
+				return (ERROR);
+			cur = cur->next;
+		}
+		idx++;
+	}
+	return (NORMAL);
 }

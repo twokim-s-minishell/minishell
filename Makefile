@@ -6,7 +6,7 @@
 #    By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:16:04 by kyunkim           #+#    #+#              #
-#    Updated: 2021/11/03 19:11:29 by kyunkim          ###   ########.fr        #
+#    Updated: 2021/11/03 20:55:03 by kyunkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ OBJS_LST	=	main.o						\
 				get_pipe_fd.o				\
 				redirection.o				\
 				here_doc.o					\
+				init_here_fd.o				\
 				switch_stdio.o				\
 				wexitstatus.o				\
 				free_two_dimensional.o		\
