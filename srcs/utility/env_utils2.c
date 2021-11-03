@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:28:58 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:28:58 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 20:14:15 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	incorrect_env_key(char *env_key)
 		return (TRUE);
 	while ((ft_isalpha(env_key[i]) || env_key[i] == '_'
 			|| ft_isdigit(env_key[i])))
+		i++;
+	if (env_key[i] == '+')
 		i++;
 	if (env_key[i] == 0)
 		return (FALSE);
