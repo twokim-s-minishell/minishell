@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+         #
+#    By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:16:04 by kyunkim           #+#    #+#              #
-#    Updated: 2021/11/03 18:07:49 by hyeonkki         ###   ########.fr        #
+#    Updated: 2021/11/03 19:04:26 by kyunkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,11 @@ EOC			=	"\033[0;0m"
 LINE_CLEAR	=	"\x1b[1A\x1b[M"
 
 # =============================================================================
-# Command Variables  
+# Command Variables
 # =============================================================================
 
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		=	-g
 READ_INC_FG	=	-I$(HOME)/.brew/opt/readline/include
 READ_LIB_FG	=	-L$(HOME)/.brew/opt/readline/lib
 RM			=	rm -rf

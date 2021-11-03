@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:10 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/03 14:21:03 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 19:08:39 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	execute_command(t_info *info, int depth)
 	if (depth > info->n_cmd - 1)
 		return ;
 	info->cmd_sequence = depth;
+	is_here_doc(info, depth);
 	make_pipeline(info, depth);
 	fork_process(info, depth);
 	if (info->pipex.pid[depth] > 0)
@@ -96,8 +97,8 @@ void	execute_command(t_info *info, int depth)
 */
 void	execute_command_main(t_info *info)
 {
-	g_exit.sig_flag = 0;
 	init_pipe_fd(info);
+	info->pipex.here_flag = 0;
 	info->cmd_sequence = 0;
 	g_exit.code = 0;
 	g_exit.sig_flag = FALSE;

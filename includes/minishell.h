@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 16:15:54 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 19:08:53 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ typedef struct s_pipex
 	int		*pid;
 	char	*limiter;
 	int		is_here_doc;
+	int		here_flag;
 }	t_pipex;
 
 typedef struct s_quote
@@ -217,6 +218,7 @@ int		wexitstatus(int status);
 
 int		redirection(t_info *info, int fd[]);
 int		here_doc(t_info *info, char *limiter, int fd[]);
+void	is_here_doc(t_info *info, int depth);
 
 /*
 ** =============================================================================
