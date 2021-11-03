@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:44 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/02 17:36:04 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 19:08:44 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,21 @@ int	here_doc(t_info *info, char *limiter, int fd[])
 	fd[READ] = pipe_fd[READ];
 	close(pipe_fd[WRITE]);
 	return (pipe_fd[READ]);
+}
+
+void	wait_here_doc(t_info *info, int depth)
+{
+	if (info->pipex.here_flag)
+		waitpid(info->pipex.pid[depth - 1], NULL, 0);
+}
+
+void	is_here_doc(t_info *info, int depth)
+{
+	if (depth > 0)
+	{
+		if (info->cmd_lst[depth - 1].redi != NULL
+			&& ft_strcmp(info->cmd_lst[depth - 1].redi->str, "<<"))
+			info->pipex.here_flag = 1;
+		wait_here_doc(info, depth);
+	}
 }
