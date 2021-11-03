@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/02 18:44:17 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 16:10:55 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,11 @@ int		env(t_info *info, int *fd);
 int		execute_exit(char **cmd, t_info *info);
 int		export(char **cmd, t_info *info, int *fd);
 int		pwd(int *fd, t_info *info);
+<<<<<<< Updated upstream
 int		unset(char **cmd, t_info *info);
+=======
+void	unset(char **cmd, t_info *info);
+>>>>>>> Stashed changes
 int		echo(t_info *info, int *fd);
 
 /*

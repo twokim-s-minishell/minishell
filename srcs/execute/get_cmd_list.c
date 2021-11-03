@@ -6,7 +6,7 @@
 /*   By: kyunkim <kyunkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 19:55:39 by kyunkim           #+#    #+#             */
-/*   Updated: 2021/11/01 19:55:40 by kyunkim          ###   ########.fr       */
+/*   Updated: 2021/11/03 15:48:03 by kyunkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	get_cmd_list(t_info *info)
 		if (cur->str != NULL && cur->str[0] != '\0')
 		{
 			info->cmd_str[cnt] = ft_strdup(cur->str);
+			merror(info->cmd_str[cnt]);
 			cnt++;
 		}
 		cur = cur->next;
