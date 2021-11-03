@@ -6,7 +6,7 @@
 #    By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/01 20:16:04 by kyunkim           #+#    #+#              #
-#    Updated: 2021/11/03 20:01:08 by hyeonkki         ###   ########.fr        #
+#    Updated: 2021/11/03 21:21:13 by hyeonkki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ OBJS_LST	=	main.o						\
 				env.o						\
 				exit.o						\
 				export.o					\
+				print_export.o				\
 				free.o						\
 				pwd.o						\
 				unset.o						\

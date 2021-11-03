@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 14:57:49 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 20:08:37 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 21:20:56 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ int		cd(char *path, t_info *info);
 int		env(t_info *info, int *fd);
 int		execute_exit(char **cmd, t_info *info);
 int		export(char **cmd, t_info *info, int *fd);
+void	print_export(t_info *info, int *fd);
 int		pwd(int *fd, t_info *info);
 int		unset(char **cmd, t_info *info);
 int		echo(t_info *info, int *fd);

@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 20:15:07 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/03 20:15:07 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 21:19:05 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	register_variable(char **cmd, t_info *info, int *fd)
 		free_double_string(env);
 		export(export_cmd, info, fd);
 		if (flag == FALSE)
-			info->env_deq->last->env_flag = FALSE;
+			(info->env_deq->size)--;
+		info->env_deq->last->env_flag = flag;
 		free(export_cmd[1]);
 	}
 	return (NORMAL);

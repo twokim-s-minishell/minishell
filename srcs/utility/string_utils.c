@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:32:19 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:32:19 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/03 21:14:38 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,14 @@ int	ft_strcmp(const char *s1, const char *s2)
 	unsigned char	*s2_tmp;
 
 	i = 0;
+	if (s1 == NULL && s2 == NULL)
+		return (0);
 	s1_tmp = (unsigned char *)s1;
 	s2_tmp = (unsigned char *)s2;
+	if (s1 == NULL)
+		return (-1 * s2_tmp[0]);
+	if (s2 == NULL)
+		return (s1_tmp[0]);
 	while (s1_tmp[i] && s2_tmp[i])
 	{
 		if (s1_tmp[i] != s2_tmp[i])
@@ -60,7 +66,7 @@ void	sort_env_str(char **str)
 	while (str[i] != NULL)
 	{
 		j = i;
-		while (ft_strcmp(str[j - 1], str[j]) > 0)
+		while (str[j] && (ft_strcmp(str[j - 1], str[j]) > 0))
 		{
 			swap_str(str, j - 1, j);
 			j--;
