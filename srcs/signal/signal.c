@@ -6,7 +6,7 @@
 /*   By: hyeonkki <hyeonkki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:08:04 by hyeonkki          #+#    #+#             */
-/*   Updated: 2021/11/01 15:08:05 by hyeonkki         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:45:32 by hyeonkki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	main_sig_handler(int signo)
 	if (signo == SIGINT)
 	{
 		ft_putchar_fd('\n', STDERR_FILENO);
+		g_exit.code = 1;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
